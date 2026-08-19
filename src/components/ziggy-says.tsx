@@ -28,7 +28,7 @@ export function ZiggySays({
       index="04"
       eyebrow="One line, in marker, every morning"
       title="Ziggy Says"
-      intro="Before there was a machine, there was a whiteboard on an easel and somebody's handwriting. It was never archived, because nobody archives a whiteboard."
+      intro="Before the exhibition imagined the machine, there was a whiteboard on an easel and somebody's handwriting. Its exact history and any surviving archive still need confirming."
     >
       <div className="board-room">
         <figure className="board-room__scene">
@@ -54,8 +54,8 @@ export function ZiggySays({
             to walk past that morning. It has never once tried to be clever.
           </p>
           <p className="board-room__aside">
-            Thirty years of these were wiped off at close of trade. Any photograph
-            anybody kept is now a primary source.
+            Any surviving photograph is a primary source. The exhibition is still
+            waiting to confirm what was kept and what was lost.
           </p>
           <figure className="board-room__reference">
             <ZiggyArtwork
@@ -69,9 +69,8 @@ export function ZiggySays({
 
       <h3 className="board-section__title">The archive</h3>
       <p className="board-section__lede">
-        Every slot below is empty, and that is the true state of it. Not one line
-        anybody has written on this board in thirty years was photographed, so the
-        exhibition holds no authenticated transcription at all.
+        Every slot below is empty, and that is the true state of this working archive.
+        No authenticated transcription has yet been supplied or independently sourced.
       </p>
 
       <ul className="board-grid">
