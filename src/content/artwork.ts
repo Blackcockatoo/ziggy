@@ -68,7 +68,7 @@ export const artwork = {
     height: 1402,
     alt: "The Ask Ziggy cabinet: a black and gold fortune-teller machine with a bulb-lined glass front, the Monkey Shop sign above it, and Ziggy inside holding a silver tray.",
     description:
-      "The full Ask Ziggy cabinet, lit, photographed in the shop. The lower panel reads I've been watching Frankston since 1996.",
+      "The full Ask Ziggy cabinet, lit in an interpretive shop setting. The lower panel carries exhibition wording: I've been watching Frankston since 1996.",
     interpretive: true,
     usage: "mounted",
   },
@@ -113,9 +113,9 @@ export const artwork = {
     src: "/images/ziggy/whiteboard/ziggy-with-board.webp",
     width: 1122,
     height: 1402,
-    alt: "The full-size Ziggy statue standing beside a whiteboard on an easel in the shop, one hand open toward the board.",
+    alt: "The full-size Ziggy statue standing beside a whiteboard on an easel in an illustrated shop setting, one hand open toward the board.",
     description:
-      "Ziggy presenting the board on the shop floor, in front of the thirty-year wall mark.",
+      "Ziggy presenting the board in an interpretive shop setting, in front of a thirty-year wall mark created for the exhibition.",
     interpretive: true,
     usage: "mounted",
   },
