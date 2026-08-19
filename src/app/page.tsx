@@ -1,39 +1,51 @@
 import { AroundTown } from "@/components/around-town";
 import { AskZiggy } from "@/components/ask-ziggy";
-import { CounterStories } from "@/components/counter-stories";
+import { Counter } from "@/components/counter";
 import { FrontWindow } from "@/components/front-window";
 import { Gang } from "@/components/gang";
-import { LuckyMonkey } from "@/components/lucky-monkey";
 import { LuckLedger } from "@/components/luck-ledger";
-import { MonkeyLineage } from "@/components/monkey-lineage";
+import { LuckyMonkey } from "@/components/lucky-monkey";
+import { ObjectArchive } from "@/components/object-archive";
+import { Principals } from "@/components/principals";
 import { ResearchKey } from "@/components/research-key";
-import { RobClosing } from "@/components/rob-closing";
 import { SiteNav } from "@/components/site-nav";
 import { Timeline } from "@/components/timeline";
 import { VisitFinale } from "@/components/visit-finale";
-import { exhibition } from "@/content/exhibition";
+import { exhibition, unplacedWins } from "@/content/exhibition";
 
+/**
+ * The exhibition, in walking order.
+ *
+ * The front window comes before the navigation on purpose: you approach the
+ * glass first, and the nav only sticks once you have gone inside.
+ */
 export default function Home() {
+  const { identity, sources } = exhibition;
+
   return (
     <>
       <a className="skip-link" href="#story">
         Skip to the exhibition
       </a>
+      <FrontWindow identity={identity} />
       <SiteNav items={exhibition.navigation} />
       <main>
-        <FrontWindow />
         <ResearchKey />
-        <Timeline entries={exhibition.timeline} sources={exhibition.sources} />
-        <LuckyMonkey lore={exhibition.lore} />
-        <LuckLedger entries={exhibition.ledger} />
-        <MonkeyLineage entries={exhibition.lineage} />
+        <Timeline entries={exhibition.timeline} sources={sources} />
+        <LuckLedger entries={exhibition.ledger} unplaced={unplacedWins} sources={sources} />
+        <LuckyMonkey lore={exhibition.lore} monkeys={exhibition.monkeys} sources={sources} />
         <AskZiggy />
-        <CounterStories stories={exhibition.counterStories} />
-        <Gang people={exhibition.people} />
-        <AroundTown records={exhibition.community} />
-        <RobClosing />
+        <Counter
+          objects={exhibition.counterObjects}
+          memories={exhibition.memories}
+          sources={sources}
+        />
+        <Gang staff={exhibition.staff} sources={sources} />
+        <AroundTown records={exhibition.community} sources={sources} />
+        <ObjectArchive artefacts={exhibition.artefacts} sources={sources} />
+        <Principals people={exhibition.principals} sources={sources} />
       </main>
-      <VisitFinale />
+      <VisitFinale identity={identity} />
     </>
   );
 }

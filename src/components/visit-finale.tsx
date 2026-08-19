@@ -1,4 +1,12 @@
-export function VisitFinale() {
+import type { ExhibitionIdentity } from "@/content/types";
+
+/**
+ * Come see the real thing.
+ *
+ * The exit. Its whole job is to move somebody from a screen to a footpath, so
+ * it says the address, says the instruction, and stops.
+ */
+export function VisitFinale({ identity }: { identity: ExhibitionIdentity }) {
   return (
     <footer id="visit" className="visit-finale">
       <div className="visit-finale__monkey" aria-hidden="true">
@@ -7,19 +15,17 @@ export function VisitFinale() {
       <p className="eyebrow">The exhibition ends. The shop does not.</p>
       <h2>Come see the real thing.</h2>
       <address>
-        <strong>8 Thompson Street</strong>
-        <span>Frankston, Victoria</span>
+        <strong>{identity.address.line}</strong>
+        <span>
+          {identity.address.suburb}, {identity.address.state}
+        </span>
       </address>
-      <a
-        href="https://www.google.com/maps/search/?api=1&query=8+Thompson+Street+Frankston+Victoria"
-        target="_blank"
-        rel="noreferrer"
-      >
+      <a href={identity.address.mapUrl} target="_blank" rel="noreferrer">
         Get directions <span aria-hidden="true">↗</span>
       </a>
       <p className="visit-finale__last-line">Look for the monkey.</p>
       <p className="visit-finale__credit">
-        A working digital exhibition scaffold · Historical details remain subject to archive review.
+        A working digital exhibition · Historical details remain subject to archive review.
       </p>
     </footer>
   );

@@ -1,22 +1,58 @@
-export function FrontWindow() {
+import type { ExhibitionIdentity } from "@/content/types";
+import { formatMornings, morningsBetween } from "@/lib/mornings";
+import { EvidencePill } from "./evidence-pill";
+
+/**
+ * The front window.
+ *
+ * A full-height shopfront after hours, with no navigation over the top of it —
+ * the nav is a sibling further down the document, so it only arrives once the
+ * visitor has walked past the glass.
+ */
+export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
+  const mornings = morningsBetween(identity.assumedFirstMorning.iso, new Date());
+
   return (
     <header id="top" className="front-window">
       <div className="front-window__grain" aria-hidden="true" />
-      <p className="front-window__location">Frankston, Victoria · Est. 1996</p>
+      <div className="front-window__bulbs" aria-hidden="true">
+        {Array.from({ length: 11 }, (_, index) => (
+          <span key={index} style={{ animationDelay: `${index * 0.18}s` }} />
+        ))}
+      </div>
+
+      <p className="front-window__location">
+        {identity.address.suburb}, {identity.address.state} · Est. 1996
+      </p>
+
       <div className="front-window__title">
-        <p>Thirty years behind the counter</p>
+        <p>{identity.subtitle}</p>
         <h1>
           The <span>Monkey</span> Shop
         </h1>
       </div>
+
       <p className="front-window__manifesto">
-        Some businesses trade in Frankston.
+        {identity.thesis[0]}
         <br />
-        Some become part of Frankston.
+        {identity.thesis[1]}
       </p>
+
       <a className="enter-link" href="#story">
-        Enter the exhibition <span aria-hidden="true">↓</span>
+        Enter <span aria-hidden="true">↓</span>
       </a>
+
+      <aside className="mornings-counter">
+        <p className="mornings-counter__number">
+          <span>{formatMornings(mornings)}</span> mornings
+        </p>
+        <p className="mornings-counter__caveat">
+          Counted from an assumed opening of {identity.assumedFirstMorning.iso}. The real
+          first morning has not been established, so this number is an illustration.
+        </p>
+        <EvidencePill evidence={identity.assumedFirstMorning.evidence} />
+      </aside>
+
       <div className="front-window__stamp" aria-label="A digital exhibition, working archive">
         <span>A digital exhibition</span>
         <strong>1996—2026</strong>
