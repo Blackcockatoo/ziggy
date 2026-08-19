@@ -351,16 +351,31 @@ h3 {
   color: var(--green);
 }
 
-.evidence-pill--research-lead {
+.evidence-pill--probable {
+  color: #3f6357;
+}
+
+.evidence-pill--needs-confirmation {
   color: #765517;
+}
+
+.evidence-pill--anecdotal {
+  color: #8a4a1e;
 }
 
 .evidence-pill--placeholder {
   color: #785a55;
 }
 
-.museum-section {
+.museum-section,
+.ziggy-room,
+.principals,
+.visit-finale,
+.research-key {
   scroll-margin-top: 4.25rem;
+}
+
+.museum-section {
   background: var(--paper);
 }
 
@@ -631,23 +646,6 @@ h3 {
   font-style: italic;
 }
 
-.lineage__arrow {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  right: -1.6rem;
-  display: grid;
-  width: 3.2rem;
-  height: 3.2rem;
-  place-items: center;
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  color: var(--ink);
-  background: var(--gold);
-  font-size: 1.5rem;
-  transform: translateY(-50%);
-}
-
 .ziggy-room {
   scroll-margin-top: 4.25rem;
   padding: clamp(5rem, 10vw, 10rem) max(1.25rem, calc((100vw - var(--max)) / 2));
@@ -862,72 +860,6 @@ h3 {
   font-size: 1.15rem;
 }
 
-.counter-scene__objects {
-  display: flex;
-  min-height: 12rem;
-  align-items: end;
-  justify-content: space-around;
-  border-bottom: 2rem solid #51311f;
-  margin-bottom: 4rem;
-}
-
-.counter-object {
-  display: grid;
-  place-items: center;
-  color: var(--paper-light);
-  background: var(--red-dark);
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.counter-object--paper {
-  width: 7rem;
-  height: 9rem;
-}
-
-.counter-object--key {
-  width: 9rem;
-  height: 2.5rem;
-  border-radius: 100px;
-  transform: rotate(-12deg);
-}
-
-.counter-object--ticket {
-  width: 4rem;
-  height: 7rem;
-  background: var(--gold);
-  color: var(--ink);
-  transform: rotate(5deg);
-}
-
-.counter-object--bell {
-  width: 5rem;
-  height: 4rem;
-  border-radius: 5rem 5rem 0 0;
-  background: #776127;
-}
-
-.story-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.story-card {
-  min-height: 20rem;
-  border: 1px solid var(--line);
-  padding: clamp(2rem, 4vw, 3.5rem);
-  background: var(--paper-light);
-}
-
-.story-card > p:not(.eyebrow, .story-card__speaker),
-.story-card blockquote {
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.2rem;
-  font-style: italic;
-}
-
 .people-grid {
   display: grid;
   gap: 5rem;
@@ -982,60 +914,6 @@ h3 {
 
 .community-item h3 {
   margin-bottom: 0.5rem;
-}
-
-.rob-closing {
-  display: grid;
-  min-height: 100svh;
-  grid-template-columns: 1.05fr 0.95fr;
-  color: var(--paper-light);
-  background: #0d0c0a;
-}
-
-.rob-closing__portrait {
-  display: grid;
-  min-height: 65svh;
-  place-items: center;
-  padding: 2rem;
-  color: rgba(251, 247, 237, 0.45);
-  background:
-    linear-gradient(to top, rgba(13, 12, 10, 0.84), transparent 50%),
-    radial-gradient(circle at 50% 35%, #403a31, #17140f 45%, #090807 75%);
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.rob-closing__copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(3rem, 8vw, 8rem);
-}
-
-.rob-closing__copy h2 {
-  font-size: clamp(3rem, 7vw, 7rem);
-}
-
-.rob-closing__copy > p:not(.eyebrow, .rob-closing__note) {
-  max-width: 33rem;
-  color: rgba(251, 247, 237, 0.72);
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.3rem;
-}
-
-.rob-closing__copy > strong {
-  color: var(--gold);
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-style: italic;
-  font-weight: 500;
-}
-
-.rob-closing__note {
-  margin-top: 3rem;
-  color: rgba(251, 247, 237, 0.4);
-  font-size: 0.68rem;
 }
 
 .visit-finale {
@@ -1125,6 +1003,933 @@ h3 {
   cursor: pointer;
 }
 
+/* ---------------------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Front window — bulbs and the mornings counter
+   ------------------------------------------------------------------------ */
+
+.front-window__bulbs {
+  position: absolute;
+  top: 1.1rem;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.6rem, 3vw, 1.6rem);
+}
+
+.front-window__bulbs span,
+.fortune-machine__bulbs span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: bulb 2.4s ease-in-out infinite;
+  box-shadow: 0 0 0.75rem rgba(214, 168, 75, 0.65);
+}
+
+@keyframes bulb {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.mornings-counter {
+  max-width: 26rem;
+  border-top: 1px solid rgba(239, 231, 211, 0.25);
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  padding-top: 1rem;
+}
+
+.mornings-counter__number {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  line-height: 1;
+}
+
+.mornings-counter__number span {
+  color: var(--gold);
+}
+
+.mornings-counter__caveat {
+  margin-bottom: 0.6rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  opacity: 0.62;
+}
+
+/* ---------------------------------------------------------------------------
+   Research key
+   ------------------------------------------------------------------------ */
+
+.research-key {
+  grid-template-columns: 1fr 1.15fr;
+  align-items: start;
+}
+
+.research-key__statement p {
+  max-width: 34rem;
+  margin-bottom: 0;
+}
+
+.research-key__legend {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.research-key__legend > div {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+
+.research-key__legend dt {
+  margin: 0;
+}
+
+.research-key__legend dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Timeline additions
+   ------------------------------------------------------------------------ */
+
+.timeline__chapter {
+  margin: 0.35rem 0 0;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.timeline__story {
+  margin: 0.75rem 0 1rem;
+  border-left: 2px solid var(--red);
+  padding-left: 1rem;
+}
+
+.timeline__story summary {
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.timeline__story p {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.timeline__note,
+.timeline__artefacts {
+  margin: 0.6rem 0 0;
+  font-size: 0.76rem;
+  opacity: 0.68;
+}
+
+.timeline__artefacts a {
+  font-variant-numeric: tabular-nums;
+}
+
+.source-links__retrieved {
+  opacity: 0.6;
+}
+
+.archive-media__credit {
+  display: block;
+  font-size: 0.68rem;
+  opacity: 0.66;
+}
+
+/* ---------------------------------------------------------------------------
+   Luck ledger
+   ------------------------------------------------------------------------ */
+
+.ledger__rows {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ledger__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ledger__cell p {
+  margin: 0;
+}
+
+.ledger__cell--story blockquote {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+}
+
+.ledger__cell--story cite {
+  display: block;
+  font-size: 0.72rem;
+  font-style: normal;
+  opacity: 0.7;
+}
+
+.ledger__row[data-complete="false"] {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 9px,
+    rgba(23, 20, 15, 0.045) 9px,
+    rgba(23, 20, 15, 0.045) 18px
+  );
+}
+
+.ledger-note ul {
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style: none;
+}
+
+.ledger-note li + li {
+  border-top: 1px solid var(--line);
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Monkey succession
+   ------------------------------------------------------------------------ */
+
+.succession {
+  margin-top: clamp(4rem, 8vw, 7rem);
+}
+
+.succession__title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: var(--font-sans), Arial, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.succession__line {
+  margin: 0.5rem 0 2.5rem;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 3.2rem);
+  letter-spacing: -0.03em;
+}
+
+.succession__line b {
+  font-weight: 400;
+  opacity: 0.45;
+}
+
+.lineage {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.lineage__entry[data-status="unconfirmed"] {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.lineage__entry h4 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.lineage__aliases {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.lineage__questions {
+  margin: 0.75rem 0 1rem;
+}
+
+.lineage__questions summary {
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lineage__questions ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Ask Ziggy — the cabinet
+   ------------------------------------------------------------------------ */
+
+.fortune-machine {
+  position: relative;
+}
+
+.fortune-machine__bulbs {
+  position: absolute;
+  top: 0.55rem;
+  right: 1rem;
+  left: 1rem;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fortune-machine__glass {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  border: 1px solid rgba(214, 168, 75, 0.35);
+  padding: 1rem;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.09), transparent 45%),
+    rgba(12, 10, 8, 0.65);
+  box-shadow: inset 0 0 4rem rgba(0, 0, 0, 0.7);
+}
+
+.fortune-machine__dial {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fortune-machine__dial li {
+  border: 1px solid rgba(214, 168, 75, 0.28);
+  padding: 0.2rem 0.45rem;
+  color: rgba(239, 231, 211, 0.45);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+.fortune-machine__dial li[data-active="true"] {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.fortune-machine__controls {
+  display: grid;
+  gap: 1rem;
+}
+
+.fortune-lever {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid #8a6a2a;
+  padding: 0.85rem 1.5rem;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e6c377, #b3873a);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform 0.12s ease;
+}
+
+.fortune-lever:hover {
+  transform: translateY(-1px);
+}
+
+.fortune-lever:active {
+  transform: translateY(2px);
+}
+
+.fortune-lever__knob {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #4a2f12;
+  box-shadow: inset 0 -2px 2px rgba(255, 255, 255, 0.35);
+}
+
+.question-chips__label {
+  margin: 0 0 0.5rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.question-chips ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fortune-slot {
+  position: relative;
+}
+
+.fortune-slot__lip {
+  height: 0.55rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  background: #0a0908;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(214, 168, 75, 0.3);
+}
+
+.fortune-machine[data-working="true"] .fortune-slot__output {
+  animation: ticket-out 0.7s ease-out;
+}
+
+@keyframes ticket-out {
+  from {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fortune-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.fortune-actions button {
+  border: 1px solid rgba(214, 168, 75, 0.5);
+  padding: 0.6rem 1rem;
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fortune-actions button:hover {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+/* The ticket itself */
+
+.fortune-card__says {
+  margin: 0.75rem 0 0.35rem;
+}
+
+.fortune-card__answer {
+  display: block;
+}
+
+.fortune-card__kicker {
+  margin: 0.4rem 0 1rem;
+}
+
+.fortune-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  border-top: 1px dashed rgba(23, 20, 15, 0.35);
+  margin: 0;
+  padding-top: 0.75rem;
+}
+
+.fortune-card__meta dt {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.fortune-card__meta dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+}
+
+.fortune-card__serial {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.fortune-card__smallprint {
+  margin: 0.85rem 0 0;
+  font-size: 0.55rem;
+  letter-spacing: 0.05em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.ziggy-noscript {
+  width: min(100%, 46rem);
+  border: 1px solid rgba(214, 168, 75, 0.4);
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+}
+
+.ziggy-noscript ul {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.ziggy-noscript li {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   The counter
+   ------------------------------------------------------------------------ */
+
+.counter-scene {
+  position: relative;
+}
+
+.counter-scene__surface {
+  height: 1.75rem;
+  background: linear-gradient(180deg, #6b4225, #3d2413);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.counter-objects {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  align-items: start;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.counter-object {
+  height: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper-light);
+}
+
+.counter-object > summary {
+  display: flex;
+  min-width: 6rem;
+  min-height: 6rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem;
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+}
+
+.counter-object > summary::-webkit-details-marker {
+  display: none;
+}
+
+.counter-object[open] > summary {
+  color: var(--paper-light);
+  background: var(--red-dark);
+}
+
+.counter-object__glyph {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.counter-object__label {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.counter-object__panel {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem;
+}
+
+.counter-object__hint {
+  max-width: 40rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.1rem;
+}
+
+/*
+ * The grid items are the list items, not the <details> inside them, so the
+ * row-spanning rule has to sit on the parent.
+ */
+.counter-objects > li:has(> .counter-object[open]) {
+  grid-column: 1 / -1;
+}
+
+.memory-list {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  list-style: none;
+}
+
+.memory {
+  border-left: 2px solid var(--red);
+  padding-left: 1rem;
+}
+
+.memory[data-recorded="false"] {
+  border-left-style: dotted;
+  border-left-color: rgba(23, 20, 15, 0.35);
+}
+
+.memory blockquote {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.memory__prompt {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  opacity: 0.82;
+}
+
+.memory__attribution {
+  margin: 0 0 0.5rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.counter-loose {
+  border-top: 1px solid var(--line);
+  margin-top: 3rem;
+  padding-top: 2rem;
+}
+
+.counter-loose h3 {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   The gang
+   ------------------------------------------------------------------------ */
+
+.person-card__nickname {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.person-card__years,
+.person-card__whereabouts {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.person-card__prompt {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.person-card__labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.permission-pill {
+  display: inline-flex;
+  width: max-content;
+  border: 1px dashed currentColor;
+  border-radius: 100px;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+
+.permission-pill--granted {
+  border-style: solid;
+}
+
+.people-grid__note {
+  max-width: 40rem;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.community-item__copy h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   The object archive
+   ------------------------------------------------------------------------ */
+
+.archive-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  border-block: 1px solid var(--line);
+  margin: 0 0 3.5rem;
+  padding: 1.25rem 0;
+}
+
+.archive-summary dt {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.archive-summary dd {
+  margin: 0.25rem 0 0;
+  color: var(--red);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2.4rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.archive-group {
+  margin-bottom: 4rem;
+}
+
+.archive-group__title {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.artefact-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.artefact-card {
+  display: grid;
+  height: 100%;
+  align-content: start;
+  border: 1px solid var(--line);
+  background: var(--paper-light);
+}
+
+.artefact-card[data-holding="lost"] {
+  border-style: dashed;
+  background: transparent;
+}
+
+.artefact-card .archive-placeholder,
+.artefact-card .archive-media {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  margin: 0;
+}
+
+.artefact-card__copy {
+  padding: 1.25rem;
+}
+
+.artefact-card__catalogue {
+  margin: 0 0 0.35rem;
+  color: var(--red);
+  font-size: 0.62rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+
+.artefact-card h4 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.artefact-card__fields {
+  display: grid;
+  gap: 0.3rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  margin: 0 0 1rem;
+  border-block: 1px solid var(--line);
+  padding: 0.75rem 0;
+}
+
+.artefact-card__fields dt {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.artefact-card__fields dd {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+}
+
+.artefact-card__description {
+  font-size: 0.9rem;
+}
+
+.artefact-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0;
+  margin: 0 0 0.85rem;
+  list-style: none;
+}
+
+.artefact-card__tags li {
+  border: 1px solid var(--line);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   Rob + Carla
+   ------------------------------------------------------------------------ */
+
+.principals {
+  color: var(--paper-light);
+  background: #0d0c0a;
+}
+
+.principals__inner {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 10rem) 1.25rem;
+}
+
+.principals h2 {
+  max-width: 20ch;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.principals__grid {
+  display: grid;
+  gap: clamp(2rem, 6vw, 5rem);
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.principal h3 {
+  margin: 1.5rem 0 0.35rem;
+}
+
+.principal__role {
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.principal__prompt,
+.principal > p {
+  max-width: 34rem;
+  color: rgba(251, 247, 237, 0.7);
+  font-size: 0.95rem;
+}
+
+.principals__close {
+  max-width: 42rem;
+  margin-top: clamp(3rem, 7vw, 6rem);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+}
+
+.principals__last-line {
+  display: block;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.04em;
+}
+
+.principals__note {
+  margin-top: 2rem;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------------ */
+
 @media (max-width: 900px) {
   .site-nav__brand span:last-child {
     display: none;
@@ -1132,13 +1937,17 @@ h3 {
 
   .research-key,
   .timeline__entry,
-  .lineage,
-  .rob-closing {
+  .lineage {
     grid-template-columns: 1fr;
   }
 
   .research-key {
     padding-inline: 1.25rem;
+  }
+
+  .research-key__legend > div {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
   }
 
   .timeline__entry {
@@ -1153,13 +1962,6 @@ h3 {
     grid-template-columns: minmax(10rem, 0.7fr) 1fr;
   }
 
-  .lineage__arrow {
-    top: auto;
-    right: 50%;
-    bottom: -1.6rem;
-    transform: translateX(50%) rotate(90deg);
-  }
-
   .ledger__head {
     display: none;
   }
@@ -1168,7 +1970,7 @@ h3 {
     grid-template-columns: 0.3fr repeat(2, 1fr);
   }
 
-  .ledger__row > p,
+  .ledger__cell--story,
   .ledger__row > div:last-child {
     grid-column: 2 / -1;
   }
@@ -1181,10 +1983,6 @@ h3 {
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-
-  .rob-closing__portrait {
-    min-height: 70svh;
-  }
 }
 
 @media (max-width: 680px) {
@@ -1193,8 +1991,8 @@ h3 {
   }
 
   .front-window {
-    min-height: calc(100svh - 4.25rem);
-    padding: 2rem 1.25rem;
+    min-height: 100svh;
+    padding: 3.5rem 1.25rem 2rem;
   }
 
   .front-window__stamp {
@@ -1211,7 +2009,6 @@ h3 {
   }
 
   .specimen-grid,
-  .story-grid,
   .person-card,
   .lineage__entry,
   .community-item,
@@ -1231,12 +2028,7 @@ h3 {
     grid-template-columns: 3rem 1fr;
   }
 
-  .ledger__row > div,
-  .ledger__row > p {
-    grid-column: 2;
-  }
-
-  .ledger__row > div:last-child {
+  .ledger__row > div {
     grid-column: 2;
   }
 
@@ -1256,8 +2048,18 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .fortune-form button {
+  .fortune-lever {
     min-height: 3rem;
+  }
+
+  .counter-objects {
+    gap: 0.5rem;
+  }
+
+  .counter-object > summary {
+    min-width: 4.5rem;
+    min-height: 4.5rem;
+    padding: 0.6rem;
   }
 
   .person-card:nth-child(even) .archive-placeholder,
@@ -1269,7 +2071,15 @@ h3 {
   .community-item {
     gap: 0.75rem;
   }
+
+  .archive-summary {
+    gap: 1.5rem;
+  }
 }
+
+/* ---------------------------------------------------------------------------
+   Motion and print
+   ------------------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1286,16 +2096,40 @@ h3 {
   .site-nav,
   .skip-link,
   .question-chips,
-  .fortune-form {
+  .fortune-form,
+  .fortune-actions,
+  .fortune-machine__bulbs,
+  .front-window__bulbs {
     display: none !important;
   }
 
   .front-window,
   .museum-section,
   .ziggy-room,
-  .rob-closing,
+  .principals,
   .visit-finale {
     min-height: 0;
     break-inside: avoid;
+  }
+
+  /*
+   * "Print card" isolates the fortune ticket. Visibility (rather than display)
+   * keeps the card's ancestors in the box tree, so the card can still be
+   * positioned on the page while everything around it stays blank.
+   */
+  body[data-printing="fortune"] * {
+    visibility: hidden;
+  }
+
+  body[data-printing="fortune"] .fortune-card,
+  body[data-printing="fortune"] .fortune-card * {
+    visibility: visible;
+  }
+
+  body[data-printing="fortune"] .fortune-card {
+    position: fixed;
+    top: 1.5cm;
+    left: 1.5cm;
+    width: 11cm;
   }
 }
