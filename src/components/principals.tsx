@@ -20,7 +20,7 @@ export function Principals({
     <section id="rob-and-carla" className="principals" aria-labelledby="principals-title">
       <div className="principals__inner">
         <p className="section-heading__index" aria-hidden="true">
-          09
+          10
         </p>
         <h2 id="principals-title">Someone still has to unlock the door.</h2>
 

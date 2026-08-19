@@ -54,6 +54,13 @@ export const sources: Source[] = [
     note: "Reported to exist around 2015. Masthead, date and page not yet confirmed; clipping not yet digitised.",
   },
   {
+    id: "exhibition-artwork",
+    label: "Artwork produced for the thirtieth-anniversary exhibition",
+    publisher: "B$S for The Monkey Shop",
+    kind: "social",
+    note: "Interpretive material, not archive material. Useful as a record of what the shop looks like and what it says, but it cannot evidence a date, a person or an event.",
+  },
+  {
     id: "shop-social",
     label: "The shop's own social media posts",
     publisher: "Cignall Frankston",

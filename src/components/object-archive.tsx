@@ -47,7 +47,7 @@ export function ObjectArchive({
   return (
     <MuseumSection
       id="archive"
-      index="08"
+      index="09"
       eyebrow="Accession register"
       title="The Object Archive"
       intro="Thirty years of ordinary objects, catalogued as if they mattered — because in about a decade they will."

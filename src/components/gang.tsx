@@ -16,7 +16,7 @@ export function Gang({ staff, sources }: { staff: PersonRecord[]; sources: Sourc
   return (
     <MuseumSection
       id="gang"
-      index="06"
+      index="07"
       eyebrow="Not an org chart"
       title="The Gang"
       intro="Everyone who ever worked a shift here: first jobs, long service, lockdown mornings and the people who kept the place human."

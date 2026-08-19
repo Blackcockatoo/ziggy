@@ -647,6 +647,9 @@ h3 {
 }
 
 .ziggy-room {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   scroll-margin-top: 4.25rem;
   padding: clamp(5rem, 10vw, 10rem) max(1.25rem, calc((100vw - var(--max)) / 2));
   color: var(--paper-light);
@@ -655,11 +658,56 @@ h3 {
     repeating-linear-gradient(90deg, #4a291d 0, #4a291d 24px, #392015 25px, #392015 48px);
 }
 
+/*
+ * Ambient only. It must never compete with the cabinet, so it is heavily
+ * knocked back and veiled — the room should read as atmosphere, not as a
+ * second picture of Ziggy above the real one.
+ */
+.ziggy-room__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ziggy-room__ambient::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: radial-gradient(85% 60% at 50% 40%, rgba(23, 16, 10, 0.55), rgba(16, 11, 7, 0.94) 78%);
+}
+
+.ziggy-room__ambient img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 26%;
+  opacity: 0.5;
+  filter: saturate(0.7);
+}
+
 .ziggy-room__intro {
   display: grid;
-  grid-template-columns: minmax(4rem, 0.28fr) 1fr;
-  gap: 1rem;
-  margin-bottom: 5rem;
+  grid-template-columns: minmax(4rem, 0.28fr) 1fr minmax(10rem, 0.5fr);
+  gap: 1rem clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-bottom: 4rem;
+}
+
+.ziggy-room__plate {
+  margin: 0;
+}
+
+.ziggy-room__plate img {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(184, 141, 71, 0.4);
+}
+
+.ziggy-room__plate figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.68rem;
+  opacity: 0.6;
 }
 
 .ziggy-room__intro h2 {
@@ -668,196 +716,6 @@ h3 {
 
 .ziggy-room__intro > div > p:last-child {
   max-width: 40rem;
-}
-
-.fortune-machine {
-  max-width: 54rem;
-  margin: 0 auto;
-  border: 0.5rem solid #2b180f;
-  border-radius: 2rem 2rem 0.5rem 0.5rem;
-  padding: 1rem;
-  background: linear-gradient(90deg, #6f3c24, #422317 44%, #76432b);
-  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.5), inset 0 0 0 2px #a16e43;
-}
-
-.fortune-machine__top {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  border: 1px solid #7e5d2a;
-  border-radius: 1rem 1rem 0 0;
-  padding: 1.25rem;
-  color: var(--gold);
-  background: #1a0f0a;
-  font-size: 0.6rem;
-  letter-spacing: 0.14em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.fortune-machine__top strong {
-  color: var(--red);
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(2.8rem, 8vw, 5rem);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 1;
-}
-
-.fortune-machine__cabinet {
-  border: 1px solid #9a7042;
-  border-top: 0;
-  padding: clamp(1.25rem, 4vw, 3rem);
-  background: #2c1910;
-}
-
-.fortune-machine__portrait {
-  display: grid;
-  min-height: 16rem;
-  place-content: center;
-  border: 0.55rem ridge #8b662e;
-  border-radius: 50% 50% 1rem 1rem;
-  color: var(--gold);
-  background:
-    radial-gradient(circle at center 36%, #463020 0 18%, transparent 19%),
-    radial-gradient(circle at center, #1d120c 0 35%, #090604 65%);
-  text-align: center;
-}
-
-.fortune-machine__eyes {
-  font-size: 1.5rem;
-  letter-spacing: 0.8rem;
-}
-
-.fortune-machine__portrait-label {
-  margin-top: 2rem;
-  font-size: 0.58rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.fortune-form {
-  margin-top: 1.5rem;
-}
-
-.fortune-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--gold);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.fortune-form__controls {
-  display: grid;
-  grid-template-columns: 1fr auto;
-}
-
-.fortune-form input {
-  min-width: 0;
-  border: 2px solid #a17945;
-  border-radius: 0;
-  padding: 0.95rem;
-  color: var(--paper-light);
-  background: #130c08;
-}
-
-.fortune-form button {
-  border: 2px solid var(--gold);
-  padding: 0 1.5rem;
-  color: var(--ink);
-  background: var(--gold);
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.question-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.8rem;
-}
-
-.question-chips button {
-  border: 1px solid rgba(214, 168, 75, 0.5);
-  border-radius: 99px;
-  padding: 0.35rem 0.65rem;
-  color: rgba(251, 247, 237, 0.72);
-  background: transparent;
-  font-size: 0.68rem;
-  cursor: pointer;
-}
-
-.fortune-slot {
-  display: grid;
-  min-height: 19rem;
-  place-items: center;
-  margin-top: 2rem;
-  border-top: 0.75rem solid #120b07;
-  border-right: 1rem solid transparent;
-  border-left: 1rem solid transparent;
-  padding: 1.5rem 1rem 0;
-}
-
-.fortune-slot__empty {
-  color: rgba(251, 247, 237, 0.46);
-  font-family: var(--font-serif), Georgia, serif;
-  font-style: italic;
-}
-
-.fortune-card {
-  position: relative;
-  width: min(100%, 31rem);
-  padding: 2rem;
-  color: #30170e;
-  background: #ead7ad;
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
-  text-align: center;
-}
-
-.fortune-card::before {
-  position: absolute;
-  inset: 0.55rem;
-  border: 1px solid #8d2c21;
-  content: "";
-  pointer-events: none;
-}
-
-.fortune-card__brand,
-.fortune-card h3,
-.fortune-card > span {
-  font-size: 0.58rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.fortune-card__question {
-  margin: 1rem auto;
-  font-family: var(--font-serif), Georgia, serif;
-  font-style: italic;
-}
-
-.fortune-card h3 {
-  margin: 1.2rem 0 0.35rem;
-  color: var(--red-dark);
-}
-
-.fortune-card > strong {
-  display: block;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1;
-}
-
-.fortune-card > p:not(.fortune-card__brand, .fortune-card__question) {
-  margin: 1rem auto;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 1.15rem;
 }
 
 .people-grid {
@@ -926,18 +784,6 @@ h3 {
   color: var(--ink);
   background: var(--gold);
   text-align: center;
-}
-
-.visit-finale__monkey {
-  display: grid;
-  width: 7rem;
-  height: 7rem;
-  place-items: center;
-  border: 3px solid var(--ink);
-  border-radius: 50%;
-  margin-bottom: 2rem;
-  font-size: 1.25rem;
-  letter-spacing: 0.5rem;
 }
 
 .visit-finale h2 {
@@ -1033,8 +879,7 @@ h3 {
   gap: clamp(0.6rem, 3vw, 1.6rem);
 }
 
-.front-window__bulbs span,
-.fortune-machine__bulbs span {
+.front-window__bulbs span {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
@@ -1301,213 +1146,7 @@ h3 {
    Ask Ziggy — the cabinet
    ------------------------------------------------------------------------ */
 
-.fortune-machine {
-  position: relative;
-}
-
-.fortune-machine__bulbs {
-  position: absolute;
-  top: 0.55rem;
-  right: 1rem;
-  left: 1rem;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-}
-
-.fortune-machine__glass {
-  position: relative;
-  display: grid;
-  gap: 1rem;
-  border: 1px solid rgba(214, 168, 75, 0.35);
-  padding: 1rem;
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.09), transparent 45%),
-    rgba(12, 10, 8, 0.65);
-  box-shadow: inset 0 0 4rem rgba(0, 0, 0, 0.7);
-}
-
-.fortune-machine__dial {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.fortune-machine__dial li {
-  border: 1px solid rgba(214, 168, 75, 0.28);
-  padding: 0.2rem 0.45rem;
-  color: rgba(239, 231, 211, 0.45);
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.25s ease, background 0.25s ease;
-}
-
-.fortune-machine__dial li[data-active="true"] {
-  color: var(--ink);
-  background: var(--gold);
-  border-color: var(--gold);
-}
-
-.fortune-machine__controls {
-  display: grid;
-  gap: 1rem;
-}
-
-.fortune-lever {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  border: 1px solid #8a6a2a;
-  padding: 0.85rem 1.5rem;
-  color: var(--ink);
-  background: linear-gradient(180deg, #e6c377, #b3873a);
-  cursor: pointer;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transition: transform 0.12s ease;
-}
-
-.fortune-lever:hover {
-  transform: translateY(-1px);
-}
-
-.fortune-lever:active {
-  transform: translateY(2px);
-}
-
-.fortune-lever__knob {
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  background: #4a2f12;
-  box-shadow: inset 0 -2px 2px rgba(255, 255, 255, 0.35);
-}
-
-.question-chips__label {
-  margin: 0 0 0.5rem;
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  opacity: 0.6;
-  text-transform: uppercase;
-}
-
-.question-chips ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.fortune-slot {
-  position: relative;
-}
-
-.fortune-slot__lip {
-  height: 0.55rem;
-  border-radius: 100px;
-  margin-bottom: 1.5rem;
-  background: #0a0908;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(214, 168, 75, 0.3);
-}
-
-.fortune-machine[data-working="true"] .fortune-slot__output {
-  animation: ticket-out 0.7s ease-out;
-}
-
-@keyframes ticket-out {
-  from {
-    opacity: 0;
-    transform: translateY(-1.5rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fortune-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1.25rem;
-}
-
-.fortune-actions button {
-  border: 1px solid rgba(214, 168, 75, 0.5);
-  padding: 0.6rem 1rem;
-  color: var(--gold);
-  background: transparent;
-  cursor: pointer;
-  font-size: 0.64rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.fortune-actions button:hover {
-  color: var(--ink);
-  background: var(--gold);
-}
-
 /* The ticket itself */
-
-.fortune-card__says {
-  margin: 0.75rem 0 0.35rem;
-}
-
-.fortune-card__answer {
-  display: block;
-}
-
-.fortune-card__kicker {
-  margin: 0.4rem 0 1rem;
-}
-
-.fortune-card__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  border-top: 1px dashed rgba(23, 20, 15, 0.35);
-  margin: 0;
-  padding-top: 0.75rem;
-}
-
-.fortune-card__meta dt {
-  font-size: 0.5rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  opacity: 0.55;
-  text-transform: uppercase;
-}
-
-.fortune-card__meta dd {
-  margin: 0.15rem 0 0;
-  font-size: 0.78rem;
-}
-
-.fortune-card__serial {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
-}
-
-.fortune-card__smallprint {
-  margin: 0.85rem 0 0;
-  font-size: 0.55rem;
-  letter-spacing: 0.05em;
-  opacity: 0.55;
-  text-transform: uppercase;
-}
 
 .ziggy-noscript {
   width: min(100%, 46rem);
@@ -2032,26 +1671,6 @@ h3 {
     grid-column: 2;
   }
 
-  .fortune-machine {
-    padding: 0.5rem;
-  }
-
-  .fortune-machine__top span {
-    display: none;
-  }
-
-  .fortune-machine__top {
-    grid-template-columns: 1fr;
-  }
-
-  .fortune-form__controls {
-    grid-template-columns: 1fr;
-  }
-
-  .fortune-lever {
-    min-height: 3rem;
-  }
-
   .counter-objects {
     gap: 0.5rem;
   }
@@ -2092,6 +1711,1082 @@ h3 {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Ask Ziggy — the cabinet
+   ---------------------------------------------------------------------------
+   One convincing object: black lacquer, aged brass, warm bulbs, glass, a tray
+   and a lever. Everything interactive inside it is real HTML; the artwork sits
+   behind the controls, never in place of them.
+   ------------------------------------------------------------------------ */
+
+.fortune-machine {
+  position: relative;
+  max-width: 56rem;
+  margin: 0 auto;
+  border: 0.5rem solid #17110c;
+  border-radius: 1.6rem 1.6rem 0.4rem 0.4rem;
+  padding: 0.9rem;
+  background: linear-gradient(168deg, #3a2415, #1b1009 46%, #35200f);
+  box-shadow:
+    0 2rem 4rem rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px rgba(184, 141, 71, 0.55);
+}
+
+.fortune-machine__bulbs {
+  position: absolute;
+  top: 0.5rem;
+  right: 1.4rem;
+  left: 1.4rem;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fortune-machine__bulbs span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(214, 168, 75, 0.22);
+  box-shadow: none;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* Idle: a slow, low pulse. The machine is on but not paying attention. */
+.fortune-machine[data-machine-state="idle"] .fortune-machine__bulbs span {
+  background: rgba(214, 168, 75, 0.5);
+  animation: bulb 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--bulb) * 0.16s);
+}
+
+/* Waking: bulbs snap on one at a time, left to right. */
+.fortune-machine[data-machine-state="waking"] .fortune-machine__bulbs span {
+  animation: bulb-snap 0.6s steps(1, end) forwards;
+  animation-delay: calc(var(--bulb) * 0.04s);
+}
+
+.fortune-machine[data-machine-state="thinking"] .fortune-machine__bulbs span,
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__bulbs span {
+  background: var(--gold);
+  box-shadow: 0 0 0.8rem rgba(214, 168, 75, 0.7);
+}
+
+/* Issuing: the lights dip as the mechanism draws current, then come back. */
+.fortune-machine[data-machine-state="issuing"] .fortune-machine__bulbs span {
+  animation: bulb-dip 0.48s ease-in-out;
+  background: var(--gold);
+  box-shadow: 0 0 1.1rem rgba(214, 168, 75, 0.9);
+}
+
+@keyframes bulb-snap {
+  from {
+    background: rgba(214, 168, 75, 0.18);
+    box-shadow: none;
+  }
+  to {
+    background: var(--gold);
+    box-shadow: 0 0 0.8rem rgba(214, 168, 75, 0.7);
+  }
+}
+
+@keyframes bulb-dip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 0.1;
+  }
+  46% {
+    opacity: 1;
+  }
+}
+
+.fortune-machine__top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  border: 1px solid rgba(184, 141, 71, 0.5);
+  border-radius: 1.1rem 1.1rem 0 0;
+  padding: 1.5rem 1.25rem 1rem;
+  color: var(--gold);
+  background: #100a06;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fortune-machine__top strong {
+  color: var(--paper-light);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-shadow: 0 0 2rem rgba(214, 168, 75, 0.45);
+}
+
+.fortune-machine__cabinet {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: 0.92fr 1fr;
+  grid-template-areas:
+    "glass controls"
+    "glass tray";
+  align-content: start;
+  border: 1px solid rgba(184, 141, 71, 0.45);
+  border-top: 0;
+  padding: 1.1rem;
+  background: #0d0906;
+}
+
+.fortune-machine__glass {
+  grid-area: glass;
+}
+
+.fortune-machine__controls {
+  grid-area: controls;
+}
+
+.fortune-tray {
+  grid-area: tray;
+}
+
+/* --- the glass ---------------------------------------------------------- */
+
+.fortune-machine__glass {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  border: 1px solid rgba(184, 141, 71, 0.4);
+  padding: 0.9rem;
+  background: radial-gradient(120% 90% at 50% 20%, #2a1a0c, #080604 72%);
+  box-shadow: inset 0 0 4rem rgba(0, 0, 0, 0.85);
+}
+
+.fortune-machine__scene {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  place-items: end center;
+  border: 1px solid rgba(184, 141, 71, 0.3);
+  background: #060403;
+  /* Reserve the frame before the artwork arrives: no layout shift. */
+  aspect-ratio: 3 / 4;
+}
+
+/* The lit interior of the cabinet, built in CSS so it can react to state. */
+.fortune-machine__interior {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(72% 52% at 50% 34%, rgba(214, 168, 75, 0.5), transparent 70%),
+    repeating-linear-gradient(90deg, #2a1a0e 0 14px, #23150b 14px 28px);
+  transition: opacity 0.5s ease;
+  opacity: 0.45;
+}
+
+.fortune-machine__shelf {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 8%;
+  background: linear-gradient(180deg, #6b4225, #2e1b0e);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/*
+ * `contain`, never `cover`: Ziggy is the subject, and cropping him into an
+ * abstract at narrow widths is exactly the failure this layout exists to avoid.
+ */
+.fortune-machine__ziggy {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: auto;
+  max-width: 92%;
+  height: 94%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: brightness(0.5) saturate(0.85);
+  transition:
+    filter 0.5s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: bottom center;
+}
+
+.fortune-machine[data-machine-state="waking"] .fortune-machine__ziggy {
+  filter: brightness(0.78) saturate(0.95);
+  transform: scale(1.01);
+}
+
+.fortune-machine[data-machine-state="waking"] .fortune-machine__interior {
+  opacity: 0.7;
+}
+
+.fortune-machine[data-machine-state="thinking"] .fortune-machine__interior,
+.fortune-machine[data-machine-state="issuing"] .fortune-machine__interior,
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__interior {
+  opacity: 1;
+}
+
+.fortune-machine[data-machine-state="thinking"] .fortune-machine__ziggy {
+  filter: brightness(0.9);
+  transform: scale(1.025);
+}
+
+.fortune-machine[data-machine-state="issuing"] .fortune-machine__ziggy {
+  filter: brightness(1.02);
+  transform: scale(1.045);
+}
+
+/* Revealed: he has leaned in and is looking straight at you. */
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__ziggy {
+  filter: brightness(1) saturate(1);
+  /* He has come forward and is looking straight at you. */
+  transform: scale(1.06);
+}
+
+.fortune-machine__glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    118deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.03) 22%,
+    transparent 42%
+  );
+}
+
+.fortune-machine__plate {
+  margin: 0;
+  border: 1px solid rgba(184, 141, 71, 0.45);
+  padding: 0.55rem;
+  color: var(--gold);
+  background: #0a0705;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__plate {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+.fortune-machine__dial {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fortune-machine__dial li {
+  border: 1px solid rgba(214, 168, 75, 0.25);
+  padding: 0.2rem 0.45rem;
+  color: rgba(239, 231, 211, 0.42);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.fortune-machine__dial li[data-active="true"] {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+/* --- controls ----------------------------------------------------------- */
+
+.fortune-machine__controls {
+  display: grid;
+  gap: 1rem;
+}
+
+.fortune-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fortune-form__controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+
+.fortune-form input {
+  min-height: 3rem;
+  border: 1px solid rgba(184, 141, 71, 0.55);
+  padding: 0 0.9rem;
+  color: var(--paper-light);
+  background: #0a0705;
+  font-size: 1rem;
+}
+
+.fortune-form input::placeholder {
+  color: rgba(239, 231, 211, 0.4);
+}
+
+.fortune-lever {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid #8a6a2a;
+  padding: 0 1.5rem;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e6c377, #b3873a);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+
+.fortune-lever:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.fortune-lever:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.fortune-lever:disabled {
+  cursor: progress;
+  filter: saturate(0.5) brightness(0.8);
+}
+
+.fortune-lever__knob {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #4a2f12;
+  box-shadow: inset 0 -2px 2px rgba(255, 255, 255, 0.35);
+  transition: transform 0.18s ease;
+}
+
+.fortune-machine[data-machine-state="issuing"] .fortune-lever__knob {
+  transform: translateY(0.35rem);
+}
+
+.question-chips__label {
+  margin: 0 0 0.5rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.question-chips ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.question-chips button {
+  border: 1px solid rgba(239, 231, 211, 0.28);
+  border-radius: 100px;
+  padding: 0.45rem 0.8rem;
+  color: var(--paper-light);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.question-chips button:hover:not(:disabled) {
+  color: var(--ink);
+  background: var(--paper-light);
+}
+
+.question-chips button:disabled {
+  cursor: progress;
+  opacity: 0.45;
+}
+
+/* --- the tray ------------------------------------------------------------
+   The statue holds a silver tray, so the fortune is delivered onto one rather
+   than appearing under a form.
+   ------------------------------------------------------------------------ */
+
+.fortune-tray {
+  position: relative;
+  border: 1px solid rgba(184, 141, 71, 0.35);
+  padding: 0.9rem;
+  background: #0a0705;
+}
+
+.fortune-tray__rim {
+  height: 0.5rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+  background: linear-gradient(180deg, #0a0908 0%, #050403 60%, #23180e 100%);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.95),
+    0 1px 0 rgba(214, 168, 75, 0.35);
+}
+
+.fortune-tray__surface {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  /* Brushed metal, the same silver as the real tray. */
+  border-radius: 46% / 12%;
+  padding: 1.6rem 1.2rem;
+  background:
+    linear-gradient(101deg, #ffffff14 0%, transparent 32%),
+    linear-gradient(180deg, #cfcfcd, #8f9092 46%, #b9bab8);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.35),
+    inset 0 -1rem 2rem rgba(0, 0, 0, 0.3),
+    0 1rem 2rem rgba(0, 0, 0, 0.45);
+}
+
+.fortune-tray__empty,
+.fortune-tray__status {
+  max-width: 20rem;
+  margin: 0;
+  color: #3a3a38;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.fortune-tray__status {
+  color: #241a10;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.fortune-machine[data-machine-state="issuing"] .fortune-tray__surface {
+  animation: tray-shunt 0.48s ease-out;
+}
+
+.fortune-machine[data-machine-state="revealed"] .fortune-card {
+  animation: ticket-out 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tray-shunt {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(0.3rem);
+  }
+}
+
+@keyframes ticket-out {
+  from {
+    opacity: 0;
+    transform: translateY(-1.4rem) rotate(-1.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-0.8deg);
+  }
+}
+
+.fortune-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.fortune-actions button {
+  border: 1px solid rgba(214, 168, 75, 0.55);
+  padding: 0.6rem 1rem;
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fortune-actions button:hover {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+/* --- the ticket ----------------------------------------------------------
+   Carries its own light palette so it reads as paper on the dark cabinet and
+   still prints correctly on white.
+   ------------------------------------------------------------------------ */
+
+.fortune-card {
+  position: relative;
+  width: min(100%, 24rem);
+  padding: 1.25rem 1.35rem 1.1rem;
+  color: #17140f;
+  background: #f6efdd;
+  box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.35);
+  transform: rotate(-0.8deg);
+}
+
+.fortune-card__rule {
+  position: absolute;
+  inset: 0.4rem;
+  border: 1px solid rgba(23, 20, 15, 0.45);
+  outline: 1px solid rgba(23, 20, 15, 0.18);
+  outline-offset: 2px;
+  pointer-events: none;
+}
+
+.fortune-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid rgba(23, 20, 15, 0.3);
+  padding-bottom: 0.6rem;
+}
+
+.fortune-card__seal {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  flex: none;
+}
+
+.fortune-card__brand {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.fortune-card__sub {
+  margin: 0.1rem 0 0;
+  font-size: 0.55rem;
+  letter-spacing: 0.11em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.fortune-card__question {
+  margin: 0.85rem 0 0.6rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.92rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.fortune-card__says {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.fortune-card__answer {
+  display: block;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.fortune-card__kicker {
+  margin: 0.5rem 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.fortune-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.25rem;
+  border-top: 1px dashed rgba(23, 20, 15, 0.4);
+  margin: 0;
+  padding-top: 0.7rem;
+}
+
+.fortune-card__meta dt {
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.fortune-card__meta dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.74rem;
+}
+
+.fortune-card__serial {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.fortune-card__smallprint {
+  margin: 0.7rem 0 0;
+  font-size: 0.46rem;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.ziggy-noscript {
+  width: min(100%, 46rem);
+  border: 1px solid rgba(214, 168, 75, 0.4);
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+}
+
+.ziggy-noscript ul {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.ziggy-noscript li {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Ziggy Says — the board
+   ------------------------------------------------------------------------ */
+
+.board-room {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(16rem, 0.85fr) 1fr;
+  align-items: center;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.board-room__scene {
+  margin: 0;
+}
+
+.board-room__scene img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+.board-room__scene figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.72rem;
+  opacity: 0.65;
+}
+
+.board-room__mark {
+  margin: 0 0 1rem;
+}
+
+.board-room__mark img {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+}
+
+.board-room__reference {
+  max-width: 15rem;
+  margin: 1.75rem 0 0;
+}
+
+.board-room__reference img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+.board-room__reference figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.68rem;
+  font-style: normal;
+  opacity: 0.6;
+}
+
+.board-room__copy p {
+  max-width: 34rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.05rem, 1.9vw, 1.35rem);
+}
+
+.board-room__aside {
+  font-size: 0.9rem !important;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.board-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.board__frame {
+  position: relative;
+}
+
+.board__surface {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/*
+ * The board artwork is a frame. Every word on it is real text placed over the
+ * top, so it stays selectable, translatable and legible to a screen reader.
+ */
+.board__written {
+  position: absolute;
+  top: 26%;
+  right: 9%;
+  bottom: 10%;
+  left: 9%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.board__eyebrow {
+  margin: 0;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  opacity: 0;
+  text-transform: uppercase;
+}
+
+.board__line {
+  margin: 0;
+  color: #1b1b1b;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.board__empty {
+  margin: 0;
+  color: rgba(27, 27, 27, 0.3);
+  font-size: 2rem;
+}
+
+.board[data-written="false"] .board__frame {
+  opacity: 0.72;
+}
+
+.board__meta {
+  display: grid;
+  justify-items: start;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+}
+
+.board__date,
+.board__flourish,
+.board__note {
+  margin: 0;
+  font-size: 0.74rem;
+  opacity: 0.7;
+}
+
+.board__flourish {
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------------------
+   The bridge from the board to the machine
+   ------------------------------------------------------------------------ */
+
+.bridge {
+  color: var(--paper-light);
+  background: linear-gradient(180deg, #100b07, #1c1109);
+}
+
+.bridge__inner {
+  display: grid;
+  width: min(100%, var(--max));
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(11rem, 0.5fr) 1fr;
+  align-items: center;
+  margin: 0 auto;
+  padding: clamp(4rem, 8vw, 7rem) 1.25rem;
+}
+
+.bridge__figure img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 1.5rem 2rem rgba(0, 0, 0, 0.6));
+}
+
+.bridge__copy h2 {
+  max-width: 18ch;
+  color: var(--gold);
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
+}
+
+.bridge__copy > p {
+  max-width: 40rem;
+  color: rgba(251, 247, 237, 0.78);
+}
+
+.bridge__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--gold);
+  padding: 0.75rem 1.25rem;
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.bridge__cta:hover {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+/* ---------------------------------------------------------------------------
+   Commemorative plate
+   ------------------------------------------------------------------------ */
+
+.commemorative {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-deep);
+}
+
+.commemorative__inner {
+  display: grid;
+  width: min(100%, var(--max));
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(12rem, 0.42fr) 1fr;
+  align-items: center;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+}
+
+.commemorative__frame {
+  border: 0.5rem solid var(--ink);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.25);
+}
+
+.commemorative__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.commemorative__copy h2 {
+  max-width: 20ch;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+}
+
+.commemorative__copy p {
+  max-width: 40rem;
+}
+
+.commemorative__note {
+  border-left: 2px solid var(--red);
+  padding-left: 0.85rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+/* ---------------------------------------------------------------------------
+   Visit finale — after hours
+   ------------------------------------------------------------------------ */
+
+.visit-finale {
+  position: relative;
+  overflow: hidden;
+}
+
+.visit-finale__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.visit-finale__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 38%;
+  opacity: 0.34;
+}
+
+.visit-finale__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — the machine must be usable, not decorative, at every width
+   ------------------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .board-room,
+  .bridge__inner,
+  .commemorative__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .fortune-machine__cabinet {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "glass"
+      "controls"
+      "tray";
+  }
+
+  .fortune-machine__scene {
+    aspect-ratio: 5 / 4;
+  }
+
+  .ziggy-room__intro {
+    grid-template-columns: minmax(3rem, 0.22fr) 1fr;
+  }
+
+  .ziggy-room__plate {
+    max-width: 18rem;
+    grid-column: 2;
+  }
+
+  .bridge__figure {
+    max-width: 15rem;
+  }
+
+  .commemorative__frame {
+    max-width: 22rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .fortune-machine {
+    border-width: 0.35rem;
+    padding: 0.6rem;
+  }
+
+  .fortune-machine__top {
+    grid-template-columns: 1fr;
+    padding: 1.75rem 0.75rem 0.85rem;
+  }
+
+  .fortune-machine__top span {
+    display: none;
+  }
+
+  .fortune-machine__cabinet {
+    padding: 0.7rem;
+  }
+
+  /* Keep Ziggy recognisable: contain, and give him room to stand. */
+  .fortune-machine__scene {
+    aspect-ratio: 4 / 5;
+  }
+
+  .fortune-machine__ziggy {
+    max-width: 86%;
+  }
+
+  .fortune-form__controls {
+    grid-template-columns: 1fr;
+  }
+
+  .fortune-tray__surface {
+    min-height: 0;
+    border-radius: 30% / 8%;
+    padding: 1rem 0.7rem;
+  }
+
+  .fortune-card {
+    width: calc(100% - 0.5rem);
+    padding: 1rem 1rem 0.9rem;
+    transform: none;
+  }
+
+  .fortune-card__meta {
+    gap: 0.6rem 1rem;
+  }
+
+  .board__written {
+    top: 24%;
+  }
+
+  .visit-finale__backdrop img {
+    opacity: 0.22;
+  }
+
+  .ziggy-room__ambient img {
+    opacity: 0.4;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion and print
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  /*
+   * Reduced motion must not cost information. The component already skips the
+   * sequence and reveals the ticket immediately; this makes sure the cabinet
+   * is fully lit in that state rather than sitting at its dim idle values.
+   */
+  .fortune-machine__ziggy {
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .fortune-machine__bulbs span {
+    background: var(--gold) !important;
+    box-shadow: 0 0 0.8rem rgba(214, 168, 75, 0.7) !important;
+  }
+}
+
 @media print {
   .site-nav,
   .skip-link,
@@ -2099,21 +2794,32 @@ h3 {
   .fortune-form,
   .fortune-actions,
   .fortune-machine__bulbs,
-  .front-window__bulbs {
+  .fortune-machine__dial,
+  .front-window__bulbs,
+  .visit-finale__backdrop {
     display: none !important;
   }
 
   .front-window,
   .museum-section,
   .ziggy-room,
+  .bridge,
   .principals,
   .visit-finale {
     min-height: 0;
     break-inside: avoid;
   }
 
+  /* The ticket is paper. It must never depend on a dark background printing. */
+  .fortune-card {
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
   /*
-   * "Print card" isolates the fortune ticket. Visibility (rather than display)
+   * "Print ticket" isolates the fortune. Visibility (rather than display)
    * keeps the card's ancestors in the box tree, so the card can still be
    * positioned on the page while everything around it stays blank.
    */

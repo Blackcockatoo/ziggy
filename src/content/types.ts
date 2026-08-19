@@ -257,6 +257,25 @@ export type ArtefactRecord = {
   media: MediaAsset;
 };
 
+/**
+ * One line off the shop's board.
+ *
+ * The board is documentary: it is a real thing the shop does, daily, in
+ * handwriting. Lines are only recorded here when they have actually been seen.
+ * Do not invent board entries — the whole point of the room is that this voice
+ * is real and the fortune machine is the theatrical version of it.
+ */
+export type BoardEntry = {
+  id: string;
+  /** Exactly as written on the board. */
+  line: string;
+  /** A drawn heart, a smiley, an underline — described, not reproduced. */
+  flourish?: string;
+  /** Display date. Most board photographs are undated, and that is fine. */
+  date?: string;
+  evidence: Evidence;
+};
+
 export type NavigationItem = {
   href: `#${string}`;
   label: string;
@@ -285,6 +304,7 @@ export type ExhibitionContent = {
   lore: LoreItem[];
   ledger: LedgerEntry[];
   monkeys: MonkeyRecord[];
+  boardEntries: BoardEntry[];
   counterObjects: CounterObject[];
   memories: Memory[];
   principals: PersonRecord[];

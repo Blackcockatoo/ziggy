@@ -1,4 +1,5 @@
 import { artefacts } from "./artefacts";
+import { boardEntries } from "./board";
 import { community } from "./community";
 import { identity } from "./identity";
 import { memories, counterObjects } from "./memories";
@@ -20,6 +21,7 @@ export const navigation: NavigationItem[] = [
   { href: "#story", label: "1996 → 2026" },
   { href: "#monkey", label: "The monkey" },
   { href: "#ledger", label: "The ten" },
+  { href: "#board", label: "Ziggy says" },
   { href: "#ask-ziggy", label: "Ask Ziggy" },
   { href: "#counter", label: "The counter" },
   { href: "#gang", label: "The gang" },
@@ -34,6 +36,7 @@ export const exhibition: ExhibitionContent = {
   lore,
   ledger,
   monkeys,
+  boardEntries,
   counterObjects,
   memories,
   principals,
@@ -44,3 +47,4 @@ export const exhibition: ExhibitionContent = {
 };
 
 export { unplacedWins } from "./wins";
+export { oracleBridge } from "./board";

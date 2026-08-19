@@ -87,18 +87,27 @@ If you find yourself typing a date into a `.tsx` file, it belongs in
 |---|------|-----------|--------|
 | — | Front Window | `front-window.tsx` | `#top` |
 | 01 | 1996 → 2026 | `timeline.tsx` | `#story` |
+| — | Commemorative plate | `commemorative.tsx` | — |
 | 02 | The Luck Ledger | `luck-ledger.tsx` | `#ledger` |
 | 03 | The Lucky Monkey + The Succession | `lucky-monkey.tsx`, `monkey-succession.tsx` | `#monkey` |
-| 04 | Ask Ziggy | `ask-ziggy.tsx`, `fortune-card.tsx` | `#ask-ziggy` |
-| 05 | The Counter | `counter.tsx` | `#counter` |
-| 06 | The Gang | `gang.tsx` | `#gang` |
-| 07 | Around Town | `around-town.tsx` | `#around-town` |
-| 08 | The Object Archive | `object-archive.tsx` | `#archive` |
-| 09 | Rob + Carla | `principals.tsx` | `#rob-and-carla` |
+| 04 | Ziggy Says (the board) | `ziggy-says.tsx` | `#board` |
+| — | The bridge into the oracle | `oracle-bridge.tsx` | — |
+| 05 | Ask Ziggy | `ask-ziggy.tsx`, `fortune-card.tsx` | `#ask-ziggy` |
+| 06 | The Counter | `counter.tsx` | `#counter` |
+| 07 | The Gang | `gang.tsx` | `#gang` |
+| 08 | Around Town | `around-town.tsx` | `#around-town` |
+| 09 | The Object Archive | `object-archive.tsx` | `#archive` |
+| 10 | Rob + Carla | `principals.tsx` | `#rob-and-carla` |
 | 10 | Come see the real thing | `visit-finale.tsx` | `#visit` |
 
 A test asserts that every navigation anchor has a matching section id, so a
 room cannot be listed and then quietly not exist.
+
+**Ziggy Says comes before Ask Ziggy on purpose.** The board is the real,
+daily, documentary version of the shop having a voice. The fortune machine is
+the theatrical version of the same voice. Putting the machine first would make
+it a gimmick; putting the board first makes it earned. `oracle-bridge.tsx` is
+the sentence that joins them.
 
 ---
 
@@ -118,7 +127,43 @@ Every file in `src/content/` exports typed data. Types live in
 | `people.ts` | `principals` (Rob, Carla) and `staff` (the gang) |
 | `community.ts` | Around Town |
 | `artefacts.ts` | The object archive catalogue |
+| `board.ts` | Ziggy Says board lines, and the bridge copy |
 | `fortunes/` | Ziggy's categories and handwritten library |
+| `artwork.ts` | Interpretive Ziggy artwork and motion references |
+
+### Documentary vs interpretive
+
+The single most important line in this repo. Two kinds of image exist and they
+must never be confused:
+
+|  | Documentary | Interpretive |
+|---|---|---|
+| What | Real archive material | Artwork made for the exhibition |
+| Model | `MediaAsset`, carrying `Evidence` | `Artwork`, typed `interpretive: true` |
+| Lives in | `src/content/*.ts` | `src/content/artwork.ts` |
+| Served from | `/archive/` | `/images/ziggy/` |
+| Renders via | `media-placeholder.tsx` | `ziggy-artwork.tsx` |
+| Can evidence a claim | Yes | **No** |
+
+Tests assert both halves: every `Artwork.src` starts with `/images/ziggy/`, and
+every `MediaAsset.src` starts with `/archive/`. Do not move a file across that
+line to save a directory.
+
+Artwork depicting identifiable people (the anniversary poster) additionally
+requires a `note` explaining that the people are illustrated, and that note has
+to reach the page. A test checks that too.
+
+```
+public/
+  archive/            documentary — approved photographs and documents
+  images/ziggy/
+    oracle/           the cabinet, the portrait, the tray, after hours
+      motion/         locked motion reference clips (not loaded by any page)
+    whiteboard/       Ziggy with the board, blank and filled boards
+    identity/         the Ziggy Says badge and its small seal
+    anniversary/      the thirty-year commemorative poster
+    character/        the transparent full-body cutout
+```
 
 ---
 
@@ -155,6 +200,59 @@ Personal material has a second gate: `Evidence.permission`
 decides whether a person's details render at all. The default is no.
 
 ---
+
+## Ask Ziggy, the machine
+
+The cabinet is a mechanism, not a form with a spinner. One pull runs:
+
+```
+idle → waking → thinking → issuing → revealed
+```
+
+Later pulls skip `waking`, because by then the machine is awake. The state
+lives in React (`src/lib/machine-states.ts`), is published on the machine as
+`data-machine-state`, and drives everything visual — the bulbs snapping on, the
+interior glow rising, Ziggy leaning forward, the lever dropping, the lights
+dipping as the mechanism draws current, the ticket landing on the tray.
+
+Three rules hold it together:
+
+1. **The fortune exists before the animation does.** `drawFortune` runs
+   synchronously on submit. The sequence only decides *when* the ticket becomes
+   visible — it can never change what it says.
+2. **Reduced motion is not a lesser experience.** Under
+   `prefers-reduced-motion: reduce` the sequence is skipped entirely and the
+   ticket appears immediately (measured at ~11ms), with the cabinet forced to
+   its fully lit values. No information is behind an animation.
+3. **The artwork is a layer, never a control.** The form, label, lever,
+   buttons, headings, plate text and the fortune itself are real HTML. The only
+   thing the imagery supplies is Ziggy.
+
+Inside the glass, the machine uses the **transparent cutout**, not one of the
+photographed cabinets. Every photograph carries its own painted `ASK ZIGGY`
+signage, which would reproduce the real `<h2>` as raster text directly behind
+itself. A test enforces this.
+
+### The motion references
+
+`public/images/ziggy/oracle/motion/` holds the three locked ~10 second clips —
+wake up, the answer, don't ask twice — described beat by beat in
+`motionReferences` in `src/content/artwork.ts`. They are direction, not assets:
+no page loads them, and a test asserts the rendered page contains no `<video>`
+and no `.mp4`. Because the component already publishes its state, mounting a
+clip per state later is additive rather than a restructure.
+
+If a clip is ever mounted, sound stays behind a user-initiated control. Never
+autoplay audio.
+
+### The ticket
+
+Aged cream stock, black ink, a ruled border, the Ziggy seal, a serial and a
+date. It carries its own light palette rather than inheriting the room's, so it
+reads as paper on the dark cabinet **and** prints correctly on white — the
+print rules force `#000` on `#fff` so the output never depends on a dark
+background rendering. "Print ticket" isolates the card via `visibility`, which
+keeps its ancestors in the box tree so it can still be positioned on the page.
 
 ## How to add things
 
@@ -246,6 +344,30 @@ and permission, add the fragment — the component switches automatically:
 
 No fragment gets published without `permission: "granted"`. A test enforces it.
 
+### A board line
+
+`src/content/board.ts`. Only record a line that has actually been seen written
+on a board:
+
+```ts
+{
+  id: "shut-the-door",
+  line: "Shut the door, it's not a bus stop.",
+  flourish: "Underlined twice.",
+  date: "August 2011",
+  evidence: { status: "verified", sourceIds: ["shop-ledger"] },
+}
+```
+
+A line with an empty `line` renders as a genuinely empty board — that is the
+honest representation of thirty years of boards nobody photographed.
+
+**Do not invent board entries.** A line seen in artwork is not the same as a
+line seen on the board, and is filed `needs-confirmation` with a note saying
+so. If the exhibition wants a line of its own, it belongs in Ziggy's fortune
+library, not here. Tests enforce that no board entry is ever `verified` without
+a source, and that every `needs-confirmation` entry explains itself.
+
 ### An artefact
 
 `src/content/artefacts.ts`. Catalogue numbers are `MS-<year|XXXX>-<sequence>`
@@ -290,11 +412,50 @@ media: {
 Alt text and captions are already written on every empty slot, so they never
 become an afterthought when the images land.
 
+### A piece of Ziggy artwork
+
+`src/content/artwork.ts`, then render it with `<ZiggyArtwork>`:
+
+```ts
+newPiece: {
+  id: "new-piece",
+  role: "oracle",
+  src: "/images/ziggy/oracle/new-piece.webp",
+  width: 1122,
+  height: 1402,
+  alt: "Ziggy inside a black-and-gold illuminated fortune-teller cabinet.",
+  description: "What it is, for the credits. Not alt text.",
+  interpretive: true,
+},
+```
+
+```tsx
+<ZiggyArtwork artwork={artwork.newPiece} sizes="(max-width: 900px) 100vw, 40vw" />
+```
+
+- Intrinsic `width`/`height` are required, so space is reserved and nothing
+  shifts while the image loads.
+- `sizes` is required in practice — get it roughly right or the browser
+  downloads the wrong file.
+- `priority` only for genuinely above-the-fold imagery. Everything currently in
+  the manifest is lazy.
+- An empty `alt` is a deliberate decorative declaration and must be explained
+  in the manifest's `note`. `decorative` on `<ZiggyArtwork>` forces that at one
+  usage for a piece that is meaningful elsewhere.
+- Describe what is visible. Do not write marketing copy into alt text, and do
+  not restate text that is already on the page.
+
+Source files are optimised WebP. The ten originals came in at 21MB of PNG and
+ship at 1.6MB.
+
 ---
 
 ## Accessibility and performance
 
 - Skip link; semantic headings; one `h1`.
+- Images never replace controls. The fortune machine is a real `<form>` with a
+  real `<label>`, a real submit button and real text output; the cabinet is
+  imagery behind it.
 - The Counter is built on native `<details name="counter">` — exclusive
   accordion behaviour, keyboard support and screen-reader semantics with zero
   JavaScript.
@@ -304,9 +465,14 @@ become an afterthought when the images land.
   block still shows what Ziggy sounds like.
 - All motion is decorative and collapses under
   `prefers-reduced-motion: reduce`.
-- Mobile-first; no horizontal overflow at 390px or 1280px (checked).
-- No animation, UI or state dependencies. `next/image` handles photographs
-  when they arrive.
+- Mobile-first; no horizontal overflow at 390px, 768px or 1280px (checked).
+- The cabinet is a two-column object on desktop and a single column below
+  900px. Ziggy is always `contain`, never `cover`, so he stays recognisable
+  instead of cropping into an abstract on a phone.
+- No animation, UI or state dependencies. All motion is CSS driven by one
+  `data-machine-state` attribute.
+- Cumulative layout shift measured at 0.055. Board text contrast measured at
+  15:1, ticket text at 16:1.
 
 ---
 
@@ -315,6 +481,11 @@ become an afterthought when the images land.
 Nothing below should be stated as fact on the public site until it is sourced.
 
 **Ask Rob and Carla:**
+
+- The board lines. Two are shown — "Be kind. You never know who needs it." and
+  "Small steps still count." — and both are marked `needs-confirmation`,
+  because they appear in artwork rather than in a dated photograph of the
+  board. Any board photograph with a visible date is a primary source.
 
 - The real first trading day, and the original trading name. Everything about
   1996 currently rests on "thirty years" being reported in 2026.
