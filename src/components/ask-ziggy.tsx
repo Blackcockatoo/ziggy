@@ -182,7 +182,7 @@ export function AskZiggy() {
           05
         </p>
         <div>
-          <p className="eyebrow">The Monkey Shop oracle</p>
+          <p className="eyebrow">The exhibition&apos;s Monkey Shop oracle</p>
           <h2 id="ask-ziggy-title">Ask Ziggy</h2>
           <p className="section-heading__intro">
             Handwritten fortunes, deterministic answers, and no chatbot pretending to be
