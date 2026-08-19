@@ -46,8 +46,8 @@ export function Principals({
         </p>
         <strong className="principals__last-line">They do.</strong>
         <p className="principals__note">
-          Working exhibition copy. The final text should follow Rob and Carla&apos;s own
-          recorded words.
+          Working exhibition copy. Primary source sought: Rob / Carla. Final text awaits
+          their confirmation.
         </p>
       </div>
     </section>
