@@ -258,16 +258,24 @@ export type ArtefactRecord = {
 };
 
 /**
- * One line off the shop's board.
+ * One line off the shop's board — a **documentary** record.
  *
- * The board is documentary: it is a real thing the shop does, daily, in
- * handwriting. Lines are only recorded here when they have actually been seen.
- * Do not invent board entries — the whole point of the room is that this voice
- * is real and the fortune machine is the theatrical version of it.
+ * This type is for authenticated transcriptions only: a line somebody has
+ * actually seen written on the real board, backed by a photograph or by Rob
+ * and Carla. There are currently none, and every record here is an empty slot.
+ *
+ * Wording invented for the exhibition is NOT a board entry, however plausible
+ * it sounds. It lives in `src/content/artwork.ts` as a `BoardExample`, which
+ * carries `interpretive: true` and cannot be assigned to this type. Keeping the
+ * two apart at the type level is the point: a concept line that slips into this
+ * array becomes a false historical claim about a real shop.
  */
 export type BoardEntry = {
   id: string;
-  /** Exactly as written on the board. */
+  /**
+   * The transcription, exactly as written on the board. Empty means an
+   * unfilled archival slot — which is the honest state of all of them today.
+   */
   line: string;
   /** A drawn heart, a smiley, an underline — described, not reproduced. */
   flourish?: string;

@@ -1,40 +1,28 @@
 import type { BoardEntry } from "./types";
 
 /**
- * Ziggy Says — the board.
+ * Ziggy Says — the board, as an archive.
  *
  * A whiteboard on an easel, rewritten by hand, read by whoever walks past. It
  * is the oldest and most ordinary version of the shop having a voice, and it is
  * the thing that makes the fortune machine make sense.
  *
+ * **Every record in this file is a documentary transcription slot, and every
+ * one of them is currently empty.** No line the exhibition has seen is an
+ * authenticated Monkey Shop board transcription: thirty years of boards were
+ * wiped at close of trade and nobody photographed them.
+ *
  * Rules:
- * - Only record a line that has actually been seen written on a board.
- * - A line seen in artwork is not the same as a line seen on the board. Those
- *   are marked `needs-confirmation` until a dated photograph exists.
- * - Never write a new line and file it as historical. If the exhibition needs
- *   a line of its own, it belongs in Ziggy's fortune library, not here.
+ * - Only fill `line` with wording somebody has seen on the real board, and
+ *   only with a documentary source id attached.
+ * - Wording written for the exhibition is not a board entry. It belongs in
+ *   `boardExamples` in `src/content/artwork.ts`, where it is typed
+ *   `interpretive: true` and cannot be mistaken for this.
+ * - `needs-confirmation` means "a real line we have not dated yet". It does not
+ *   mean "a line we made up and might one day match". Never file concept
+ *   wording under it.
  */
 export const boardEntries: BoardEntry[] = [
-  {
-    id: "be-kind",
-    line: "Be kind. You never know who needs it.",
-    flourish: "A drawn smiley at the end.",
-    evidence: {
-      status: "needs-confirmation",
-      note: "Appears written on the board in the shop's own visual material. Not yet confirmed as a dated board entry, and the date it was up is unknown.",
-      sourceIds: ["exhibition-artwork", "interview-rob"],
-    },
-  },
-  {
-    id: "small-steps",
-    line: "Small steps still count.",
-    flourish: "A drawn heart in the corner.",
-    evidence: {
-      status: "needs-confirmation",
-      note: "Appears written on the board in the shop's own visual material. Not yet confirmed as a dated board entry.",
-      sourceIds: ["exhibition-artwork", "interview-rob"],
-    },
-  },
   {
     id: "board-slot-1",
     line: "",
@@ -51,6 +39,15 @@ export const boardEntries: BoardEntry[] = [
       status: "placeholder",
       note: "Wanted especially: a board with a date visible, or one somebody photographed because of what it said that morning.",
       sourceIds: ["shop-ledger"],
+    },
+  },
+  {
+    id: "board-slot-3",
+    line: "",
+    evidence: {
+      status: "placeholder",
+      note: "Rob and Carla will remember lines nobody photographed. A remembered line is still a real line, and can be recorded here once they confirm it.",
+      sourceIds: ["interview-rob", "interview-carla"],
     },
   },
 ];

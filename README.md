@@ -127,9 +127,9 @@ Every file in `src/content/` exports typed data. Types live in
 | `people.ts` | `principals` (Rob, Carla) and `staff` (the gang) |
 | `community.ts` | Around Town |
 | `artefacts.ts` | The object archive catalogue |
-| `board.ts` | Ziggy Says board lines, and the bridge copy |
+| `board.ts` | Ziggy Says **documentary** board slots, and the bridge copy |
 | `fortunes/` | Ziggy's categories and handwritten library |
-| `artwork.ts` | Interpretive Ziggy artwork and motion references |
+| `artwork.ts` | Interpretive artwork, example board wording, motion direction |
 
 ### Documentary vs interpretive
 
@@ -152,6 +152,39 @@ line to save a directory.
 Artwork depicting identifiable people (the anniversary poster) additionally
 requires a `note` explaining that the people are illustrated, and that note has
 to reach the page. A test checks that too.
+
+**The line applies to words, not just images.** Wording written for the
+exhibition is artwork in exactly the same way a poster is:
+
+|  | `BoardEntry` (`board.ts`) | `BoardExample` (`artwork.ts`) |
+|---|---|---|
+| What | A line seen on the real board | Wording written for the exhibition |
+| Requires | A documentary source | `interpretive: true` |
+| Rendered as | An archive record | A dashed, stamped example |
+| Can be quoted as something the shop said | Yes | **No** |
+
+The two types are structurally incompatible, so an example can never be
+assigned into `boardEntries`. Tests assert that no example wording appears in
+the archive, that any filled `line` is `verified` or `probable` with a source,
+and that examples are labelled as such on the page beside the wording.
+
+There are currently **no authenticated board transcriptions at all** — every
+archive slot is empty, which is the true state of thirty years of boards nobody
+photographed.
+
+### Asset usage
+
+Every `Artwork` declares `usage`:
+
+- `mounted` — a component renders it now; tests assert it stays reachable
+- `reserved` — production-ready and intentionally dormant; requires a `note`
+  saying why it is being held
+
+Nothing asserts a render *count*. An asset may be reused in as many places as it
+earns (the blank board is the frame behind every board on the page), and a
+reserved asset lying dormant is legitimate. What is checked is that every
+manifest `src` resolves to a file that exists in `public/`, and that everything
+marked `mounted` is genuinely reachable.
 
 ```
 public/
@@ -233,17 +266,29 @@ photographed cabinets. Every photograph carries its own painted `ASK ZIGGY`
 signage, which would reproduce the real `<h2>` as raster text directly behind
 itself. A test enforces this.
 
-### The motion references
+### The motion direction
 
-`public/images/ziggy/oracle/motion/` holds the three locked ~10 second clips —
-wake up, the answer, don't ask twice — described beat by beat in
-`motionReferences` in `src/content/artwork.ts`. They are direction, not assets:
-no page loads them, and a test asserts the rendered page contains no `<video>`
-and no `.mp4`. Because the component already publishes its state, mounting a
-clip per state later is additive rather than a restructure.
+`motionSpecs` in `src/content/artwork.ts` describes three ~10 second sequences
+beat by beat, keyed by stable semantic id — `wake-up`, `the-answer`,
+`dont-ask-twice` — and addressed by that id, never by array or upload order.
 
-If a clip is ever mounted, sound stays behind a user-initiated control. Never
-autoplay audio.
+**All three are currently disabled.** Three reference clips were supplied, but
+which clip shows which sequence has not been confirmed, so none is bound to a
+slot: `clip` is `null` and `enabled` is `false` on every one. Guessing the
+mapping would put the wrong footage behind a named state. The candidates sit in
+`public/images/ziggy/oracle/motion/unattributed/` as `clip-a`, `clip-b` and
+`clip-c` — names chosen to claim nothing, and a test asserts they contain no
+state id.
+
+To enable one: watch the clip, confirm which sequence it is, move it to
+`<id>.mp4` in the motion folder, then set `clip` and `enabled`. A test blocks
+`enabled: true` without a `clip`.
+
+They are direction, not assets: no page loads them, and a test asserts the
+rendered page contains no `<video>` and no `.mp4`. Because the component already
+publishes its state, mounting a clip per state later is additive rather than a
+restructure. If a clip is ever mounted, sound stays behind a user-initiated
+control. Never autoplay audio.
 
 ### The ticket
 
@@ -346,8 +391,9 @@ No fragment gets published without `permission: "granted"`. A test enforces it.
 
 ### A board line
 
-`src/content/board.ts`. Only record a line that has actually been seen written
-on a board:
+Two different jobs, two different files. Pick the right one.
+
+**A real line somebody saw on the board** → `src/content/board.ts`:
 
 ```ts
 {
@@ -359,14 +405,28 @@ on a board:
 }
 ```
 
-A line with an empty `line` renders as a genuinely empty board — that is the
-honest representation of thirty years of boards nobody photographed.
+A filled `line` is a claim that those words were on the real board, so it needs
+a documentary status and a source. An empty `line` renders as a genuinely empty
+board.
 
-**Do not invent board entries.** A line seen in artwork is not the same as a
-line seen on the board, and is filed `needs-confirmation` with a note saying
-so. If the exhibition wants a line of its own, it belongs in Ziggy's fortune
-library, not here. Tests enforce that no board entry is ever `verified` without
-a source, and that every `needs-confirmation` entry explains itself.
+**Wording written for the exhibition** → `boardExamples` in
+`src/content/artwork.ts`:
+
+```ts
+{
+  id: "example-shut-the-door",
+  line: "Shut the door, it's not a bus stop.",
+  interpretive: true,
+  provenance: "Written for the exhibition. Not a Monkey Shop board transcription.",
+}
+```
+
+**Never put invented wording in `boardEntries`, under any status.**
+`needs-confirmation` means "a real line we have not dated yet" — it does not
+mean "a line we made up and might one day match". Concept wording filed there
+becomes a false historical claim about a real business, which is the single
+worst failure this project can have. The types make it impossible; the tests
+make it loud.
 
 ### An artefact
 

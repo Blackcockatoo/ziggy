@@ -1,4 +1,4 @@
-import { artwork } from "@/content/artwork";
+import { artwork, boardExamples } from "@/content/artwork";
 import type { BoardEntry, Source } from "@/content/types";
 import { EvidencePill } from "./evidence-pill";
 import { MuseumSection } from "./museum-section";
@@ -67,11 +67,23 @@ export function ZiggySays({
         </div>
       </div>
 
+      <h3 className="board-section__title">The archive</h3>
+      <p className="board-section__lede">
+        Every slot below is empty, and that is the true state of it. Not one line
+        anybody has written on this board in thirty years was photographed, so the
+        exhibition holds no authenticated transcription at all.
+      </p>
+
       <ul className="board-grid">
         {entries.map((entry) => {
           const written = entry.line.length > 0;
           return (
-            <li key={entry.id} className="board" data-written={written ? "true" : "false"}>
+            <li
+              key={entry.id}
+              className="board"
+              data-kind="record"
+              data-written={written ? "true" : "false"}
+            >
               <div className="board__frame">
                 <ZiggyArtwork
                   artwork={artwork.boardBlank}
@@ -80,9 +92,6 @@ export function ZiggySays({
                   decorative
                 />
                 <div className="board__written">
-                  <p className="board__eyebrow" aria-hidden="true">
-                    Ziggy says
-                  </p>
                   {written ? (
                     <blockquote className="board__line">{entry.line}</blockquote>
                   ) : (
@@ -106,6 +115,41 @@ export function ZiggySays({
           );
         })}
       </ul>
+
+      <div className="board-examples">
+        <h3 className="board-section__title">Example artwork</h3>
+        <p className="board-section__lede">
+          These two are <strong>written for the exhibition</strong> to show what a
+          full board looks like. They are artwork, not history: nobody wrote them
+          on the real board, and they must never be quoted as something the shop
+          said.
+        </p>
+        <ul className="board-grid">
+          {boardExamples.map((example) => (
+            <li key={example.id} className="board" data-kind="example">
+              <div className="board__frame">
+                <ZiggyArtwork
+                  artwork={artwork.boardBlank}
+                  className="board__surface"
+                  sizes="(max-width: 680px) 90vw, (max-width: 1100px) 44vw, 30vw"
+                  decorative
+                />
+                <div className="board__written">
+                  <blockquote className="board__line">{example.line}</blockquote>
+                </div>
+                <p className="board__stamp">Example</p>
+              </div>
+              <div className="board__meta">
+                {example.flourish ? (
+                  <p className="board__flourish">{example.flourish}</p>
+                ) : null}
+                <span className="interpretive-pill">Exhibition artwork</span>
+                <p className="board__note">{example.provenance}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </MuseumSection>
   );
 }

@@ -1,3 +1,4 @@
+import { existsSync, readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import Home from "../src/app/page";
@@ -5,7 +6,14 @@ import { AskZiggy } from "../src/components/ask-ziggy";
 import { FortuneCard } from "../src/components/fortune-card";
 import { fortunes } from "../src/content/fortunes/library";
 import { drawFortune } from "../src/lib/fortune-engine";
-import { allArtwork, artwork, motionReferences } from "../src/content/artwork";
+import {
+  allArtwork,
+  artwork,
+  boardExamples,
+  motionSpecs,
+  motionStateIds,
+  unattributedClips,
+} from "../src/content/artwork";
 import { exhibition } from "../src/content/exhibition";
 import { machineStates, machineStatus, sequenceFor } from "../src/lib/machine-states";
 
@@ -183,9 +191,12 @@ describe("the board and the bridge into the oracle", () => {
   });
 
   it("puts every board line on the page as real text, not baked into artwork", () => {
-    for (const entry of exhibition.boardEntries) {
-      if (!entry.line) continue;
-      expect(markup).toContain(escaped(entry.line));
+    for (const line of [
+      ...exhibition.boardEntries.map((entry) => entry.line),
+      ...boardExamples.map((example) => example.line),
+    ]) {
+      if (!line) continue;
+      expect(markup).toContain(escaped(line));
     }
   });
 
@@ -200,9 +211,9 @@ describe("the board and the bridge into the oracle", () => {
     }
   });
 
-  it("requires a note explaining why a board line is not yet confirmed", () => {
+  it("requires a note explaining why an archival slot is still empty", () => {
     for (const entry of exhibition.boardEntries) {
-      if (entry.evidence.status !== "needs-confirmation") continue;
+      if (entry.line !== "") continue;
       expect(entry.evidence.note, entry.id).toBeTruthy();
     }
   });
@@ -212,22 +223,52 @@ describe("the board and the bridge into the oracle", () => {
   });
 });
 
-describe("motion references", () => {
-  it("documents all three states as direction rather than mounting video", () => {
-    expect(motionReferences).toHaveLength(3);
-    for (const clip of motionReferences) {
-      expect(clip.beats.length).toBeGreaterThan(3);
-      expect(clip.src).toMatch(/^\/images\/ziggy\/oracle\/motion\/.+\.mp4$/);
+describe("motion direction", () => {
+  it("addresses each sequence by a stable semantic id", () => {
+    expect(motionStateIds).toEqual(["wake-up", "the-answer", "dont-ask-twice"]);
+    for (const id of motionStateIds) {
+      // The key, the id and the caller's handle are the same string, so no
+      // lookup can silently depend on ordering.
+      expect(motionSpecs[id].id).toBe(id);
+      expect(motionSpecs[id].beats.length).toBeGreaterThan(3);
     }
-    // Nothing on the page loads a clip: the states are CSS and React.
+  });
+
+  it("leaves every slot disabled while its footage is unattributed", () => {
+    // Three clips were supplied and none has been confirmed against a
+    // sequence. Binding one on a guess would put the wrong footage behind a
+    // named state.
+    for (const id of motionStateIds) {
+      expect(motionSpecs[id].clip, id).toBeNull();
+      expect(motionSpecs[id].enabled, id).toBe(false);
+    }
+  });
+
+  it("never enables a slot that has no confirmed clip", () => {
+    for (const id of motionStateIds) {
+      const spec = motionSpecs[id];
+      if (spec.enabled) expect(spec.clip, id).toBeTruthy();
+    }
+  });
+
+  it("keeps unattributed footage under names that claim nothing", () => {
+    expect(unattributedClips).toHaveLength(3);
+    for (const src of unattributedClips) {
+      expect(src).toMatch(/^\/images\/ziggy\/oracle\/motion\/unattributed\/clip-[a-c]\.mp4$/);
+      // A filename must not assert the mapping the manifest refuses to make.
+      for (const id of motionStateIds) expect(src).not.toContain(id);
+    }
+  });
+
+  it("mounts no video: the states are CSS and React", () => {
     expect(markup).not.toContain("<video");
     expect(markup).not.toContain(".mp4");
   });
 
   it("only names machine states that actually exist", () => {
-    for (const clip of motionReferences) {
-      for (const state of clip.states) {
-        expect(machineStates as string[], `${clip.id} → ${state}`).toContain(state);
+    for (const id of motionStateIds) {
+      for (const state of motionSpecs[id].states) {
+        expect(machineStates as string[], `${id} → ${state}`).toContain(state);
       }
     }
   });
@@ -253,27 +294,103 @@ function machineCss(): string {
 }
 let cssCache: string | null = null;
 function readCss(): string {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { readFileSync } = require("node:fs") as typeof import("node:fs");
   return readFileSync(new URL("../src/app/globals.css", import.meta.url), "utf8");
 }
 
-describe("no artwork ships unused", () => {
-  it("renders every asset in the manifest somewhere in the experience", () => {
-    // A file in the manifest that no component references is dead weight in
-    // the repo and a broken promise in the asset bible. The seal only appears
-    // on an issued ticket, so the ticket counts as part of the surface.
-    const surface = markup + renderToStaticMarkup(
+describe("artwork references resolve", () => {
+  /** Page plus an issued ticket: the seal only exists on a drawn fortune. */
+  const surface =
+    markup +
+    renderToStaticMarkup(
       <FortuneCard
         ticket={drawFortune({ question: "Should I quit my job?", library: fortunes })}
         issuedOn="19 Aug 2026"
       />,
     );
 
+  it("points every manifest entry at a file that actually exists", () => {
     for (const item of allArtwork) {
-      expect(surface, `${item.id} is in the manifest but never rendered`).toContain(
+      const path = new URL(`../public${item.src}`, import.meta.url);
+      expect(existsSync(path), `${item.id} → ${item.src} is missing from public/`).toBe(
+        true,
+      );
+    }
+  });
+
+  it("keeps every mounted asset reachable in the rendered experience", () => {
+    for (const item of allArtwork.filter((a) => a.usage === "mounted")) {
+      expect(surface, `${item.id} is marked mounted but nothing renders it`).toContain(
         optimised(item.src),
       );
     }
+  });
+
+  it("allows an asset to be reused in as many places as it earns", () => {
+    // The blank board is the frame behind every board, archival and example
+    // alike. Reuse is a legitimate outcome, not a smell, so nothing here
+    // asserts a render count.
+    const occurrences = surface.split(optimised(artwork.boardBlank.src)).length - 1;
+    expect(occurrences).toBeGreaterThan(1);
+  });
+
+  it("allows a production-ready asset to lie dormant, if it says why", () => {
+    for (const item of allArtwork.filter((a) => a.usage === "reserved")) {
+      expect(item.note, `${item.id} is reserved without explaining why`).toBeTruthy();
+    }
+  });
+
+  it("does not preload the library: only genuine hero imagery is eager", () => {
+    expect(surface).not.toContain('loading="eager"');
+  });
+});
+
+describe("example board wording is never mistaken for archive", () => {
+  it("keeps the archive free of exhibition-written lines", () => {
+    const exampleLines = boardExamples.map((example) => example.line);
+    for (const entry of exhibition.boardEntries) {
+      expect(exampleLines, `board entry ${entry.id}`).not.toContain(entry.line);
+    }
+  });
+
+  it("holds no board transcription that is not documented", () => {
+    // A filled `line` is a claim that somebody saw those words on the real
+    // board, so it needs a documentary status and a source. Everything else
+    // must be an empty slot.
+    for (const entry of exhibition.boardEntries) {
+      if (entry.line === "") continue;
+      expect(["verified", "probable"], entry.id).toContain(entry.evidence.status);
+      expect(entry.evidence.sourceIds?.length ?? 0, entry.id).toBeGreaterThan(0);
+    }
+  });
+
+  it("never files concept wording as a historical research lead", () => {
+    const exampleLines = new Set(boardExamples.map((example) => example.line));
+    for (const entry of exhibition.boardEntries) {
+      if (entry.evidence.status !== "needs-confirmation") continue;
+      expect(exampleLines.has(entry.line), entry.id).toBe(false);
+    }
+  });
+
+  it("marks every example as interpretive and says where it came from", () => {
+    for (const example of boardExamples) {
+      expect(example.interpretive, example.id).toBe(true);
+      expect(example.provenance, example.id).toMatch(/not a Monkey Shop board transcription/i);
+    }
+  });
+
+  it("labels examples on the page, next to the wording", () => {
+    for (const example of boardExamples) {
+      expect(markup).toContain(escaped(example.line));
+    }
+    expect(markup).toContain('data-kind="example"');
+    expect(markup).toContain("Exhibition artwork");
+    expect(markup).toContain("written for the exhibition");
+  });
+
+  it("separates the archive from the examples in the markup", () => {
+    expect(markup).toContain('data-kind="record"');
+    expect(markup.indexOf('data-kind="record"')).toBeLessThan(
+      markup.indexOf('data-kind="example"'),
+    );
   });
 });

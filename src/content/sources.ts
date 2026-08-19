@@ -58,7 +58,7 @@ export const sources: Source[] = [
     label: "Artwork produced for the thirtieth-anniversary exhibition",
     publisher: "B$S for The Monkey Shop",
     kind: "social",
-    note: "Interpretive material, not archive material. Useful as a record of what the shop looks like and what it says, but it cannot evidence a date, a person or an event.",
+    note: "Interpretive material, not archive material. Any wording appearing in it was written for the exhibition and is not a transcription of anything. It cannot evidence a date, a person, an event or a board line.",
   },
   {
     id: "shop-social",

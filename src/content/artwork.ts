@@ -45,6 +45,17 @@ export type Artwork = {
   interpretive: true;
   /** Set when identifiable people appear, so the credit can say so. */
   depictsPeople?: boolean;
+  /**
+   * Whether this asset is wired into the current build.
+   *
+   * - `mounted`  a component renders it now; it must stay reachable
+   * - `reserved` production-ready and intentionally dormant, kept for a use
+   *              that is coming or for a layout that may return
+   *
+   * Reuse is fine: an asset may be rendered in as many places as it earns.
+   * Dormancy is fine too, as long as `note` says why it is being held.
+   */
+  usage: "mounted" | "reserved";
   note?: string;
 };
 
@@ -59,6 +70,7 @@ export const artwork = {
     description:
       "The full Ask Ziggy cabinet, lit, photographed in the shop. The lower panel reads I've been watching Frankston since 1996.",
     interpretive: true,
+    usage: "mounted",
   },
   oraclePortrait: {
     id: "oracle-portrait",
@@ -69,6 +81,7 @@ export const artwork = {
     alt: "Ziggy inside the illuminated cabinet, hands resting either side of a glowing globe, wearing a black-and-white diamond vest and gold bow tie.",
     description: "Closer portrait of Ziggy behind the cabinet glass.",
     interpretive: true,
+    usage: "mounted",
   },
   trayTicket: {
     id: "tray-ticket",
@@ -80,6 +93,7 @@ export const artwork = {
     description:
       "The delivery moment: the tray extended, a ticket on it. The cabinet plate beneath reads Fortune · Wisdom · Insight.",
     interpretive: true,
+    usage: "mounted",
   },
   cabinetAfterHours: {
     id: "cabinet-after-hours",
@@ -91,6 +105,7 @@ export const artwork = {
     description:
       "After hours. The shop is shut and the cabinet is the only thing still lit.",
     interpretive: true,
+    usage: "mounted",
   },
   ziggyWithBoard: {
     id: "ziggy-with-board",
@@ -102,6 +117,7 @@ export const artwork = {
     description:
       "Ziggy presenting the board on the shop floor, in front of the thirty-year wall mark.",
     interpretive: true,
+    usage: "mounted",
   },
   boardBlank: {
     id: "board-blank",
@@ -113,6 +129,7 @@ export const artwork = {
     description:
       "The blank branded Ziggy Says board. Used as an empty frame behind live text.",
     interpretive: true,
+    usage: "mounted",
     note: "Decorative in every current usage: the board's words are always real HTML on top of it.",
   },
   boardFilled: {
@@ -121,9 +138,11 @@ export const artwork = {
     src: "/images/ziggy/whiteboard/board-filled.webp",
     width: 1000,
     height: 1250,
-    alt: "A Ziggy Says board in handwriting: Small steps still count, with a drawn heart.",
-    description: "The board as it appears in the shop's own material.",
+    alt: "An example Ziggy Says board in handwriting: Small steps still count, with a drawn heart.",
+    description:
+      "Example artwork showing how a filled board looks. The wording was written for the exhibition and is not a transcription of a real board.",
     interpretive: true,
+    usage: "mounted",
   },
   badge: {
     id: "ziggy-says-badge",
@@ -135,6 +154,7 @@ export const artwork = {
     description:
       "The round Ziggy Says mark: Ziggy grinning in a diamond vest and gold bow tie, ringed by Ziggy Says and Since 1996.",
     interpretive: true,
+    usage: "mounted",
     note: "Decorative: it is always accompanied by the same words in real text.",
   },
   seal: {
@@ -146,6 +166,7 @@ export const artwork = {
     alt: "",
     description: "Small version of the Ziggy Says mark, used as the seal on a fortune ticket.",
     interpretive: true,
+    usage: "mounted",
   },
   anniversaryPoster: {
     id: "thirty-years-poster",
@@ -157,6 +178,7 @@ export const artwork = {
     description:
       "Thirtieth-anniversary commemorative poster produced for the exhibition.",
     interpretive: true,
+    usage: "mounted",
     depictsPeople: true,
     note: "The people in this poster are illustrated, not documented portraits. They must not be captioned as identified staff, and must not be cited as evidence of who worked in the shop.",
   },
@@ -170,35 +192,95 @@ export const artwork = {
     description:
       "Clean full-body cutout of the statue on a transparent background. The reusable character asset.",
     interpretive: true,
+    usage: "mounted",
   },
 } as const satisfies Record<string, Artwork>;
 
 export const allArtwork: Artwork[] = Object.values(artwork);
 
 /**
+ * Example board wording.
+ *
+ * Concept lines written **for the exhibition** to show what the board looks
+ * like when it is full. They are artwork, exactly like the images above, and
+ * they are the reason this type exists at all: written in the shop's register,
+ * they read like genuine board lines, and filing them anywhere near the archive
+ * would manufacture a false historical claim about a real business.
+ *
+ * The guard rails:
+ * - `interpretive: true` is required by the type and cannot be set to `false`.
+ * - `BoardExample` is structurally incompatible with `BoardEntry`, so one can
+ *   never be assigned into `boardEntries`.
+ * - Anything rendered from here must be visibly labelled as an example.
+ *
+ * A real board line — seen, photographed or confirmed by Rob and Carla — is a
+ * `BoardEntry` in `src/content/board.ts`, and never appears here.
+ */
+export type BoardExample = {
+  id: string;
+  /** Wording invented for the exhibition. Never a transcription. */
+  line: string;
+  /** A drawn heart, a smiley — described, not reproduced. */
+  flourish?: string;
+  interpretive: true;
+  /** Why this wording exists, shown wherever it is rendered. */
+  provenance: string;
+};
+
+export const boardExamples: BoardExample[] = [
+  {
+    id: "example-be-kind",
+    line: "Be kind. You never know who needs it.",
+    flourish: "A drawn smiley at the end.",
+    interpretive: true,
+    provenance:
+      "Written for the exhibition to show the board in use. Not a Monkey Shop board transcription.",
+  },
+  {
+    id: "example-small-steps",
+    line: "Small steps still count.",
+    flourish: "A drawn heart in the corner.",
+    interpretive: true,
+    provenance:
+      "Written for the exhibition to show the board in use. Not a Monkey Shop board transcription.",
+  },
+];
+
+/**
  * Motion direction for the Ask Ziggy machine.
  *
- * These clips are the locked reference for how the cabinet behaves. The live
- * site implements them as CSS and React state, not video — the component reads
- * its machine state from `data-machine-state`, so a clip could be mounted per
- * state later without restructuring anything.
+ * Three specifications, addressed by stable semantic id — never by array or
+ * upload order. The live site implements them as CSS and React state, not
+ * video: the component publishes `data-machine-state`, so a clip can be mounted
+ * per state later without restructuring anything.
  *
- * They are reference material and are not loaded by any page.
+ * **All three are disabled.** Three reference clips were supplied, but which
+ * clip shows which sequence has not been confirmed, so none of them is bound to
+ * a slot. Guessing the mapping would put the wrong footage behind a named
+ * state, which is worse than shipping none. The candidates sit unattributed in
+ * `unattributedClips` until somebody who has watched them says which is which.
+ *
+ * To enable one: confirm the clip, move it to `<id>.mp4` in the motion folder,
+ * set `clip` to that path and `enabled` to true.
  */
-export type MotionReference = {
-  id: string;
-  src: string;
+export type MotionStateId = "wake-up" | "the-answer" | "dont-ask-twice";
+
+export type MotionSpec = {
+  id: MotionStateId;
   title: string;
-  /** The machine states this clip documents. */
+  /** Machine states this sequence documents. Validated against the real list. */
   states: string[];
   beats: string[];
+  /** The confirmed clip for this slot, or null while unattributed. */
+  clip: string | null;
+  /** Never true without a confirmed `clip`. */
+  enabled: boolean;
   note?: string;
 };
 
-export const motionReferences: MotionReference[] = [
-  {
+export const motionSpecs: Record<MotionStateId, MotionSpec> = {
+  "wake-up": {
     id: "wake-up",
-    src: "/images/ziggy/oracle/motion/01-wake-up.mp4",
     title: "Wake up",
     states: ["idle", "waking"],
     beats: [
@@ -208,11 +290,12 @@ export const motionReferences: MotionReference[] = [
       "Tray slides forward and the ticket becomes visible.",
       "The ASK ZIGGY sign lands.",
     ],
-    note: "Sound direction, only if a clip is ever mounted with a user-initiated control: low electrical hum, individual bulb clicks, a small servo, one bell. Never autoplay audio.",
+    clip: null,
+    enabled: false,
+    note: "Sound direction, only if a clip is ever mounted behind a user-initiated control: low electrical hum, individual bulb clicks, a small servo, one bell. Never autoplay audio.",
   },
-  {
+  "the-answer": {
     id: "the-answer",
-    src: "/images/ziggy/oracle/motion/02-the-answer.mp4",
     title: "The answer",
     states: ["thinking", "issuing", "revealed"],
     beats: [
@@ -222,10 +305,11 @@ export const motionReferences: MotionReference[] = [
       "The fortune becomes readable.",
       "His eyes snap to the viewer.",
     ],
+    clip: null,
+    enabled: false,
   },
-  {
+  "dont-ask-twice": {
     id: "dont-ask-twice",
-    src: "/images/ziggy/oracle/motion/03-dont-ask-twice.mp4",
     title: "Don't ask twice",
     states: ["revealed", "thinking", "issuing"],
     beats: [
@@ -235,6 +319,27 @@ export const motionReferences: MotionReference[] = [
       "Lights return brighter; Ziggy is closer and more awake; tray extended.",
       "The fortune reads YOU ALREADY KNOW.",
     ],
+    clip: null,
+    enabled: false,
     note: "The repeat-pull beat. Dry, funny, slightly unnerving, affectionate. Never horror.",
   },
+};
+
+/** Addressed explicitly by id, so no caller can depend on ordering. */
+export const motionStateIds: MotionStateId[] = [
+  "wake-up",
+  "the-answer",
+  "dont-ask-twice",
+];
+
+/**
+ * The supplied reference footage, deliberately not attributed to a slot.
+ *
+ * Filenames carry no meaning on purpose: `clip-a` is not a claim about
+ * `wake-up`. Watch them, decide, then rename into the semantic filename.
+ */
+export const unattributedClips: string[] = [
+  "/images/ziggy/oracle/motion/unattributed/clip-a.mp4",
+  "/images/ziggy/oracle/motion/unattributed/clip-b.mp4",
+  "/images/ziggy/oracle/motion/unattributed/clip-c.mp4",
 ];
