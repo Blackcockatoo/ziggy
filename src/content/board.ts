@@ -8,9 +8,9 @@ import type { BoardEntry } from "./types";
  * the thing that makes the fortune machine make sense.
  *
  * **Every record in this file is a documentary transcription slot, and every
- * one of them is currently empty.** No line the exhibition has seen is an
- * authenticated Monkey Shop board transcription: thirty years of boards were
- * wiped at close of trade and nobody photographed them.
+ * one of them is currently empty.** No authenticated Monkey Shop board
+ * transcription has yet been added to the exhibition. Any surviving
+ * photographs, remembered lines and board history still await confirmation.
  *
  * Rules:
  * - Only fill `line` with wording somebody has seen on the real board, and
@@ -28,7 +28,7 @@ export const boardEntries: BoardEntry[] = [
     line: "",
     evidence: {
       status: "placeholder",
-      note: "An empty board. Thirty years of these were wiped off at the end of the day. Every photograph anybody kept is worth having.",
+      note: "Archive slot — source pending. Any surviving photograph of the board is worth having.",
       sourceIds: ["shop-ledger", "shop-social"],
     },
   },
@@ -46,7 +46,7 @@ export const boardEntries: BoardEntry[] = [
     line: "",
     evidence: {
       status: "placeholder",
-      note: "Rob and Carla will remember lines nobody photographed. A remembered line is still a real line, and can be recorded here once they confirm it.",
+      note: "Rob or Carla may remember lines the exhibition has not sourced. A remembered line can be recorded here once they confirm it.",
       sourceIds: ["interview-rob", "interview-carla"],
     },
   },
@@ -60,7 +60,7 @@ export const boardEntries: BoardEntry[] = [
  */
 export const oracleBridge = {
   eyebrow: "From the board to the machine",
-  line: "Ziggy was saying something long before anyone built him a way to answer back.",
-  body: "Thirty years of it: one line at a time, in marker, at the height of an adult's eyeline, wiped off at close and written again in the morning. Nobody archived it. Nobody thought to. What follows is that same voice, given a cabinet, a lever and a tray — and asked a direct question for the first time.",
+  line: "In this exhibition, Ziggy's board learns to answer back.",
+  body: "Exhibition interpretation: the board's changing voice becomes a cabinet, a lever and a tray. What follows is a creative extension of the Ziggy idea, not a transcription of shop history or something Rob or Carla have said.",
   callToAction: "Ask him something",
 };
