@@ -1,0 +1,2901 @@
+:root {
+  --paper: #efe7d3;
+  --paper-deep: #d8cdb2;
+  --paper-light: #fbf7ed;
+  --ink: #17140f;
+  --ink-soft: #3c372d;
+  --red: #a02b26;
+  --red-dark: #6d1a17;
+  --gold: #d6a84b;
+  --green: #40584a;
+  --line: rgba(23, 20, 15, 0.22);
+  --max: 1240px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-sans), Arial, sans-serif;
+  line-height: 1.55;
+}
+
+body::selection {
+  color: var(--paper-light);
+  background: var(--red);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(3rem, 7vw, 6.8rem);
+  font-weight: 520;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+h3 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.55rem, 3vw, 2.5rem);
+  font-weight: 550;
+  line-height: 1.04;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  color: var(--ink);
+  background: var(--gold);
+  font-weight: 800;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  min-height: 4.25rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(239, 231, 211, 0.2);
+  color: var(--paper-light);
+  background: rgba(23, 20, 15, 0.96);
+  backdrop-filter: blur(12px);
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+.site-nav__brand {
+  display: flex;
+  min-height: 4.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.25rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.site-nav__brand span:first-child {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.site-nav__links {
+  display: flex;
+  align-self: stretch;
+  overflow-x: auto;
+}
+
+.site-nav__links a {
+  display: grid;
+  min-width: max-content;
+  place-items: center;
+  border-left: 1px solid rgba(239, 231, 211, 0.16);
+  padding: 0 1rem;
+  color: rgba(251, 247, 237, 0.76);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.site-nav__links a:hover {
+  color: var(--paper-light);
+  background: var(--red);
+}
+
+.front-window {
+  position: relative;
+  display: grid;
+  min-height: calc(100svh - 4.25rem);
+  overflow: hidden;
+  align-content: space-between;
+  padding: clamp(2rem, 5vw, 5rem);
+  color: var(--paper-light);
+  background:
+    linear-gradient(90deg, transparent 49.8%, rgba(239, 231, 211, 0.11) 50%, transparent 50.2%),
+    radial-gradient(circle at 50% 110%, rgba(160, 43, 38, 0.55), transparent 44%),
+    var(--ink);
+  isolation: isolate;
+}
+
+.front-window::before,
+.front-window::after {
+  position: absolute;
+  z-index: -1;
+  width: 36vw;
+  height: 120%;
+  border: 1px solid rgba(239, 231, 211, 0.12);
+  content: "";
+  transform: rotate(12deg);
+}
+
+.front-window::before {
+  top: -15%;
+  left: -18%;
+}
+
+.front-window::after {
+  right: -18%;
+  bottom: -15%;
+}
+
+.front-window__grain {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.16;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.front-window__location,
+.eyebrow {
+  margin-bottom: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.front-window__title {
+  align-self: center;
+  text-align: center;
+}
+
+.front-window__title > p {
+  margin-bottom: 1rem;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-style: italic;
+}
+
+.front-window h1 {
+  max-width: 11ch;
+  margin: 0 auto;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(5rem, 15vw, 12rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.72;
+}
+
+.front-window h1 span {
+  display: block;
+  color: var(--red);
+  font-style: italic;
+}
+
+.front-window__manifesto {
+  max-width: 28rem;
+  margin: 2rem auto 0;
+  color: rgba(251, 247, 237, 0.72);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+  font-style: italic;
+  text-align: center;
+}
+
+.enter-link {
+  width: max-content;
+  border-bottom: 1px solid var(--paper-light);
+  padding-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.enter-link span {
+  margin-left: 0.75rem;
+}
+
+.front-window__stamp {
+  position: absolute;
+  right: clamp(2rem, 5vw, 5rem);
+  bottom: clamp(2rem, 5vw, 5rem);
+  display: grid;
+  width: 10rem;
+  height: 10rem;
+  place-content: center;
+  border: 1px solid rgba(239, 231, 211, 0.4);
+  border-radius: 50%;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(-8deg);
+}
+
+.front-window__stamp strong {
+  margin: 0.35rem 0;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.1rem;
+}
+
+.research-key {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 2rem;
+  padding: 2.5rem max(1.25rem, calc((100vw - var(--max)) / 2));
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-deep);
+}
+
+.research-key h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.research-key p {
+  margin-bottom: 0;
+}
+
+.research-key__labels {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.evidence-pill {
+  display: inline-flex;
+  width: max-content;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid currentColor;
+  border-radius: 100px;
+  padding: 0.28rem 0.55rem;
+  color: var(--ink-soft);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.evidence-pill__dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.evidence-pill--verified {
+  color: var(--green);
+}
+
+.evidence-pill--probable {
+  color: #3f6357;
+}
+
+.evidence-pill--needs-confirmation {
+  color: #765517;
+}
+
+.evidence-pill--anecdotal {
+  color: #8a4a1e;
+}
+
+.evidence-pill--placeholder {
+  color: #785a55;
+}
+
+.museum-section,
+.ziggy-room,
+.principals,
+.visit-finale,
+.research-key {
+  scroll-margin-top: 4.25rem;
+}
+
+.museum-section {
+  background: var(--paper);
+}
+
+.museum-section--ink {
+  color: var(--paper-light);
+  background: var(--ink);
+}
+
+.museum-section--red {
+  color: var(--paper-light);
+  background: var(--red-dark);
+}
+
+.museum-section--ink .evidence-pill,
+.museum-section--red .evidence-pill {
+  color: inherit;
+  opacity: 0.72;
+}
+
+.museum-section__inner {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 10rem) 1.25rem;
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(4rem, 0.28fr) 1fr;
+  gap: 1rem;
+  margin-bottom: clamp(3rem, 7vw, 7rem);
+}
+
+.section-heading__index {
+  margin: 0;
+  color: var(--red);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.museum-section--ink .section-heading__index,
+.museum-section--red .section-heading__index {
+  color: var(--gold);
+}
+
+.section-heading__intro {
+  max-width: 44rem;
+  margin: 1.75rem 0 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+}
+
+.timeline {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.timeline__entry {
+  display: grid;
+  grid-template-columns: minmax(5rem, 0.28fr) minmax(16rem, 1fr) minmax(12rem, 0.72fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  border-top: 1px solid var(--line);
+  padding: 2rem 0 4rem;
+}
+
+.timeline__year {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline__content > p:not(.eyebrow) {
+  max-width: 42rem;
+  color: var(--ink-soft);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.15rem;
+}
+
+.source-links {
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style: none;
+}
+
+.source-links a {
+  font-size: 0.72rem;
+}
+
+.archive-placeholder {
+  display: grid;
+  min-height: 15rem;
+  align-content: center;
+  justify-items: center;
+  border: 1px dashed currentColor;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.035);
+  text-align: center;
+}
+
+.archive-placeholder__mark {
+  color: var(--red);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.museum-section--ink .archive-placeholder__mark,
+.museum-section--red .archive-placeholder__mark {
+  color: var(--gold);
+}
+
+.archive-placeholder__type {
+  margin: 0.8rem 0 0.3rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.archive-placeholder > p:not(.archive-placeholder__type) {
+  margin-bottom: 1rem;
+  font-family: var(--font-serif), Georgia, serif;
+}
+
+.archive-placeholder figcaption {
+  margin-bottom: 1rem;
+  font-size: 0.68rem;
+  font-style: italic;
+}
+
+.archive-media__frame {
+  position: relative;
+  min-height: 22rem;
+}
+
+.archive-media__frame img {
+  object-fit: cover;
+}
+
+.specimen-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid rgba(239, 231, 211, 0.28);
+}
+
+.specimen-card {
+  min-height: 21rem;
+  border: 1px solid rgba(239, 231, 211, 0.18);
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.specimen-card__label {
+  color: var(--gold);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.specimen-card h3 {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+}
+
+.specimen-card > p:not(.specimen-card__label) {
+  max-width: 30rem;
+  color: rgba(251, 247, 237, 0.7);
+}
+
+.display-quote {
+  max-width: 16ch;
+  margin: 8rem auto 2rem;
+  color: var(--paper-light);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  font-style: italic;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-align: center;
+}
+
+.ledger {
+  border-top: 2px solid var(--ink);
+}
+
+.ledger__head,
+.ledger__row {
+  display: grid;
+  grid-template-columns: 0.4fr 1.15fr 1.1fr 2fr 0.9fr;
+  gap: 1.5rem;
+}
+
+.ledger__head {
+  border-bottom: 1px solid var(--line);
+  padding: 0.8rem 0;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ledger__row {
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  padding: 1.5rem 0;
+}
+
+.ledger__row > div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.ledger__row span,
+.ledger__row p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.ledger__number {
+  color: var(--red);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2rem;
+}
+
+.ledger__unknown {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+}
+
+.ledger__mobile-label {
+  display: none;
+}
+
+.ledger-note {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  margin-top: 3rem;
+  border-left: 4px solid var(--gold);
+  padding: 1.5rem;
+  background: rgba(214, 168, 75, 0.14);
+}
+
+.ledger-note p {
+  margin: 0;
+}
+
+.lineage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(251, 247, 237, 0.3);
+}
+
+.lineage__entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.75fr) 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--red-dark);
+}
+
+.lineage__role {
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+.ziggy-room {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  scroll-margin-top: 4.25rem;
+  padding: clamp(5rem, 10vw, 10rem) max(1.25rem, calc((100vw - var(--max)) / 2));
+  color: var(--paper-light);
+  background:
+    linear-gradient(rgba(23, 20, 15, 0.74), rgba(23, 20, 15, 0.74)),
+    repeating-linear-gradient(90deg, #4a291d 0, #4a291d 24px, #392015 25px, #392015 48px);
+}
+
+/*
+ * Ambient only. It must never compete with the cabinet, so it is heavily
+ * knocked back and veiled — the room should read as atmosphere, not as a
+ * second picture of Ziggy above the real one.
+ */
+.ziggy-room__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ziggy-room__ambient::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: radial-gradient(85% 60% at 50% 40%, rgba(23, 16, 10, 0.55), rgba(16, 11, 7, 0.94) 78%);
+}
+
+.ziggy-room__ambient img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 26%;
+  opacity: 0.5;
+  filter: saturate(0.7);
+}
+
+.ziggy-room__intro {
+  display: grid;
+  grid-template-columns: minmax(4rem, 0.28fr) 1fr minmax(10rem, 0.5fr);
+  gap: 1rem clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-bottom: 4rem;
+}
+
+.ziggy-room__plate {
+  margin: 0;
+}
+
+.ziggy-room__plate img {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(184, 141, 71, 0.4);
+}
+
+.ziggy-room__plate figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.68rem;
+  opacity: 0.6;
+}
+
+.ziggy-room__intro h2 {
+  color: var(--gold);
+}
+
+.ziggy-room__intro > div > p:last-child {
+  max-width: 40rem;
+}
+
+.people-grid {
+  display: grid;
+  gap: 5rem;
+}
+
+.person-card {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.8fr) 1fr;
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: center;
+}
+
+.person-card:nth-child(even) .archive-placeholder {
+  grid-column: 2;
+}
+
+.person-card:nth-child(even) .person-card__copy {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.person-card__role {
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+.person-card__copy > p:not(.eyebrow, .person-card__role) {
+  max-width: 34rem;
+  color: rgba(251, 247, 237, 0.7);
+}
+
+.community-list {
+  border-top: 1px solid var(--line);
+}
+
+.community-item {
+  display: grid;
+  grid-template-columns: 0.35fr 2fr 0.8fr;
+  gap: 2rem;
+  align-items: start;
+  border-bottom: 1px solid var(--line);
+  padding: 2rem 0;
+}
+
+.community-item__index {
+  color: var(--red);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2rem;
+}
+
+.community-item h3 {
+  margin-bottom: 0.5rem;
+}
+
+.visit-finale {
+  display: flex;
+  min-height: 92svh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.25rem 2rem;
+  color: var(--ink);
+  background: var(--gold);
+  text-align: center;
+}
+
+.visit-finale h2 {
+  max-width: 11ch;
+}
+
+.visit-finale address {
+  display: grid;
+  margin: 2rem 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+.visit-finale a {
+  border: 2px solid var(--ink);
+  padding: 0.85rem 1.15rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.visit-finale__last-line {
+  margin: 3rem 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-style: italic;
+}
+
+.visit-finale__credit {
+  margin-top: auto;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.utility-page {
+  display: grid;
+  min-height: 100svh;
+  place-content: center;
+  padding: 2rem;
+  color: var(--paper-light);
+  background: var(--ink);
+  text-align: center;
+}
+
+.utility-page h1 {
+  max-width: 14ch;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.92;
+}
+
+.utility-page a,
+.utility-page button {
+  justify-self: center;
+  border: 1px solid var(--gold);
+  padding: 0.75rem 1rem;
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+   ------------------------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Front window — bulbs and the mornings counter
+   ------------------------------------------------------------------------ */
+
+.front-window__bulbs {
+  position: absolute;
+  top: 1.1rem;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.6rem, 3vw, 1.6rem);
+}
+
+.front-window__bulbs span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: bulb 2.4s ease-in-out infinite;
+  box-shadow: 0 0 0.75rem rgba(214, 168, 75, 0.65);
+}
+
+@keyframes bulb {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.mornings-counter {
+  max-width: 26rem;
+  border-top: 1px solid rgba(239, 231, 211, 0.25);
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  padding-top: 1rem;
+}
+
+.mornings-counter__number {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+  line-height: 1;
+}
+
+.mornings-counter__number span {
+  color: var(--gold);
+}
+
+.mornings-counter__caveat {
+  margin-bottom: 0.6rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  opacity: 0.62;
+}
+
+/* ---------------------------------------------------------------------------
+   Research key
+   ------------------------------------------------------------------------ */
+
+.research-key {
+  grid-template-columns: 1fr 1.15fr;
+  align-items: start;
+}
+
+.research-key__statement p {
+  max-width: 34rem;
+  margin-bottom: 0;
+}
+
+.research-key__legend {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.research-key__legend > div {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+
+.research-key__legend dt {
+  margin: 0;
+}
+
+.research-key__legend dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Timeline additions
+   ------------------------------------------------------------------------ */
+
+.timeline__chapter {
+  margin: 0.35rem 0 0;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.timeline__story {
+  margin: 0.75rem 0 1rem;
+  border-left: 2px solid var(--red);
+  padding-left: 1rem;
+}
+
+.timeline__story summary {
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.timeline__story p {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.timeline__note,
+.timeline__artefacts {
+  margin: 0.6rem 0 0;
+  font-size: 0.76rem;
+  opacity: 0.68;
+}
+
+.timeline__artefacts a {
+  font-variant-numeric: tabular-nums;
+}
+
+.source-links__retrieved {
+  opacity: 0.6;
+}
+
+.archive-media__credit {
+  display: block;
+  font-size: 0.68rem;
+  opacity: 0.66;
+}
+
+/* ---------------------------------------------------------------------------
+   Luck ledger
+   ------------------------------------------------------------------------ */
+
+.ledger__rows {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ledger__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ledger__cell p {
+  margin: 0;
+}
+
+.ledger__cell--story blockquote {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+}
+
+.ledger__cell--story cite {
+  display: block;
+  font-size: 0.72rem;
+  font-style: normal;
+  opacity: 0.7;
+}
+
+.ledger__row[data-complete="false"] {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 9px,
+    rgba(23, 20, 15, 0.045) 9px,
+    rgba(23, 20, 15, 0.045) 18px
+  );
+}
+
+.ledger-note ul {
+  padding: 0;
+  margin: 1rem 0 0;
+  list-style: none;
+}
+
+.ledger-note li + li {
+  border-top: 1px solid var(--line);
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Monkey succession
+   ------------------------------------------------------------------------ */
+
+.succession {
+  margin-top: clamp(4rem, 8vw, 7rem);
+}
+
+.succession__title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: var(--font-sans), Arial, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.succession__line {
+  margin: 0.5rem 0 2.5rem;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 3.2rem);
+  letter-spacing: -0.03em;
+}
+
+.succession__line b {
+  font-weight: 400;
+  opacity: 0.45;
+}
+
+.lineage {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.lineage__entry[data-status="unconfirmed"] {
+  border-style: dashed;
+  opacity: 0.85;
+}
+
+.lineage__entry h4 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.lineage__aliases {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.lineage__questions {
+  margin: 0.75rem 0 1rem;
+}
+
+.lineage__questions summary {
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lineage__questions ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Ask Ziggy — the cabinet
+   ------------------------------------------------------------------------ */
+
+/* The ticket itself */
+
+.ziggy-noscript {
+  width: min(100%, 46rem);
+  border: 1px solid rgba(214, 168, 75, 0.4);
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+}
+
+.ziggy-noscript ul {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.ziggy-noscript li {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   The counter
+   ------------------------------------------------------------------------ */
+
+.counter-scene {
+  position: relative;
+}
+
+.counter-scene__surface {
+  height: 1.75rem;
+  background: linear-gradient(180deg, #6b4225, #3d2413);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.counter-objects {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  align-items: start;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.counter-object {
+  height: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper-light);
+}
+
+.counter-object > summary {
+  display: flex;
+  min-width: 6rem;
+  min-height: 6rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem;
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+}
+
+.counter-object > summary::-webkit-details-marker {
+  display: none;
+}
+
+.counter-object[open] > summary {
+  color: var(--paper-light);
+  background: var(--red-dark);
+}
+
+.counter-object__glyph {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.counter-object__label {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.counter-object__panel {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem;
+}
+
+.counter-object__hint {
+  max-width: 40rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.1rem;
+}
+
+/*
+ * The grid items are the list items, not the <details> inside them, so the
+ * row-spanning rule has to sit on the parent.
+ */
+.counter-objects > li:has(> .counter-object[open]) {
+  grid-column: 1 / -1;
+}
+
+.memory-list {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  list-style: none;
+}
+
+.memory {
+  border-left: 2px solid var(--red);
+  padding-left: 1rem;
+}
+
+.memory[data-recorded="false"] {
+  border-left-style: dotted;
+  border-left-color: rgba(23, 20, 15, 0.35);
+}
+
+.memory blockquote {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.memory__prompt {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  opacity: 0.82;
+}
+
+.memory__attribution {
+  margin: 0 0 0.5rem;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.counter-loose {
+  border-top: 1px solid var(--line);
+  margin-top: 3rem;
+  padding-top: 2rem;
+}
+
+.counter-loose h3 {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   The gang
+   ------------------------------------------------------------------------ */
+
+.person-card__nickname {
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.person-card__years,
+.person-card__whereabouts {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.person-card__prompt {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.person-card__labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.permission-pill {
+  display: inline-flex;
+  width: max-content;
+  border: 1px dashed currentColor;
+  border-radius: 100px;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+
+.permission-pill--granted {
+  border-style: solid;
+}
+
+.people-grid__note {
+  max-width: 40rem;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.community-item__copy h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   The object archive
+   ------------------------------------------------------------------------ */
+
+.archive-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  border-block: 1px solid var(--line);
+  margin: 0 0 3.5rem;
+  padding: 1.25rem 0;
+}
+
+.archive-summary dt {
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.archive-summary dd {
+  margin: 0.25rem 0 0;
+  color: var(--red);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2.4rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.archive-group {
+  margin-bottom: 4rem;
+}
+
+.archive-group__title {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.artefact-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.artefact-card {
+  display: grid;
+  height: 100%;
+  align-content: start;
+  border: 1px solid var(--line);
+  background: var(--paper-light);
+}
+
+.artefact-card[data-holding="lost"] {
+  border-style: dashed;
+  background: transparent;
+}
+
+.artefact-card .archive-placeholder,
+.artefact-card .archive-media {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  margin: 0;
+}
+
+.artefact-card__copy {
+  padding: 1.25rem;
+}
+
+.artefact-card__catalogue {
+  margin: 0 0 0.35rem;
+  color: var(--red);
+  font-size: 0.62rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+
+.artefact-card h4 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.artefact-card__fields {
+  display: grid;
+  gap: 0.3rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  margin: 0 0 1rem;
+  border-block: 1px solid var(--line);
+  padding: 0.75rem 0;
+}
+
+.artefact-card__fields dt {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.artefact-card__fields dd {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+}
+
+.artefact-card__description {
+  font-size: 0.9rem;
+}
+
+.artefact-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0;
+  margin: 0 0 0.85rem;
+  list-style: none;
+}
+
+.artefact-card__tags li {
+  border: 1px solid var(--line);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  opacity: 0.75;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   Rob + Carla
+   ------------------------------------------------------------------------ */
+
+.principals {
+  color: var(--paper-light);
+  background: #0d0c0a;
+}
+
+.principals__inner {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 10rem) 1.25rem;
+}
+
+.principals h2 {
+  max-width: 20ch;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.principals__grid {
+  display: grid;
+  gap: clamp(2rem, 6vw, 5rem);
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.principal h3 {
+  margin: 1.5rem 0 0.35rem;
+}
+
+.principal__role {
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.principal__prompt,
+.principal > p {
+  max-width: 34rem;
+  color: rgba(251, 247, 237, 0.7);
+  font-size: 0.95rem;
+}
+
+.principals__close {
+  max-width: 42rem;
+  margin-top: clamp(3rem, 7vw, 6rem);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+}
+
+.principals__last-line {
+  display: block;
+  color: var(--gold);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.04em;
+}
+
+.principals__note {
+  margin-top: 2rem;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .site-nav__brand span:last-child {
+    display: none;
+  }
+
+  .research-key,
+  .timeline__entry,
+  .lineage {
+    grid-template-columns: 1fr;
+  }
+
+  .research-key {
+    padding-inline: 1.25rem;
+  }
+
+  .research-key__legend > div {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .timeline__entry {
+    gap: 1rem;
+  }
+
+  .timeline__entry > .archive-placeholder {
+    margin-top: 1rem;
+  }
+
+  .lineage__entry {
+    grid-template-columns: minmax(10rem, 0.7fr) 1fr;
+  }
+
+  .ledger__head {
+    display: none;
+  }
+
+  .ledger__row {
+    grid-template-columns: 0.3fr repeat(2, 1fr);
+  }
+
+  .ledger__cell--story,
+  .ledger__row > div:last-child {
+    grid-column: 2 / -1;
+  }
+
+  .ledger__mobile-label {
+    display: block;
+    margin-bottom: 0.25rem !important;
+    font-size: 0.55rem !important;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-nav__links a {
+    padding: 0 0.75rem;
+  }
+
+  .front-window {
+    min-height: 100svh;
+    padding: 3.5rem 1.25rem 2rem;
+  }
+
+  .front-window__stamp {
+    display: none;
+  }
+
+  .front-window h1 {
+    font-size: clamp(4.5rem, 24vw, 8rem);
+  }
+
+  .section-heading,
+  .ziggy-room__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .specimen-grid,
+  .person-card,
+  .lineage__entry,
+  .community-item,
+  .ledger-note {
+    grid-template-columns: 1fr;
+  }
+
+  .specimen-card {
+    min-height: 17rem;
+  }
+
+  .lineage__entry {
+    padding: 1.25rem;
+  }
+
+  .ledger__row {
+    grid-template-columns: 3rem 1fr;
+  }
+
+  .ledger__row > div {
+    grid-column: 2;
+  }
+
+  .counter-objects {
+    gap: 0.5rem;
+  }
+
+  .counter-object > summary {
+    min-width: 4.5rem;
+    min-height: 4.5rem;
+    padding: 0.6rem;
+  }
+
+  .person-card:nth-child(even) .archive-placeholder,
+  .person-card:nth-child(even) .person-card__copy {
+    grid-row: auto;
+    grid-column: auto;
+  }
+
+  .community-item {
+    gap: 0.75rem;
+  }
+
+  .archive-summary {
+    gap: 1.5rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion and print
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Ask Ziggy — the cabinet
+   ---------------------------------------------------------------------------
+   One convincing object: black lacquer, aged brass, warm bulbs, glass, a tray
+   and a lever. Everything interactive inside it is real HTML; the artwork sits
+   behind the controls, never in place of them.
+   ------------------------------------------------------------------------ */
+
+.fortune-machine {
+  position: relative;
+  max-width: 56rem;
+  margin: 0 auto;
+  border: 0.5rem solid #17110c;
+  border-radius: 1.6rem 1.6rem 0.4rem 0.4rem;
+  padding: 0.9rem;
+  background: linear-gradient(168deg, #3a2415, #1b1009 46%, #35200f);
+  box-shadow:
+    0 2rem 4rem rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px rgba(184, 141, 71, 0.55);
+}
+
+.fortune-machine__bulbs {
+  position: absolute;
+  top: 0.5rem;
+  right: 1.4rem;
+  left: 1.4rem;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fortune-machine__bulbs span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: rgba(214, 168, 75, 0.22);
+  box-shadow: none;
+  transition: background 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* Idle: a slow, low pulse. The machine is on but not paying attention. */
+.fortune-machine[data-machine-state="idle"] .fortune-machine__bulbs span {
+  background: rgba(214, 168, 75, 0.5);
+  animation: bulb 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--bulb) * 0.16s);
+}
+
+/* Waking: bulbs snap on one at a time, left to right. */
+.fortune-machine[data-machine-state="waking"] .fortune-machine__bulbs span {
+  animation: bulb-snap 0.6s steps(1, end) forwards;
+  animation-delay: calc(var(--bulb) * 0.04s);
+}
+
+.fortune-machine[data-machine-state="thinking"] .fortune-machine__bulbs span,
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__bulbs span {
+  background: var(--gold);
+  box-shadow: 0 0 0.8rem rgba(214, 168, 75, 0.7);
+}
+
+/* Issuing: the lights dip as the mechanism draws current, then come back. */
+.fortune-machine[data-machine-state="issuing"] .fortune-machine__bulbs span {
+  animation: bulb-dip 0.48s ease-in-out;
+  background: var(--gold);
+  box-shadow: 0 0 1.1rem rgba(214, 168, 75, 0.9);
+}
+
+@keyframes bulb-snap {
+  from {
+    background: rgba(214, 168, 75, 0.18);
+    box-shadow: none;
+  }
+  to {
+    background: var(--gold);
+    box-shadow: 0 0 0.8rem rgba(214, 168, 75, 0.7);
+  }
+}
+
+@keyframes bulb-dip {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  22% {
+    opacity: 0.1;
+  }
+  46% {
+    opacity: 1;
+  }
+}
+
+.fortune-machine__top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  border: 1px solid rgba(184, 141, 71, 0.5);
+  border-radius: 1.1rem 1.1rem 0 0;
+  padding: 1.5rem 1.25rem 1rem;
+  color: var(--gold);
+  background: #100a06;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fortune-machine__top strong {
+  color: var(--paper-light);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-shadow: 0 0 2rem rgba(214, 168, 75, 0.45);
+}
+
+.fortune-machine__cabinet {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: 0.92fr 1fr;
+  grid-template-areas:
+    "glass controls"
+    "glass tray";
+  align-content: start;
+  border: 1px solid rgba(184, 141, 71, 0.45);
+  border-top: 0;
+  padding: 1.1rem;
+  background: #0d0906;
+}
+
+.fortune-machine__glass {
+  grid-area: glass;
+}
+
+.fortune-machine__controls {
+  grid-area: controls;
+}
+
+.fortune-tray {
+  grid-area: tray;
+}
+
+/* --- the glass ---------------------------------------------------------- */
+
+.fortune-machine__glass {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  border: 1px solid rgba(184, 141, 71, 0.4);
+  padding: 0.9rem;
+  background: radial-gradient(120% 90% at 50% 20%, #2a1a0c, #080604 72%);
+  box-shadow: inset 0 0 4rem rgba(0, 0, 0, 0.85);
+}
+
+.fortune-machine__scene {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  place-items: end center;
+  border: 1px solid rgba(184, 141, 71, 0.3);
+  background: #060403;
+  /* Reserve the frame before the artwork arrives: no layout shift. */
+  aspect-ratio: 3 / 4;
+}
+
+/* The lit interior of the cabinet, built in CSS so it can react to state. */
+.fortune-machine__interior {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(72% 52% at 50% 34%, rgba(214, 168, 75, 0.5), transparent 70%),
+    repeating-linear-gradient(90deg, #2a1a0e 0 14px, #23150b 14px 28px);
+  transition: opacity 0.5s ease;
+  opacity: 0.45;
+}
+
+.fortune-machine__shelf {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 8%;
+  background: linear-gradient(180deg, #6b4225, #2e1b0e);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/*
+ * `contain`, never `cover`: Ziggy is the subject, and cropping him into an
+ * abstract at narrow widths is exactly the failure this layout exists to avoid.
+ */
+.fortune-machine__ziggy {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: auto;
+  max-width: 92%;
+  height: 94%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: brightness(0.5) saturate(0.85);
+  transition:
+    filter 0.5s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: bottom center;
+}
+
+.fortune-machine[data-machine-state="waking"] .fortune-machine__ziggy {
+  filter: brightness(0.78) saturate(0.95);
+  transform: scale(1.01);
+}
+
+.fortune-machine[data-machine-state="waking"] .fortune-machine__interior {
+  opacity: 0.7;
+}
+
+.fortune-machine[data-machine-state="thinking"] .fortune-machine__interior,
+.fortune-machine[data-machine-state="issuing"] .fortune-machine__interior,
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__interior {
+  opacity: 1;
+}
+
+.fortune-machine[data-machine-state="thinking"] .fortune-machine__ziggy {
+  filter: brightness(0.9);
+  transform: scale(1.025);
+}
+
+.fortune-machine[data-machine-state="issuing"] .fortune-machine__ziggy {
+  filter: brightness(1.02);
+  transform: scale(1.045);
+}
+
+/* Revealed: he has leaned in and is looking straight at you. */
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__ziggy {
+  filter: brightness(1) saturate(1);
+  /* He has come forward and is looking straight at you. */
+  transform: scale(1.06);
+}
+
+.fortune-machine__glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    118deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.03) 22%,
+    transparent 42%
+  );
+}
+
+.fortune-machine__plate {
+  margin: 0;
+  border: 1px solid rgba(184, 141, 71, 0.45);
+  padding: 0.55rem;
+  color: var(--gold);
+  background: #0a0705;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fortune-machine[data-machine-state="revealed"] .fortune-machine__plate {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+.fortune-machine__dial {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fortune-machine__dial li {
+  border: 1px solid rgba(214, 168, 75, 0.25);
+  padding: 0.2rem 0.45rem;
+  color: rgba(239, 231, 211, 0.42);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.fortune-machine__dial li[data-active="true"] {
+  color: var(--ink);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+/* --- controls ----------------------------------------------------------- */
+
+.fortune-machine__controls {
+  display: grid;
+  gap: 1rem;
+}
+
+.fortune-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fortune-form__controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+
+.fortune-form input {
+  min-height: 3rem;
+  border: 1px solid rgba(184, 141, 71, 0.55);
+  padding: 0 0.9rem;
+  color: var(--paper-light);
+  background: #0a0705;
+  font-size: 1rem;
+}
+
+.fortune-form input::placeholder {
+  color: rgba(239, 231, 211, 0.4);
+}
+
+.fortune-lever {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid #8a6a2a;
+  padding: 0 1.5rem;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e6c377, #b3873a);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+
+.fortune-lever:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.fortune-lever:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.fortune-lever:disabled {
+  cursor: progress;
+  filter: saturate(0.5) brightness(0.8);
+}
+
+.fortune-lever__knob {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: #4a2f12;
+  box-shadow: inset 0 -2px 2px rgba(255, 255, 255, 0.35);
+  transition: transform 0.18s ease;
+}
+
+.fortune-machine[data-machine-state="issuing"] .fortune-lever__knob {
+  transform: translateY(0.35rem);
+}
+
+.question-chips__label {
+  margin: 0 0 0.5rem;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.question-chips ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.question-chips button {
+  border: 1px solid rgba(239, 231, 211, 0.28);
+  border-radius: 100px;
+  padding: 0.45rem 0.8rem;
+  color: var(--paper-light);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.question-chips button:hover:not(:disabled) {
+  color: var(--ink);
+  background: var(--paper-light);
+}
+
+.question-chips button:disabled {
+  cursor: progress;
+  opacity: 0.45;
+}
+
+/* --- the tray ------------------------------------------------------------
+   The statue holds a silver tray, so the fortune is delivered onto one rather
+   than appearing under a form.
+   ------------------------------------------------------------------------ */
+
+.fortune-tray {
+  position: relative;
+  border: 1px solid rgba(184, 141, 71, 0.35);
+  padding: 0.9rem;
+  background: #0a0705;
+}
+
+.fortune-tray__rim {
+  height: 0.5rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+  background: linear-gradient(180deg, #0a0908 0%, #050403 60%, #23180e 100%);
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.95),
+    0 1px 0 rgba(214, 168, 75, 0.35);
+}
+
+.fortune-tray__surface {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  /* Brushed metal, the same silver as the real tray. */
+  border-radius: 46% / 12%;
+  padding: 1.6rem 1.2rem;
+  background:
+    linear-gradient(101deg, #ffffff14 0%, transparent 32%),
+    linear-gradient(180deg, #cfcfcd, #8f9092 46%, #b9bab8);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.35),
+    inset 0 -1rem 2rem rgba(0, 0, 0, 0.3),
+    0 1rem 2rem rgba(0, 0, 0, 0.45);
+}
+
+.fortune-tray__empty,
+.fortune-tray__status {
+  max-width: 20rem;
+  margin: 0;
+  color: #3a3a38;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.fortune-tray__status {
+  color: #241a10;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.fortune-machine[data-machine-state="issuing"] .fortune-tray__surface {
+  animation: tray-shunt 0.48s ease-out;
+}
+
+.fortune-machine[data-machine-state="revealed"] .fortune-card {
+  animation: ticket-out 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tray-shunt {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(0.3rem);
+  }
+}
+
+@keyframes ticket-out {
+  from {
+    opacity: 0;
+    transform: translateY(-1.4rem) rotate(-1.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-0.8deg);
+  }
+}
+
+.fortune-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.fortune-actions button {
+  border: 1px solid rgba(214, 168, 75, 0.55);
+  padding: 0.6rem 1rem;
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fortune-actions button:hover {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+/* --- the ticket ----------------------------------------------------------
+   Carries its own light palette so it reads as paper on the dark cabinet and
+   still prints correctly on white.
+   ------------------------------------------------------------------------ */
+
+.fortune-card {
+  position: relative;
+  width: min(100%, 24rem);
+  padding: 1.25rem 1.35rem 1.1rem;
+  color: #17140f;
+  background: #f6efdd;
+  box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.35);
+  transform: rotate(-0.8deg);
+}
+
+.fortune-card__rule {
+  position: absolute;
+  inset: 0.4rem;
+  border: 1px solid rgba(23, 20, 15, 0.45);
+  outline: 1px solid rgba(23, 20, 15, 0.18);
+  outline-offset: 2px;
+  pointer-events: none;
+}
+
+.fortune-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid rgba(23, 20, 15, 0.3);
+  padding-bottom: 0.6rem;
+}
+
+.fortune-card__seal {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  flex: none;
+}
+
+.fortune-card__brand {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.fortune-card__sub {
+  margin: 0.1rem 0 0;
+  font-size: 0.55rem;
+  letter-spacing: 0.11em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.fortune-card__question {
+  margin: 0.85rem 0 0.6rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 0.92rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.fortune-card__says {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.fortune-card__answer {
+  display: block;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.fortune-card__kicker {
+  margin: 0.5rem 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.fortune-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.25rem;
+  border-top: 1px dashed rgba(23, 20, 15, 0.4);
+  margin: 0;
+  padding-top: 0.7rem;
+}
+
+.fortune-card__meta dt {
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.fortune-card__meta dd {
+  margin: 0.15rem 0 0;
+  font-size: 0.74rem;
+}
+
+.fortune-card__serial {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.fortune-card__smallprint {
+  margin: 0.7rem 0 0;
+  font-size: 0.46rem;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  text-transform: uppercase;
+}
+
+.ziggy-noscript {
+  width: min(100%, 46rem);
+  border: 1px solid rgba(214, 168, 75, 0.4);
+  margin: 2rem auto 0;
+  padding: 1.5rem;
+}
+
+.ziggy-noscript ul {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.ziggy-noscript li {
+  margin-bottom: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Ziggy Says — the board
+   ------------------------------------------------------------------------ */
+
+.board-room {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(16rem, 0.85fr) 1fr;
+  align-items: center;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.board-room__scene {
+  margin: 0;
+}
+
+.board-room__scene img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+.board-room__scene figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.72rem;
+  opacity: 0.65;
+}
+
+.board-room__mark {
+  margin: 0 0 1rem;
+}
+
+.board-room__mark img {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+}
+
+.board-room__reference {
+  max-width: 15rem;
+  margin: 1.75rem 0 0;
+}
+
+.board-room__reference img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+.board-room__reference figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.68rem;
+  font-style: normal;
+  opacity: 0.6;
+}
+
+.board-room__copy p {
+  max-width: 34rem;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.05rem, 1.9vw, 1.35rem);
+}
+
+.board-room__aside {
+  font-size: 0.9rem !important;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.board-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.board-section__title {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.board-section__lede {
+  max-width: 44rem;
+  margin-bottom: 2rem;
+  font-size: 0.92rem;
+  opacity: 0.8;
+}
+
+.board-examples {
+  border-top: 1px solid var(--line);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+/*
+ * Example artwork is held at arm's length from the archive: dashed frame, a
+ * corner stamp and its own pill, so it can never be skim-read as a record.
+ */
+.board[data-kind="example"] .board__frame {
+  outline: 2px dashed var(--red);
+  outline-offset: 4px;
+}
+
+.board__stamp {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  color: var(--paper-light);
+  background: var(--red);
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.interpretive-pill {
+  display: inline-flex;
+  width: max-content;
+  align-items: center;
+  border: 1px solid var(--red);
+  border-radius: 100px;
+  padding: 0.28rem 0.55rem;
+  color: var(--red);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.board__frame {
+  position: relative;
+}
+
+.board__surface {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/*
+ * The board artwork is a frame. Every word on it is real text placed over the
+ * top, so it stays selectable, translatable and legible to a screen reader.
+ */
+.board__written {
+  position: absolute;
+  top: 26%;
+  right: 9%;
+  bottom: 10%;
+  left: 9%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.board__eyebrow {
+  margin: 0;
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  opacity: 0;
+  text-transform: uppercase;
+}
+
+.board__line {
+  margin: 0;
+  color: #1b1b1b;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.board__empty {
+  margin: 0;
+  color: rgba(27, 27, 27, 0.3);
+  font-size: 2rem;
+}
+
+.board[data-written="false"] .board__frame {
+  opacity: 0.72;
+}
+
+.board__meta {
+  display: grid;
+  justify-items: start;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+}
+
+.board__date,
+.board__flourish,
+.board__note {
+  margin: 0;
+  font-size: 0.74rem;
+  opacity: 0.7;
+}
+
+.board__flourish {
+  font-style: italic;
+}
+
+/* ---------------------------------------------------------------------------
+   The bridge from the board to the machine
+   ------------------------------------------------------------------------ */
+
+.bridge {
+  color: var(--paper-light);
+  background: linear-gradient(180deg, #100b07, #1c1109);
+}
+
+.bridge__inner {
+  display: grid;
+  width: min(100%, var(--max));
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(11rem, 0.5fr) 1fr;
+  align-items: center;
+  margin: 0 auto;
+  padding: clamp(4rem, 8vw, 7rem) 1.25rem;
+}
+
+.bridge__figure img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 1.5rem 2rem rgba(0, 0, 0, 0.6));
+}
+
+.bridge__copy h2 {
+  max-width: 18ch;
+  color: var(--gold);
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
+}
+
+.bridge__copy > p {
+  max-width: 40rem;
+  color: rgba(251, 247, 237, 0.78);
+}
+
+.bridge__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--gold);
+  padding: 0.75rem 1.25rem;
+  color: var(--gold);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.bridge__cta:hover {
+  color: var(--ink);
+  background: var(--gold);
+}
+
+/* ---------------------------------------------------------------------------
+   Commemorative plate
+   ------------------------------------------------------------------------ */
+
+.commemorative {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-deep);
+}
+
+.commemorative__inner {
+  display: grid;
+  width: min(100%, var(--max));
+  gap: clamp(1.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(12rem, 0.42fr) 1fr;
+  align-items: center;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) 1.25rem;
+}
+
+.commemorative__frame {
+  border: 0.5rem solid var(--ink);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.25);
+}
+
+.commemorative__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.commemorative__copy h2 {
+  max-width: 20ch;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+}
+
+.commemorative__copy p {
+  max-width: 40rem;
+}
+
+.commemorative__note {
+  border-left: 2px solid var(--red);
+  padding-left: 0.85rem;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+/* ---------------------------------------------------------------------------
+   Visit finale — after hours
+   ------------------------------------------------------------------------ */
+
+.visit-finale {
+  position: relative;
+  overflow: hidden;
+}
+
+.visit-finale__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.visit-finale__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 38%;
+  opacity: 0.34;
+}
+
+.visit-finale__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — the machine must be usable, not decorative, at every width
+   ------------------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .board-room,
+  .bridge__inner,
+  .commemorative__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .fortune-machine__cabinet {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "glass"
+      "controls"
+      "tray";
+  }
+
+  .fortune-machine__scene {
+    aspect-ratio: 5 / 4;
+  }
+
+  .ziggy-room__intro {
+    grid-template-columns: minmax(3rem, 0.22fr) 1fr;
+  }
+
+  .ziggy-room__plate {
+    max-width: 18rem;
+    grid-column: 2;
+  }
+
+  .bridge__figure {
+    max-width: 15rem;
+  }
+
+  .commemorative__frame {
+    max-width: 22rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .fortune-machine {
+    border-width: 0.35rem;
+    padding: 0.6rem;
+  }
+
+  .fortune-machine__top {
+    grid-template-columns: 1fr;
+    padding: 1.75rem 0.75rem 0.85rem;
+  }
+
+  .fortune-machine__top span {
+    display: none;
+  }
+
+  .fortune-machine__cabinet {
+    padding: 0.7rem;
+  }
+
+  /* Keep Ziggy recognisable: contain, and give him room to stand. */
+  .fortune-machine__scene {
+    aspect-ratio: 4 / 5;
+  }
+
+  .fortune-machine__ziggy {
+    max-width: 86%;
+  }
+
+  .fortune-form__controls {
+    grid-template-columns: 1fr;
+  }
+
+  .fortune-tray__surface {
+    min-height: 0;
+    border-radius: 30% / 8%;
+    padding: 1rem 0.7rem;
+  }
+
+  .fortune-card {
+    width: calc(100% - 0.5rem);
+    padding: 1rem 1rem 0.9rem;
+    transform: none;
+  }
+
+  .fortune-card__meta {
+    gap: 0.6rem 1rem;
+  }
+
+  .board__written {
+    top: 24%;
+  }
+
+  .visit-finale__backdrop img {
+    opacity: 0.22;
+  }
+
+  .ziggy-room__ambient img {
+    opacity: 0.4;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion and print
+   ------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  /*
+   * Reduced motion must not cost information. The component already skips the
+   * sequence and reveals the ticket immediately; this makes sure the cabinet
+   * is fully lit in that state rather than sitting at its dim idle values.
+   */
+  .fortune-machine__ziggy {
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .fortune-machine__bulbs span {
+    background: var(--gold) !important;
+    box-shadow: 0 0 0.8rem rgba(214, 168, 75, 0.7) !important;
+  }
+}
+
+@media print {
+  .site-nav,
+  .skip-link,
+  .question-chips,
+  .fortune-form,
+  .fortune-actions,
+  .fortune-machine__bulbs,
+  .fortune-machine__dial,
+  .front-window__bulbs,
+  .visit-finale__backdrop {
+    display: none !important;
+  }
+
+  .front-window,
+  .museum-section,
+  .ziggy-room,
+  .bridge,
+  .principals,
+  .visit-finale {
+    min-height: 0;
+    break-inside: avoid;
+  }
+
+  /* The ticket is paper. It must never depend on a dark background printing. */
+  .fortune-card {
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /*
+   * "Print ticket" isolates the fortune. Visibility (rather than display)
+   * keeps the card's ancestors in the box tree, so the card can still be
+   * positioned on the page while everything around it stays blank.
+   */
+  body[data-printing="fortune"] * {
+    visibility: hidden;
+  }
+
+  body[data-printing="fortune"] .fortune-card,
+  body[data-printing="fortune"] .fortune-card * {
+    visibility: visible;
+  }
+
+  body[data-printing="fortune"] .fortune-card {
+    position: fixed;
+    top: 1.5cm;
+    left: 1.5cm;
+    width: 11cm;
+  }
+}
