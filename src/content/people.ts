@@ -4,8 +4,8 @@ import type { PersonRecord } from "./types";
  * Rob and Carla.
  *
  * The closing room, and the quietest one. No founder bios, no achievements
- * list. Carla's role and preferred credit must come from Carla — inferring
- * either would be exactly the mistake this project exists to avoid.
+ * list. Public records establish the family-business connection; personal
+ * meaning and preferred wording remain theirs.
  */
 export const principals: PersonRecord[] = [
   {
@@ -15,10 +15,10 @@ export const principals: PersonRecord[] = [
     years: "Thirty years",
     bio: "Named publicly as the agency's owner, and the voice in the record when the tenth Division One win was announced.",
     memoryPrompt:
-      "Ask Rob for the first morning, the strangest request ever made at this counter, and the one object he could never bring himself to throw out.",
+      "If he feels like it: one first-morning memory, one strange request or one object he would save.",
     evidence: {
       status: "verified",
-      sourceIds: ["lott-2026-tenth-win"],
+      sourceIds: ["cignall-2016-win", "lott-2026-tenth-win"],
       permission: "pending",
     },
     media: {
@@ -32,14 +32,15 @@ export const principals: PersonRecord[] = [
   {
     id: "carla",
     name: "Carla",
-    role: "Family business. Role and preferred credit to be confirmed by Carla.",
-    years: "Interview required",
+    role: "Co-owner of the family-run agency.",
+    years: "Publicly documented by 2016",
+    bio: "Named with Rob in the archived 2016 business history and the 2022 official lottery account.",
     memoryPrompt:
-      "Ask Carla what changed, what never did, and which single photograph tells the real story of the shop.",
+      "If she feels like it: the one photograph or person that best explains the shop.",
     evidence: {
-      status: "needs-confirmation",
-      note: "Named alongside Rob in research leads. Her role, credit and involvement should be described in her own words.",
-      sourceIds: ["interview-carla"],
+      status: "verified",
+      note: "Public sources document Carla's co-ownership and involvement. Personal stories and preferred wording remain hers.",
+      sourceIds: ["tobacco-blends-about-2016", "lott-2022-million"],
       permission: "pending",
     },
     media: {

@@ -4,6 +4,7 @@ import { EvidencePill } from "./evidence-pill";
 
 const statuses: EvidenceStatus[] = [
   "verified",
+  "strongly-supported",
   "probable",
   "needs-confirmation",
   "anecdotal",

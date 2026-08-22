@@ -12,7 +12,7 @@ the monkeys who ended up as a landmark.
 
 The working title is **The Monkey Shop — Thirty Years in Frankston**. The
 editorial alternative, kept alive in `src/content/identity.ts`, is
-**10,957 Mornings — Thirty Years Behind the Counter in Frankston**.
+**Roughly 11,000 Mornings — Thirty Years Behind the Counter in Frankston**.
 
 B$S is the curator here, not the subject.
 
@@ -22,11 +22,11 @@ B$S is the curator here, not the subject.
 
 Two things share the name.
 
-1. **Ziggy** (or Ziggie) is the original shopfront monkey, and the reason the
-   place gets called the Lucky Monkey Shop. He was stolen around 2015. Archie
-   is the monkey outside the shop today. Whether Archie is the direct
-   replacement or a later one is genuinely not established — see
-   `src/content/monkeys.ts`.
+1. **Ziggie** is the spelling in a dated disappearance/replacement news lead;
+   **Archie** is the name in dated shop/public material. The evidence does not
+   establish that either was the original, whether they are the same figure,
+   or how many figures existed. The exhibition spelling **Ziggy** belongs to
+   the fortune-machine concept — see `src/content/monkeys.ts`.
 2. **Ask Ziggy** is the site's fortune machine: a Zoltar cabinet run by a
    tobacconist's monkey, built on a handwritten fortune library and a
    deterministic selection engine. No language model runs at request time.
@@ -72,7 +72,7 @@ src/
   lib/
     evidence.ts       honesty-label rules
     fortune-engine.ts the Ziggy machine
-    mornings.ts       the "10,957 mornings" arithmetic
+    mornings.ts       legacy date helpers; the exhibition now shows an approximation
 tests/                content integrity, the engine, server-rendered structure
 public/archive/       approved images, documents and audio
 ```
@@ -109,7 +109,7 @@ Every file in `src/content/` exports typed data. Types live in
 
 | File | Holds |
 |------|-------|
-| `identity.ts` | Titles, thesis, address, the assumed first morning |
+| `identity.ts` | Titles, thesis, address, the approximate mornings device |
 | `sources.ts` | Every citation, by id |
 | `timeline.ts` | The 1996 → 2026 narrative |
 | `wins.ts` | The ten Division One slots, plus sourced-but-unplaced wins |
@@ -126,12 +126,13 @@ Every file in `src/content/` exports typed data. Types live in
 
 This is the part that matters most, and the part easiest to erode.
 
-Every claim carries an `Evidence` record with one of five statuses:
+Every claim carries an `Evidence` record with one of six statuses:
 
 | Status | Means | Renders as |
 |--------|-------|-----------|
 | `verified` | A source you can go and read | Documented |
-| `probable` | Strongly indicated, not yet pinned down | Probable |
+| `strongly-supported` | Substantially supported, with a stated source limit | Strongly supported |
+| `probable` | A reasonable inference, not yet pinned down | Probable |
 | `needs-confirmation` | A lead awaiting the archive or an interview | Needs confirming |
 | `anecdotal` | Told and believed locally, not documented | Local lore |
 | `placeholder` | An empty frame, kept empty on purpose | Archive slot |
@@ -142,7 +143,7 @@ That distinction is part of the exhibition, not an apology for it.
 
 Rules the tests enforce:
 
-- A `verified` record must cite at least one source that exists in
+- A `verified` or `strongly-supported` record must cite at least one source that exists in
   `sources.ts`.
 - Nothing unverified is ever classified as documented.
 - An incomplete Division One win can never be `verified` or `probable`.
@@ -173,7 +174,7 @@ on export.
   title: "The awning goes up",
   body: "One panel of text. This is what the visitor reads.",
   story: "Optional longer read, behind a <details>.",
-  evidence: { status: "verified", sourceIds: ["shop-ledger"] },
+  evidence: { status: "verified", sourceIds: ["dated-public-source"] },
   artefactIds: ["MS-2011-017"],   // must exist in artefacts.ts
 }
 ```
@@ -240,7 +241,7 @@ and permission, add the fragment — the component switches automatically:
   speakerRole: "rob",
   era: "2000s",
   objectId: "pencil",                            // must exist in counterObjects
-  evidence: { status: "verified", sourceIds: ["interview-rob"], permission: "granted" },
+  evidence: { status: "verified", sourceIds: ["recorded-memory-001"], permission: "granted" },
 }
 ```
 
@@ -263,13 +264,14 @@ and must be unique — `XXXX` is an honest statement that the object is undated.
   holding: "held",              // held | wanted | lost
   relatedIds: ["new-awning"],   // timeline, monkey, person or counter-object ids
   tags: ["signage", "shopfront"],
-  evidence: { status: "verified", sourceIds: ["shop-ledger"] },
+  evidence: { status: "verified", sourceIds: ["family-archive-001"] },
   media: { /* alt text and caption are required, filled or not */ },
 }
 ```
 
-`wanted` is the shopping list for Rob. `lost` is a real catalogue state — a
-museum records what it does not have.
+`wanted` is the curator's internal accession list, not homework for Rob or
+Carla. `lost` is a real catalogue state — a museum records what it does not
+have.
 
 ### A photograph
 
@@ -280,8 +282,8 @@ media: {
   id: "first-shopfront",
   kind: "image",
   src: "/archive/first-shopfront.jpg",
-  alt: "Rob outside the original Frankston shopfront in 1996",
-  caption: "Rob at 8 Thompson Street, 1996.",
+  alt: "Rob outside an early Frankston shopfront",
+  caption: "Rob at 8 Thompson Street, date to be confirmed.",
   credit: "Courtesy of the Macaro family.",
   evidence: { status: "verified", sourceIds: ["family-archive-001"] },
 }
@@ -310,38 +312,35 @@ become an afterthought when the images land.
 
 ---
 
-## What is still unverified
+## What remains unresolved
 
-Nothing below should be stated as fact on the public site until it is sourced.
+Public research now supplies the ABR chronology, a dated 2016 address-specific
+web record, documented services/catalogue categories, the 2016/2019/2022
+recoverable wins, the 2026 tenth win and one 2018 community example.
 
-**Ask Rob and Carla:**
+The genuinely human/archive layer is shorter:
 
-- The real first trading day, and the original trading name. Everything about
-  1996 currently rests on "thirty years" being reported in 2026.
-- Wins 1–9: date, draw number, game, prize, ticket type and a permitted human
-  detail for each. Nine of ten rows are empty.
-- Where the 2022 $1m win sits in the run of ten.
-- Ziggy or Ziggie — and whether Archie is the direct replacement.
-- When the first monkey arrived, and where he came from.
-- The monkey theft: date, masthead, and whether a reward notice exists.
-- Whether the original monkey was ever recovered.
-- The dated service list, including whether the specialist pipe trade is real.
-- Covid trading: hours, screens, who kept coming in.
-- Staff names, years, nicknames, whereabouts — and permission for each.
-- The mural: artist, date, location, condition.
-- Community involvement: specific dated things, not general goodwill.
+- the earliest shop image or paper;
+- monkey photographs/material and clarification of the Ziggie / Archie /
+  replacement relationship;
+- a small batch of candid shop photographs and one surviving object;
+- up to three people who matter, one genuine community connection, and one
+  image/story of major change;
+- optional ephemera or casual voice notes.
 
-**Known-good, already sourced:** the address; Archie's name; the tenth
-Division One win of $3,126,800.49 on 13 June 2026 (draw 4685); the $1,000,000
-Division One win on 8 January 2022 (draw 4223); "the Lucky Monkey Shop" as a
-customer nickname.
+No sorting, scanning, captions or exact dates are required. Public lottery,
+registry, service and press facts remain research tasks.
 
-**A note on the mornings counter:** the number on the front window is
-arithmetic on an *assumed* opening date of 1996-01-01, held in
-`identity.assumedFirstMorning` with a `needs-confirmation` status, and it
-renders with that caveat visible. It is also computed at build time, so it
-only moves when the site is rebuilt. Once Rob confirms the real first morning,
-change the date there and set the status to `verified`.
+The exact first trading day and the placement of recovered 2016, 2019 and 2022
+wins within positions 1–9 are unresolved. The tenth win is fixed at draw 4685
+on 13 June 2026; two readable draw archives give the Division One dividend as
+$3,127,800.49, while an indexed official snippet is $1,000 lower. The source
+note preserves that conflict.
+
+**A note on the mornings counter:** the front window now says
+`≈ 11,000 mornings`. No exact date is stored or implied. It is an
+anniversary-scale illustration attached to the supported Est. 1996 /
+thirty-year frame.
 
 ---
 

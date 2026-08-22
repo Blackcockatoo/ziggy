@@ -29,12 +29,14 @@ export function SourceList({
       {resolved.map((source) => (
         <li key={source.id}>
           {source.url ? (
-            <a href={source.url} target="_blank" rel="noreferrer">
+            <a href={source.url} target="_blank" rel="noreferrer" title={source.note}>
               {source.publisher}: {source.label}
+              {source.note ? <span className="visually-hidden">. {source.note}</span> : null}
             </a>
           ) : (
-            <span>
+            <span title={source.note}>
               {source.publisher}: {source.label}
+              {source.note ? <span className="visually-hidden">. {source.note}</span> : null}
             </span>
           )}
           {source.retrievedOn ? (

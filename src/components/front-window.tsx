@@ -1,5 +1,4 @@
 import type { ExhibitionIdentity } from "@/content/types";
-import { formatMornings, morningsBetween } from "@/lib/mornings";
 import { EvidencePill } from "./evidence-pill";
 
 /**
@@ -10,8 +9,6 @@ import { EvidencePill } from "./evidence-pill";
  * visitor has walked past the glass.
  */
 export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
-  const mornings = morningsBetween(identity.assumedFirstMorning.iso, new Date());
-
   return (
     <header id="top" className="front-window">
       <div className="front-window__grain" aria-hidden="true" />
@@ -44,13 +41,13 @@ export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
 
       <aside className="mornings-counter">
         <p className="mornings-counter__number">
-          <span>{formatMornings(mornings)}</span> mornings
+          <span>{identity.approximateMornings.display}</span> mornings
         </p>
         <p className="mornings-counter__caveat">
-          Counted from an assumed opening of {identity.assumedFirstMorning.iso}. The real
-          first morning has not been established, so this number is an illustration.
+          Approximately thirty years of opening up. No exact first day is claimed or hidden
+          inside the count.
         </p>
-        <EvidencePill evidence={identity.assumedFirstMorning.evidence} />
+        <EvidencePill evidence={identity.approximateMornings.evidence} />
       </aside>
 
       <div className="front-window__stamp" aria-label="A digital exhibition, working archive">

@@ -1,4 +1,5 @@
 import type { LedgerEntry, Source } from "@/content/types";
+import type { LotteryExclusion } from "@/content/wins";
 import { EvidencePill } from "./evidence-pill";
 import { MuseumSection } from "./museum-section";
 import { SourceList } from "./source-list";
@@ -13,10 +14,12 @@ import { SourceList } from "./source-list";
 export function LuckLedger({
   entries,
   unplaced,
+  exclusions,
   sources,
 }: {
   entries: LedgerEntry[];
   unplaced: LedgerEntry[];
+  exclusions: LotteryExclusion[];
   sources: Source[];
 }) {
   return (
@@ -25,7 +28,7 @@ export function LuckLedger({
       index="02"
       eyebrow="Ten times lightning struck"
       title="The Luck Ledger"
-      intro="All ten slots exist now. Nine stay responsibly blank until draw records and shop material put a date and a story against each number."
+      intro="All ten slots remain visible. Only the tenth is placed with confidence; recovered earlier wins stay separate until evidence proves their sequence."
     >
       <div className="ledger">
         <div className="ledger__head" aria-hidden="true">
@@ -96,7 +99,7 @@ export function LuckLedger({
 
       {unplaced.length > 0 ? (
         <aside className="ledger-note">
-          <p className="eyebrow">Confirmed, sequence pending</p>
+          <p className="eyebrow">Confirmed / strongly supported — sequence unresolved</p>
           <p>
             These wins are sourced, but nothing yet says where they sit in the run of ten.
             Assigning them a number would be a guess, so they wait here instead.
@@ -107,7 +110,35 @@ export function LuckLedger({
                 <strong>{entry.prize}</strong> · {entry.game} draw {entry.draw} ·{" "}
                 {entry.date}
                 {entry.story ? <p>{entry.story}</p> : null}
+                {entry.entry || entry.winnerLocality ? (
+                  <p className="ledger-note__meta">
+                    {[entry.entry, entry.winnerLocality].filter(Boolean).join(" · ")}
+                  </p>
+                ) : null}
+                <EvidencePill evidence={entry.evidence} />
+                {entry.evidence.note ? (
+                  <p className="ledger-note__evidence">{entry.evidence.note}</p>
+                ) : null}
                 <SourceList sourceIds={entry.evidence.sourceIds} sources={sources} />
+              </li>
+            ))}
+          </ul>
+        </aside>
+      ) : null}
+
+      {exclusions.length > 0 ? (
+        <aside className="ledger-exclusions">
+          <p className="eyebrow">Documented exclusions</p>
+          <p>
+            A winner living in Frankston is not evidence that the ticket came from 8
+            Thompson Street.
+          </p>
+          <ul>
+            {exclusions.map((entry) => (
+              <li key={`${entry.date}-${entry.retailer}`}>
+                <strong>{entry.date}</strong> · {entry.event} · {entry.retailer}
+                <span>{entry.reason}</span>
+                <SourceList sourceIds={entry.sourceIds} sources={sources} />
               </li>
             ))}
           </ul>

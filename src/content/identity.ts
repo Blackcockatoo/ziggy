@@ -3,9 +3,9 @@ import type { ExhibitionIdentity } from "./types";
 /**
  * The fixed points of the exhibition.
  *
- * `assumedFirstMorning` exists only to drive the "10,957 mornings" editorial
- * device. It carries its own evidence record and must be rendered with that
- * status visible until Rob confirms the real first trading day.
+ * The mornings device is deliberately approximate. No day/month is stored,
+ * because the public record supports the 1996 frame but not an exact opening
+ * morning.
  */
 export const identity: ExhibitionIdentity = {
   title: "The Monkey Shop",
@@ -23,12 +23,12 @@ export const identity: ExhibitionIdentity = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=8+Thompson+Street+Frankston+Victoria",
   },
-  assumedFirstMorning: {
-    iso: "1996-01-01",
+  approximateMornings: {
+    display: "≈ 11,000",
     evidence: {
-      status: "needs-confirmation",
-      note: "A placeholder date used only to demonstrate the counter. The real first morning has not been established, so the number it produces is an illustration, not a fact.",
-      sourceIds: ["shop-ledger", "interview-rob"],
+      status: "probable",
+      note: "An anniversary-scale illustration based on the publicly supported Est. 1996 / thirty-year frame. It is not calculated from a claimed opening day.",
+      sourceIds: ["lott-2026-tenth-win", "shop-facebook-profile", "tobacco-blends-about-2016"],
     },
   },
 };

@@ -71,8 +71,18 @@ describe("the luck ledger renders", () => {
   });
 
   it("shows the verified tenth win with its draw and prize", () => {
-    expect(markup).toContain("$3,126,800.49");
+    expect(markup).toContain("$3,127,800.49");
     expect(markup).toContain("Draw 4685");
+    expect(markup).not.toContain("$3,126,800.49");
+  });
+
+  it("shows recovered wins separately and names the exclusion rule", () => {
+    expect(markup).toContain("sequence unresolved");
+    expect(markup).toContain("draw 3621");
+    expect(markup).toContain("draw 3945");
+    expect(markup).toContain("draw 4223");
+    expect(markup).toContain("Documented exclusions");
+    expect(markup).toContain("Towerhill Lotto");
   });
 
   it("does not attach a documented label to an empty row", () => {
@@ -133,12 +143,22 @@ describe("honesty labels reach the page", () => {
     expect(markup).toContain('data-evidence-class="empty"');
   });
 
+  it("keeps strongly supported claims visibly distinct", () => {
+    expect(markup).toContain("Strongly supported");
+  });
+
+  it("keeps the monkey relationship visibly unresolved", () => {
+    expect(markup).toContain("Ziggie / Archie / replacement history — relationship unresolved");
+    expect(markup).not.toContain("Ziggy → replacement → Archie");
+  });
+
   it("links out to the sources it cites", () => {
     expect(markup).toContain("mediacentre.thelott.com");
   });
 
   it("does not present the mornings count as established fact", () => {
     expect(markup).toContain("mornings");
-    expect(markup).toContain("this number is an illustration");
+    expect(markup).toContain("No exact first day is claimed");
+    expect(markup).not.toContain("1996-01-01");
   });
 });

@@ -11,7 +11,7 @@ import { ResearchKey } from "@/components/research-key";
 import { SiteNav } from "@/components/site-nav";
 import { Timeline } from "@/components/timeline";
 import { VisitFinale } from "@/components/visit-finale";
-import { exhibition, unplacedWins } from "@/content/exhibition";
+import { exhibition, lotteryExclusions, unplacedWins } from "@/content/exhibition";
 
 /**
  * The exhibition, in walking order.
@@ -32,7 +32,12 @@ export default function Home() {
       <main>
         <ResearchKey />
         <Timeline entries={exhibition.timeline} sources={sources} />
-        <LuckLedger entries={exhibition.ledger} unplaced={unplacedWins} sources={sources} />
+        <LuckLedger
+          entries={exhibition.ledger}
+          unplaced={unplacedWins}
+          exclusions={lotteryExclusions}
+          sources={sources}
+        />
         <LuckyMonkey lore={exhibition.lore} monkeys={exhibition.monkeys} sources={sources} />
         <AskZiggy />
         <Counter

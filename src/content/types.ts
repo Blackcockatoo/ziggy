@@ -12,13 +12,16 @@
  * How well a claim is supported.
  *
  * - `verified`         a primary or reputable published source is linked
- * - `probable`         strongly indicated by evidence, not yet nailed down
+ * - `strongly-supported` multiple/public sources substantially support it,
+ *                        but a source limitation still matters
+ * - `probable`         a reasonable inference, not yet nailed down
  * - `needs-confirmation` a research lead awaiting the archive or an interview
  * - `anecdotal`        told, repeated and believed locally; not documented
  * - `placeholder`      an intentionally empty slot waiting for material
  */
 export type EvidenceStatus =
   | "verified"
+  | "strongly-supported"
   | "probable"
   | "needs-confirmation"
   | "anecdotal"
@@ -271,11 +274,8 @@ export type ExhibitionIdentity = {
   alternativeSubtitle: string;
   thesis: [string, string];
   address: { line: string; suburb: string; state: string; mapUrl: string };
-  /**
-   * The date used to derive the mornings counter. Deliberately typed with its
-   * own evidence so the number can never masquerade as a documented fact.
-   */
-  assumedFirstMorning: { iso: string; evidence: Evidence };
+  /** Approximate editorial device; no exact opening day is stored or implied. */
+  approximateMornings: { display: string; evidence: Evidence };
 };
 
 export type ExhibitionContent = {
