@@ -5,7 +5,7 @@ import type { PersonRecord } from "./types";
  *
  * The closing room, and the quietest one. No founder bios, no achievements
  * list. Public records establish the family-business connection; personal
- * meaning and preferred wording remain theirs.
+ * meaning, preferred wording and what gets shown remain theirs.
  */
 export const principals: PersonRecord[] = [
   {
@@ -13,9 +13,9 @@ export const principals: PersonRecord[] = [
     name: "Rob",
     role: "Owner. Storyteller. Keeper of the key.",
     years: "Thirty years",
-    bio: "Named publicly as the agency's owner, and the voice in the record when the tenth Division One win was announced.",
+    bio: "Named publicly as the agency's owner, and the voice in the record around documented Division One wins.",
     memoryPrompt:
-      "If he feels like it: one first-morning memory, one strange request or one object he would save.",
+      "Only if he wants to add it: one first-morning memory, one strange request or one object he would save.",
     evidence: {
       status: "verified",
       sourceIds: ["cignall-2016-win", "lott-2026-tenth-win"],
@@ -24,8 +24,8 @@ export const principals: PersonRecord[] = [
     media: {
       id: "rob-portrait",
       kind: "image",
-      alt: "Portrait space reserved for Rob behind the counter",
-      caption: "Commission: Rob behind the counter, looking toward the door.",
+      alt: "Portrait space reserved for a photograph of Rob in the shop",
+      caption: "Archive slot: a photograph Rob is happy to use, exactly as formal or ordinary as he wants.",
       evidence: { status: "placeholder", permission: "pending" },
     },
   },
@@ -36,7 +36,7 @@ export const principals: PersonRecord[] = [
     years: "Publicly documented by 2016",
     bio: "Named with Rob in the archived 2016 business history and the 2022 official lottery account.",
     memoryPrompt:
-      "If she feels like it: the one photograph or person that best explains the shop.",
+      "Only if she wants to add it: the one photograph or person that best explains the shop.",
     evidence: {
       status: "verified",
       note: "Public sources document Carla's co-ownership and involvement. Personal stories and preferred wording remain hers.",
@@ -46,8 +46,8 @@ export const principals: PersonRecord[] = [
     media: {
       id: "carla-portrait",
       kind: "image",
-      alt: "Portrait space reserved for Carla in the shop",
-      caption: "Commission: Carla, in the place she chooses to be remembered.",
+      alt: "Portrait space reserved for a photograph of Carla in the shop",
+      caption: "Archive slot: a photograph Carla chooses, in the place she chooses to be remembered.",
       evidence: { status: "placeholder", permission: "pending" },
     },
   },
@@ -77,7 +77,7 @@ export const staff: PersonRecord[] = [
       id: "staff-early-photo",
       kind: "image",
       alt: "Archive space reserved for a photograph of the earliest staff",
-      caption: "Wanted: any staff photograph from the first decade.",
+      caption: "Archive slot: any first-decade staff photograph, with permission before names are published.",
       evidence: { status: "placeholder", permission: "pending" },
     },
   },
@@ -94,7 +94,7 @@ export const staff: PersonRecord[] = [
       id: "staff-long-service-photo",
       kind: "image",
       alt: "Archive space reserved for a portrait of the longest-serving staff member",
-      caption: "Wanted: a portrait, and permission to use it.",
+      caption: "Archive slot: one photograph, if the person is happy to be included.",
       evidence: { status: "placeholder", permission: "pending" },
     },
   },
@@ -111,7 +111,7 @@ export const staff: PersonRecord[] = [
       id: "staff-first-job-photo",
       kind: "image",
       alt: "Archive space reserved for a photograph of a first-job staff member",
-      caption: "Wanted: the photograph they would actually agree to.",
+      caption: "Archive slot: only a photograph they would actually agree to.",
       evidence: { status: "placeholder", permission: "pending" },
     },
   },
@@ -122,13 +122,13 @@ export const staff: PersonRecord[] = [
     years: "2020–2021",
     era: "Lockdown shifts",
     memoryPrompt:
-      "Who worked the lockdown shifts, and what was the shop like with nobody on the street?",
+      "If it belongs in the story: who worked the lockdown shifts, and what was the shop like with nobody on the street?",
     evidence: { status: "placeholder", permission: "pending" },
     media: {
       id: "staff-covid-photo",
       kind: "image",
       alt: "Archive space reserved for a photograph of the shop during lockdown trading",
-      caption: "Wanted: anything at all from 2020 and 2021.",
+      caption: "Optional archive slot: one image or sign from 2020–2021, only if it is worth keeping in the story.",
       evidence: { status: "placeholder", permission: "pending" },
     },
   },
