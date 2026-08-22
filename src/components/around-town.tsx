@@ -28,7 +28,7 @@ export function AroundTown({
   return (
     <MuseumSection
       id="around-town"
-      index="07"
+      index="08"
       eyebrow="The shop beyond the shop"
       title="Around Town"
       intro="The small civic acts and changing street details that rarely make a company history — and should not be turned into one."
