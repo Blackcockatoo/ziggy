@@ -117,8 +117,8 @@ src/
     evidence.ts       honesty-label rules
     fortune-engine.ts the Ziggy machine
     mornings.ts       legacy date helpers; the exhibition now shows an approximation
-  tests/               content integrity, the engine, server-rendered structure
-  public/archive/      approved images, documents and audio
+tests/                content integrity, the engine, server-rendered structure
+public/archive/       approved images, documents and audio
 ```
 
 Components take data as props and render it. They hold no facts of their own.
