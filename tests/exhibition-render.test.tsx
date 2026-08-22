@@ -28,6 +28,7 @@ describe("exhibition chapters", () => {
     "story",
     "ledger",
     "monkey",
+    "board",
     "ask-ziggy",
     "counter",
     "gang",
@@ -113,8 +114,6 @@ describe("accessibility-critical structure", () => {
   });
 
   it("keeps the counter usable without JavaScript", () => {
-    // Native <details name="counter"> gives exclusive-accordion behaviour,
-    // keyboard support and screen-reader semantics with zero script.
     expect(markup).toContain('name="counter"');
     expect(markup).toContain("<summary>");
   });
@@ -148,8 +147,16 @@ describe("honesty labels reach the page", () => {
   });
 
   it("keeps the monkey relationship visibly unresolved", () => {
-    expect(markup).toContain("Ziggie / Archie / replacement history — relationship unresolved");
+    expect(markup).toContain("Ziggie / Archie / reported replacement — relationship unresolved");
     expect(markup).not.toContain("Ziggy → replacement → Archie");
+  });
+
+  it("keeps the real board archive empty while showing interpretive examples", () => {
+    expect(markup).toContain("Ziggy Says");
+    expect(markup).toContain("Exhibition artwork");
+    for (const entry of exhibition.boardEntries) {
+      expect(entry.line).toBe("");
+    }
   });
 
   it("links out to the sources it cites", () => {
