@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Libre_Franklin, Newsreader } from "next/font/google";
 import "./globals.css";
+import "./visuals.css";
 
 const sans = Libre_Franklin({
   subsets: ["latin"],
