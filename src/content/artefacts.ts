@@ -178,7 +178,7 @@ export const artefacts: ArtefactRecord[] = [
       "Any image that can identify Ziggie, Archie or a reported replacement. Customer photographs count; exact dates are not required.",
     provenance: "Expected: shop, family album, or the public.",
     holding: "wanted",
-    relatedIds: ["ziggy", "monkey-arrives", "monkey-heist"],
+    relatedIds: ["ziggy", "the-interregnum", "monkey-heist"],
     tags: ["monkey", "folklore"],
     evidence: { status: "placeholder" },
     media: {
@@ -206,7 +206,7 @@ export const artefacts: ArtefactRecord[] = [
       sourceIds: ["herald-ziggie-2016"],
     },
     media: {
-      id: "MS-2015-009-media",
+      id: "MS-2016-009-media",
       kind: "document",
       alt: "Catalogue space reserved for the full January 2016 Ziggie article",
       caption: "Essential: an owner-held clipping is welcome; public archive retrieval remains an internal research task.",
@@ -227,7 +227,7 @@ export const artefacts: ArtefactRecord[] = [
     tags: ["monkey", "window", "reward"],
     evidence: { status: "placeholder", sourceIds: ["herald-ziggie-2016"] },
     media: {
-      id: "MS-2015-010-media",
+      id: "MS-XXXX-010-media",
       kind: "document",
       alt: "Catalogue space reserved for the reward notice for the missing monkey",
       caption: "Wanted: the notice, or a photograph of it in the window.",
