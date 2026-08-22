@@ -25,7 +25,8 @@ type Issued = { ticket: FortuneTicket; issuedOn: string };
 /**
  * Ask Ziggy.
  *
- * A Zoltar cabinet run by a tobacconist's monkey. Everything it says was
+ * Ziggy is the exhibition's invented fortune-teller and narrator, not a claim
+ * about the historical name of a physical shop monkey. Everything he says was
  * written by hand and lives in `src/content/fortunes` — the machine only
  * selects, composes and stamps. No model call, no network, no server.
  *
@@ -111,8 +112,9 @@ export function AskZiggy() {
           <h2 id="ask-ziggy-title">Ask Ziggy</h2>
           <p className="section-heading__intro">
             Handwritten fortunes, deterministic answers, and no chatbot pretending to be
-            local folklore. Ask the same question twice and Ziggy keeps his story
-            straight. Pull the lever again and he elaborates.
+            local folklore. Ziggy belongs to the exhibition; Archie and Ziggie belong to
+            the historical record. Ask the same question twice and Ziggy keeps his story
+            straight. Pull again and he elaborates.
           </p>
         </div>
       </div>
