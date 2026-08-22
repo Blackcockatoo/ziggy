@@ -40,10 +40,10 @@ function prefersReducedMotion(): boolean {
 /**
  * Ask Ziggy.
  *
- * The real Monkey Shop waiter monkey, thirty years of watching Frankston, and
- * a cabinet. Everything he says was written by hand and lives in
- * `src/content/fortunes` — the machine only selects, composes and stamps. No
- * model call, no network, no server.
+ * Ziggy is the exhibition's invented fortune-teller/narrator, not a claim
+ * about the historical name of a physical shop monkey. Everything he says was
+ * written by hand and lives in `src/content/fortunes` — the machine only
+ * selects, composes and stamps. No model call, no network, no server.
  *
  * The cabinet is a mechanism rather than a form with a spinner. One pull runs
  * `idle → waking → thinking → issuing → revealed`; later pulls skip the wake.
@@ -91,8 +91,6 @@ export function AskZiggy() {
         return;
       }
 
-      // The fortune exists before any animation does. Nothing below can change
-      // what it says; the sequence only decides when it becomes visible.
       const ticket = drawFortune({
         question: cleanQuestion,
         library: fortunes,
@@ -119,9 +117,7 @@ export function AskZiggy() {
       let elapsed = 0;
       const steps = sequenceFor(firstPull);
       steps.forEach((step) => {
-        timers.current.push(
-          window.setTimeout(() => setState(step), elapsed),
-        );
+        timers.current.push(window.setTimeout(() => setState(step), elapsed));
         elapsed += stateDurations[step];
       });
       timers.current.push(
@@ -170,11 +166,7 @@ export function AskZiggy() {
   return (
     <section id="ask-ziggy" className="ziggy-room" aria-labelledby="ask-ziggy-title">
       <div className="ziggy-room__ambient" aria-hidden="true">
-        <ZiggyArtwork
-          artwork={artwork.oraclePortrait}
-          sizes="100vw"
-          decorative
-        />
+        <ZiggyArtwork artwork={artwork.oraclePortrait} sizes="100vw" decorative />
       </div>
 
       <div className="ziggy-room__intro">
@@ -182,19 +174,16 @@ export function AskZiggy() {
           05
         </p>
         <div>
-          <p className="eyebrow">The exhibition&apos;s Monkey Shop oracle</p>
+          <p className="eyebrow">The exhibition&apos;s penny-arcade oracle</p>
           <h2 id="ask-ziggy-title">Ask Ziggy</h2>
           <p className="section-heading__intro">
-            Handwritten fortunes, deterministic answers, and no chatbot pretending to be
-            local folklore. Ask the same question twice and Ziggy keeps his story
-            straight. Pull the lever again and he elaborates.
+            Ziggy belongs to the exhibition; Archie and Ziggie belong to the historical
+            record. Ask a question, pull the lever and the machine wakes up, thinks,
+            prints a ticket and remembers enough to elaborate when you pull again.
           </p>
         </div>
         <figure className="ziggy-room__plate">
-          <ZiggyArtwork
-            artwork={artwork.trayTicket}
-            sizes="(max-width: 900px) 60vw, 22vw"
-          />
+          <ZiggyArtwork artwork={artwork.trayTicket} sizes="(max-width: 900px) 60vw, 22vw" />
           <figcaption>{artwork.trayTicket.description}</figcaption>
         </figure>
       </div>
@@ -214,12 +203,6 @@ export function AskZiggy() {
 
         <div className="fortune-machine__cabinet">
           <div className="fortune-machine__glass">
-            {/*
-              The cutout, not the photographed cabinet: the photographs carry
-              their own painted ASK ZIGGY signage, which would collide with the
-              real heading above. This way the artwork supplies the figure and
-              the HTML supplies every word.
-            */}
             <div className="fortune-machine__scene">
               <div className="fortune-machine__interior" aria-hidden="true" />
               <ZiggyArtwork
@@ -294,7 +277,6 @@ export function AskZiggy() {
             </div>
           </div>
 
-          {/* The tray is the delivery device, exactly as it is on the statue. */}
           <div className="fortune-tray">
             <div className="fortune-tray__rim" aria-hidden="true" />
             <div className="fortune-tray__surface" aria-live="polite" aria-atomic="true">
@@ -303,18 +285,13 @@ export function AskZiggy() {
               ) : working ? (
                 <p className="fortune-tray__status">{machineStatus[state]}</p>
               ) : (
-                <p className="fortune-tray__empty">
-                  Ziggy will put your fortune on the tray.
-                </p>
+                <p className="fortune-tray__empty">Ziggy will put your fortune on the tray.</p>
               )}
             </div>
 
             {issued ? (
               <div className="fortune-actions">
-                <button
-                  type="button"
-                  onClick={() => issue(issued.ticket.question, drawIndex + 1)}
-                >
+                <button type="button" onClick={() => issue(issued.ticket.question, drawIndex + 1)}>
                   Pull again
                 </button>
                 <button type="button" onClick={copyTicket}>
