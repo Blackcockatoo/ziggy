@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { exhibition, unplacedWins } from "../src/content/exhibition";
+import {
+  exhibition,
+  lotteryExclusions,
+  unplacedWins,
+} from "../src/content/exhibition";
 import { evidenceClass } from "../src/lib/evidence";
 import type { Evidence } from "../src/content/types";
 
@@ -12,6 +16,7 @@ function allEvidence(): Array<{ path: string; evidence: Evidence }> {
     if (evidence) records.push({ path, evidence });
   };
 
+  push("identity/approximate-mornings", exhibition.identity.approximateMornings.evidence);
   exhibition.timeline.forEach((entry) => {
     push(`timeline/${entry.id}`, entry.evidence);
     push(`timeline/${entry.id}/media`, entry.media?.evidence);
@@ -54,9 +59,14 @@ describe("sourcing integrity", () => {
     }
   });
 
-  it("never marks a claim verified without a source", () => {
+  it("never marks a documented or strongly supported claim without a source", () => {
     for (const { path, evidence } of allEvidence()) {
-      if (evidence.status !== "verified") continue;
+      if (
+        evidence.status !== "verified" &&
+        evidence.status !== "strongly-supported"
+      ) {
+        continue;
+      }
       expect(evidence.sourceIds?.length ?? 0, `${path} is verified with no source`).toBeGreaterThan(
         0,
       );
@@ -65,7 +75,13 @@ describe("sourcing integrity", () => {
 
   it("classifies unverified material as lore or as an empty slot, never as documented", () => {
     for (const { path, evidence } of allEvidence()) {
-      if (evidence.status === "verified" || evidence.status === "probable") continue;
+      if (
+        evidence.status === "verified" ||
+        evidence.status === "strongly-supported" ||
+        evidence.status === "probable"
+      ) {
+        continue;
+      }
       expect(evidenceClass(evidence.status), `${path}`).not.toBe("documented");
     }
   });
@@ -78,8 +94,9 @@ describe("sourcing integrity", () => {
     }
   });
 
-  it("keeps the mornings counter marked as an assumption", () => {
-    expect(exhibition.identity.assumedFirstMorning.evidence.status).not.toBe("verified");
+  it("keeps the mornings counter approximate and free of an invented day", () => {
+    expect(exhibition.identity.approximateMornings.evidence.status).not.toBe("verified");
+    expect(exhibition.identity.approximateMornings.display).toContain("≈");
   });
 });
 
@@ -113,6 +130,25 @@ describe("the luck ledger", () => {
     const numbered = new Set(exhibition.ledger.map((entry) => entry.number));
     for (const entry of unplacedWins) {
       expect(numbered.has(entry.number)).toBe(false);
+    }
+  });
+
+  it("recovers only the supported earlier draws without assigning sequence numbers", () => {
+    expect(unplacedWins.map((entry) => entry.draw)).toEqual(["3621", "3945", "4223"]);
+    expect(exhibition.ledger.slice(0, 9).every((entry) => entry.draw === undefined)).toBe(
+      true,
+    );
+  });
+
+  it("keeps the supported tenth-win figure and preserves different-retailer exclusions", () => {
+    expect(exhibition.ledger[9].draw).toBe("4685");
+    expect(exhibition.ledger[9].prize).toBe("$3,127,800.49");
+    expect(lotteryExclusions).toHaveLength(3);
+    for (const exclusion of lotteryExclusions) {
+      expect(exclusion.retailer).not.toContain("8 Thompson Street");
+      for (const sourceId of exclusion.sourceIds) {
+        expect(knownSourceIds.has(sourceId)).toBe(true);
+      }
     }
   });
 });
@@ -214,6 +250,16 @@ describe("the timeline", () => {
       }
     }
   });
+
+  it("keeps registry dates separate from the supported opening frame", () => {
+    const opening = exhibition.timeline.find((entry) => entry.id === "opening");
+    const registry = exhibition.timeline.find((entry) => entry.id === "before-cignall");
+
+    expect(opening?.year).toBe("Est. 1996");
+    expect(opening?.story).toContain("No day or month has been invented");
+    expect(registry?.title).toBe("The names in the public record");
+    expect(registry?.story).toContain("do not establish");
+  });
 });
 
 describe("the monkey record", () => {
@@ -224,8 +270,10 @@ describe("the monkey record", () => {
     expect(unconfirmed.length).toBeGreaterThan(0);
   });
 
-  it("records Ziggy's alternative spelling instead of picking one", () => {
+  it("records both Ziggie and Ziggy without turning either into a genealogy", () => {
     const ziggy = exhibition.monkeys.find((monkey) => monkey.id === "ziggy");
-    expect(ziggy?.aliases).toContain("Ziggie");
+    expect(ziggy?.name).toBe("Ziggie");
+    expect(ziggy?.aliases.join(" ")).toContain("Ziggy");
+    expect(exhibition.monkeys.map((monkey) => monkey.name)).toContain("Archie");
   });
 });

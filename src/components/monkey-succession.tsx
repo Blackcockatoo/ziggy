@@ -13,9 +13,8 @@ const statusLabels: Record<MonkeyRecord["status"], string> = {
 /**
  * The succession.
  *
- * Ziggy → ? → Archie, treated with the straight face a contested civic
- * dynasty deserves. The unconfirmed link in the middle is rendered as an
- * actual gap in the line rather than smoothed over.
+ * Two names and a replacement story, without pretending the available
+ * evidence supplies a family tree.
  */
 export function MonkeySuccession({
   monkeys,
@@ -26,14 +25,9 @@ export function MonkeySuccession({
 }) {
   return (
     <div className="succession">
-      <h3 className="succession__title">The succession</h3>
+      <h3 className="succession__title">Names in the record</h3>
       <p className="succession__line" aria-hidden="true">
-        {monkeys.map((monkey, index) => (
-          <span key={monkey.id}>
-            {monkey.status === "unconfirmed" ? "?" : monkey.name}
-            {index < monkeys.length - 1 ? <b> → </b> : null}
-          </span>
-        ))}
+        <span>Ziggie / Archie / replacement history — relationship unresolved</span>
       </p>
 
       <ol className="lineage">

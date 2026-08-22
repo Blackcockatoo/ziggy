@@ -14,7 +14,7 @@ const glyphs: Record<MediaAsset["kind"], string> = {
  *
  * Renders the real thing when `src` is set, and an honest empty frame — with
  * its alt text, caption and evidence already written — when it is not. The
- * placeholders are the shopping list for Rob.
+ * placeholders remain archive opportunities, not a checklist for the owners.
  */
 export function MediaPlaceholder({ asset }: { asset: MediaAsset }) {
   if (asset.src) {

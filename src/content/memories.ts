@@ -26,7 +26,7 @@ export const counterObjects: CounterObject[] = [
     glyph: "▤",
     evidence: {
       status: "needs-confirmation",
-      sourceIds: ["shop-social"],
+      sourceIds: ["shop-facebook-profile"],
     },
   },
   {
@@ -35,7 +35,7 @@ export const counterObjects: CounterObject[] = [
     label: "Paper",
     hint: "Bundled, cut, counted and stacked before most of Frankston was awake.",
     glyph: "☰",
-    evidence: { status: "needs-confirmation", sourceIds: ["shop-ledger"] },
+    evidence: { status: "verified", sourceIds: ["shop-facebook-profile"] },
   },
   {
     id: "key-blank",
@@ -43,7 +43,7 @@ export const counterObjects: CounterObject[] = [
     label: "Key",
     hint: "Cut while you wait. Half of them for doors that no longer exist.",
     glyph: "⚿",
-    evidence: { status: "needs-confirmation", sourceIds: ["shop-ledger"] },
+    evidence: { status: "verified", sourceIds: ["shop-facebook-profile"] },
   },
   {
     id: "till",

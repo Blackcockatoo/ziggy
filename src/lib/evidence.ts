@@ -10,10 +10,11 @@ import type {
  *
  * The status set is deliberately finer-grained than the public distinction.
  * Visitors see documented fact, local lore, or an empty frame; researchers
- * see which of the five statuses produced that classification.
+ * see which of the six statuses produced that classification.
  */
 export const evidenceLabels: Record<EvidenceStatus, string> = {
   verified: "Documented",
+  "strongly-supported": "Strongly supported",
   probable: "Probable",
   "needs-confirmation": "Needs confirming",
   anecdotal: "Local lore",
@@ -22,7 +23,8 @@ export const evidenceLabels: Record<EvidenceStatus, string> = {
 
 export const evidenceDescriptions: Record<EvidenceStatus, string> = {
   verified: "Supported by a source you can go and read.",
-  probable: "Strongly indicated by the evidence, not yet pinned down.",
+  "strongly-supported": "Substantially supported, with a source limitation still stated.",
+  probable: "A reasonable inference from the evidence, not yet pinned down.",
   "needs-confirmation": "A research lead awaiting the archive or an interview.",
   anecdotal: "Told, repeated and believed locally. Not documented.",
   placeholder: "An empty frame, kept empty on purpose.",
@@ -30,6 +32,7 @@ export const evidenceDescriptions: Record<EvidenceStatus, string> = {
 
 const classByStatus: Record<EvidenceStatus, EvidenceClass> = {
   verified: "documented",
+  "strongly-supported": "documented",
   probable: "documented",
   "needs-confirmation": "lore",
   anecdotal: "lore",

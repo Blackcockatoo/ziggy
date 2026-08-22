@@ -43,4 +43,4 @@ export const exhibition: ExhibitionContent = {
   sources,
 };
 
-export { unplacedWins } from "./wins";
+export { lotteryExclusions, unplacedWins } from "./wins";

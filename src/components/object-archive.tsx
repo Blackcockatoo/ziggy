@@ -22,13 +22,44 @@ const holdingLabels: Record<ArtefactRecord["holding"], string> = {
   lost: "Lost",
 };
 
+const archivePriorities = [
+  {
+    label: "Essential",
+    items: [
+      "Earliest shop image or paper",
+      "One monkey image, clipping or object clue",
+      "Several candid shop photographs",
+      "One surviving object",
+      "Access to any messy box, folder or phone album",
+    ],
+  },
+  {
+    label: "Useful",
+    items: [
+      "Up to three important people",
+      "One genuine community connection",
+      "Old Lotto material",
+      "One image or story showing a major change",
+    ],
+  },
+  {
+    label: "Bonus",
+    items: [
+      "Uniforms or key tags",
+      "Handwritten signs, receipts or invoices",
+      "Staff jokes or strange memorabilia",
+      "A short casual voice note",
+    ],
+  },
+] as const;
+
 /**
  * The Object Archive.
  *
  * A catalogue rather than a gallery: catalogue number, object type, date
  * range, provenance and evidence on every record, whether or not the object
- * itself has arrived. Grouped by holding so the "wanted" list reads as what it
- * is — the request to Rob.
+ * itself has arrived. The public-facing request stays short; the detailed
+ * internal register remains available behind one disclosure.
  */
 export function ObjectArchive({
   artefacts,
@@ -67,61 +98,98 @@ export function ObjectArchive({
         </div>
       </dl>
 
-      {groups.map((holding) => {
-        const records = artefacts.filter((item) => item.holding === holding);
-        if (records.length === 0) return null;
+      <section className="archive-request" aria-labelledby="archive-request-title">
+        <div className="archive-request__intro">
+          <p className="eyebrow">The human pieces only</p>
+          <h3 id="archive-request-title">A small, gentle ask</h3>
+          <p>
+            No sorting. No scanning. No captions. No homework. Phone photographs and
+            approximate dates are enough.
+          </p>
+        </div>
+        <div className="archive-request__grid">
+          {archivePriorities.map((group) => (
+            <article key={group.label}>
+              <h4>{group.label}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
 
-        return (
-          <section key={holding} className="archive-group" aria-labelledby={`archive-${holding}`}>
-            <h3 id={`archive-${holding}`} className="archive-group__title">
-              {holdingLabels[holding]}
-            </h3>
-            <ul className="artefact-grid">
-              {records.map((artefact) => (
-                <li key={artefact.id}>
-                  <article className="artefact-card" data-holding={artefact.holding}>
-                    <MediaPlaceholder asset={artefact.media} />
-                    <div className="artefact-card__copy">
-                      <p className="artefact-card__catalogue">{artefact.catalogue}</p>
-                      <h4>{artefact.title}</h4>
-                      <dl className="artefact-card__fields">
-                        <div>
-                          <dt>Type</dt>
-                          <dd>{typeLabels[artefact.objectType]}</dd>
-                        </div>
-                        <div>
-                          <dt>Date</dt>
-                          <dd>{artefact.dateRange}</dd>
-                        </div>
-                        <div>
-                          <dt>Holding</dt>
-                          <dd>{holdingLabels[artefact.holding]}</dd>
-                        </div>
-                        {artefact.provenance ? (
+      <details className="archive-register">
+        <summary>Open the full internal accession register</summary>
+        <p>
+          The detailed catalogue remains useful to the curator. It is not a checklist Rob
+          or Carla are expected to complete.
+        </p>
+        {groups.map((holding) => {
+          const records = artefacts.filter((item) => item.holding === holding);
+          if (records.length === 0) return null;
+
+          return (
+            <section
+              key={holding}
+              className="archive-group"
+              aria-labelledby={`archive-${holding}`}
+            >
+              <h3 id={`archive-${holding}`} className="archive-group__title">
+                {holdingLabels[holding]}
+              </h3>
+              <ul className="artefact-grid">
+                {records.map((artefact) => (
+                  <li key={artefact.id}>
+                    <article className="artefact-card" data-holding={artefact.holding}>
+                      <MediaPlaceholder asset={artefact.media} />
+                      <div className="artefact-card__copy">
+                        <p className="artefact-card__catalogue">{artefact.catalogue}</p>
+                        <h4>{artefact.title}</h4>
+                        <dl className="artefact-card__fields">
                           <div>
-                            <dt>Provenance</dt>
-                            <dd>{artefact.provenance}</dd>
+                            <dt>Type</dt>
+                            <dd>{typeLabels[artefact.objectType]}</dd>
                           </div>
+                          <div>
+                            <dt>Date</dt>
+                            <dd>{artefact.dateRange}</dd>
+                          </div>
+                          <div>
+                            <dt>Holding</dt>
+                            <dd>{holdingLabels[artefact.holding]}</dd>
+                          </div>
+                          {artefact.provenance ? (
+                            <div>
+                              <dt>Provenance</dt>
+                              <dd>{artefact.provenance}</dd>
+                            </div>
+                          ) : null}
+                        </dl>
+                        <p className="artefact-card__description">{artefact.description}</p>
+                        {artefact.tags?.length ? (
+                          <ul className="artefact-card__tags" aria-label="Tags">
+                            {artefact.tags.map((tag) => (
+                              <li key={tag}>{tag}</li>
+                            ))}
+                          </ul>
                         ) : null}
-                      </dl>
-                      <p className="artefact-card__description">{artefact.description}</p>
-                      {artefact.tags?.length ? (
-                        <ul className="artefact-card__tags" aria-label="Tags">
-                          {artefact.tags.map((tag) => (
-                            <li key={tag}>{tag}</li>
-                          ))}
-                        </ul>
-                      ) : null}
-                      <EvidencePill evidence={artefact.evidence} />
-                      <SourceList sourceIds={artefact.evidence.sourceIds} sources={sources} />
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
+                        <EvidencePill evidence={artefact.evidence} />
+                        <SourceList
+                          sourceIds={artefact.evidence.sourceIds}
+                          sources={sources}
+                        />
+                      </div>
+                    </article>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
+      </details>
     </MuseumSection>
   );
 }
