@@ -1,4 +1,5 @@
 import { artefacts } from "./artefacts";
+import { boardEntries } from "./board";
 import { community } from "./community";
 import { identity } from "./identity";
 import { memories, counterObjects } from "./memories";
@@ -18,12 +19,15 @@ import type { ExhibitionContent, NavigationItem } from "./types";
  */
 export const navigation: NavigationItem[] = [
   { href: "#story", label: "1996 → 2026" },
-  { href: "#monkey", label: "The monkey" },
   { href: "#ledger", label: "The ten" },
+  { href: "#monkey", label: "The monkey" },
+  { href: "#board", label: "Ziggy Says" },
   { href: "#ask-ziggy", label: "Ask Ziggy" },
   { href: "#counter", label: "The counter" },
   { href: "#gang", label: "The gang" },
+  { href: "#around-town", label: "Around town" },
   { href: "#archive", label: "The archive" },
+  { href: "#rob-and-carla", label: "Rob + Carla" },
   { href: "#visit", label: "Visit" },
 ];
 
@@ -34,6 +38,7 @@ export const exhibition: ExhibitionContent = {
   lore,
   ledger,
   monkeys,
+  boardEntries,
   counterObjects,
   memories,
   principals,
