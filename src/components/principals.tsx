@@ -7,7 +7,8 @@ import { SourceList } from "./source-list";
  * Rob and Carla.
  *
  * The quietest room. No founder bio, no achievements, no adjectives doing work
- * that a photograph will do better. One line, and then the door.
+ * that a photograph will do better. The public record supplies the frame;
+ * personal wording and what gets shown remain theirs.
  */
 export function Principals({
   people,
@@ -46,8 +47,8 @@ export function Principals({
         </p>
         <strong className="principals__last-line">They do.</strong>
         <p className="principals__note">
-          Working exhibition copy. The final text should follow Rob and Carla&apos;s own
-          recorded words.
+          Working exhibition copy. Rob and Carla can correct it, replace it with their own
+          words, add a photograph, or leave the room exactly as it is.
         </p>
       </div>
     </section>
