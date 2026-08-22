@@ -260,6 +260,16 @@ export type ArtefactRecord = {
   media: MediaAsset;
 };
 
+/** A documentary transcription slot for the real shop board. */
+export type BoardEntry = {
+  id: string;
+  /** Empty until wording has actually been sourced or confirmed. */
+  line: string;
+  flourish?: string;
+  date?: string;
+  evidence: Evidence;
+};
+
 export type NavigationItem = {
   href: `#${string}`;
   label: string;
@@ -285,6 +295,7 @@ export type ExhibitionContent = {
   lore: LoreItem[];
   ledger: LedgerEntry[];
   monkeys: MonkeyRecord[];
+  boardEntries: BoardEntry[];
   counterObjects: CounterObject[];
   memories: Memory[];
   principals: PersonRecord[];
