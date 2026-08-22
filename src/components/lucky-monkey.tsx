@@ -6,9 +6,9 @@ import { MuseumSection } from "./museum-section";
 /**
  * The Lucky Monkey.
  *
- * Specimen labels first, then the succession. The room is written as natural
- * history because that is the funniest accurate frame for what actually
- * happened: an ornament became a landmark and then a lineage.
+ * Specimen labels first, then the historical name record. The room borrows
+ * natural-history language because an ornament became a landmark and then a
+ * body of folklore. It deliberately stops short of inventing a genealogy.
  */
 export function LuckyMonkey({
   lore,
@@ -25,7 +25,7 @@ export function LuckyMonkey({
       index="03"
       eyebrow="An accidental civic species"
       title="The Lucky Monkey"
-      intro="A mascot became a landmark, then a family tree, then a theory of luck. The exhibition treats that folklore with the seriousness it deserves and the mischief it demands."
+      intro="A mascot became a landmark, then a story larger than the object itself. The exhibition treats that folklore with the seriousness it deserves and the mischief it demands — without pretending the surviving record gives us a neat family tree."
       tone="ink"
     >
       <div className="specimen-grid">

@@ -270,10 +270,10 @@ describe("the monkey record", () => {
     expect(unconfirmed.length).toBeGreaterThan(0);
   });
 
-  it("records both Ziggie and Ziggy without turning either into a genealogy", () => {
-    const ziggy = exhibition.monkeys.find((monkey) => monkey.id === "ziggy");
-    expect(ziggy?.name).toBe("Ziggie");
-    expect(ziggy?.aliases.join(" ")).toContain("Ziggy");
+  it("keeps historical Ziggie and Archie separate from exhibition Ziggy", () => {
+    const ziggie = exhibition.monkeys.find((monkey) => monkey.id === "ziggy");
+    expect(ziggie?.name).toBe("Ziggie");
+    expect(ziggie?.aliases.join(" ")).not.toContain("Ziggy");
     expect(exhibition.monkeys.map((monkey) => monkey.name)).toContain("Archie");
   });
 });

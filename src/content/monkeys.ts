@@ -1,16 +1,22 @@
 import type { LoreItem, MonkeyRecord } from "./types";
 
 /**
- * The monkey record.
+ * The historical monkey record.
  *
- * The evidence currently supplies two names and a replacement story, but not a
- * reliable genealogy. The unresolved relationship is the record.
+ * IMPORTANT: exhibition-Ziggy is not a member of this historical succession.
+ * Ziggy is the fortune-teller/narrator invented for the exhibition. The
+ * source record currently supplies the names Ziggie and Archie plus a
+ * replacement story, but not a reliable genealogy.
+ *
+ * The first record retains the legacy internal id `ziggy` only because other
+ * catalogue records already point to it. That implementation slug must never
+ * be rendered or interpreted as evidence that Ziggy was a historical alias.
  */
 export const monkeys: MonkeyRecord[] = [
   {
     id: "ziggy",
     name: "Ziggie",
-    aliases: ["Ziggy — exhibition spelling"],
+    aliases: [],
     reign: "Published by 2 January 2016",
     status: "missing",
     role: "The name in the published disappearance and replacement lead.",
@@ -112,7 +118,7 @@ export const lore: LoreItem[] = [
     id: "behaviour",
     label: "Known behaviour",
     value: "Unsolicited advice",
-    body: "The shop's social presence carries the monkey's voice and saying-board material. The full chronology of the board still belongs to the photo archive.",
+    body: "The shop's social presence carries monkey-and-saying-board material. The full chronology of the board still belongs to the photo archive.",
     evidence: {
       status: "needs-confirmation",
       note: "Public traces exist, but a dated board archive has not been assembled.",

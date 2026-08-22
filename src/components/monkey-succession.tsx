@@ -11,10 +11,11 @@ const statusLabels: Record<MonkeyRecord["status"], string> = {
 };
 
 /**
- * The succession.
+ * The historical name record.
  *
- * Two names and a replacement story, without pretending the available
- * evidence supplies a family tree.
+ * Two sourced names and a replacement story, displayed without pretending the
+ * available evidence supplies a lineage. Exhibition-Ziggy is deliberately not
+ * part of this record.
  */
 export function MonkeySuccession({
   monkeys,
@@ -27,7 +28,7 @@ export function MonkeySuccession({
     <div className="succession">
       <h3 className="succession__title">Names in the record</h3>
       <p className="succession__line" aria-hidden="true">
-        <span>Ziggie / Archie / replacement history — relationship unresolved</span>
+        <span>Ziggie / Archie / reported replacement — relationship unresolved</span>
       </p>
 
       <ol className="lineage">
