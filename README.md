@@ -20,16 +20,60 @@ B$S is the curator here, not the subject.
 
 ## What Ziggy is
 
-Two things share the name.
+**Ziggy is an exhibition invention.** He is the fortune-teller, narrator and
+slightly impossible interpreter built for this project. His name is not a
+historical claim about the shop's physical monkey figures.
 
-1. **Ziggie** is the spelling in a dated disappearance/replacement news lead;
-   **Archie** is the name in dated shop/public material. The evidence does not
-   establish that either was the original, whether they are the same figure,
-   or how many figures existed. The exhibition spelling **Ziggy** belongs to
-   the fortune-machine concept — see `src/content/monkeys.ts`.
-2. **Ask Ziggy** is the site's fortune machine: a Zoltar cabinet run by a
-   tobacconist's monkey, built on a handwritten fortune library and a
-   deterministic selection engine. No language model runs at request time.
+The historical record currently contains two separately documented names:
+**Ziggie**, in a dated disappearance/replacement news lead, and **Archie**, in
+dated shop/public material. The evidence does not establish that either was
+the original, whether they are the same figure, whether one replaced the
+other, or how many figures existed. Keep those names exactly where their
+sources put them and do not recruit exhibition-Ziggy into that genealogy.
+
+**Ask Ziggy** is the site's penny-arcade fortune machine: a Zoltar-like cabinet
+built from a handwritten fortune library and a deterministic selection engine.
+No language model runs at request time. Ziggy may interpret the archive; he may
+never manufacture historical fact.
+
+---
+
+## Curatorial direction
+
+This project is an art-direction and evidence-refinement exercise, not a
+redesign target. Preserve the existing architecture, rooms, evidence model,
+responsiveness, accessibility and working interactions unless a concrete bug
+requires otherwise.
+
+The aesthetic equation is:
+
+> **museum catalogue × old Frankston shop window × penny arcade × slightly haunted local folklore**
+
+The governing tension is:
+
+> **dead-serious archival discipline on the surface; strange living symbolism underneath.**
+
+Operationally:
+
+- the archive says what can be proved;
+- objects suggest what was lived;
+- Frankston supplies the folklore;
+- Ziggy is allowed to interpret it;
+- interpretation never becomes evidence by repetition.
+
+B$S should be felt through rhythm, recursion, visual restraint, odd
+correspondences, object-memory, negative space and details that reward a
+second look. Do not paste overt studio branding over the exhibition. The art
+behind the art should be legible without becoming a speech about itself.
+
+The experience should also feel unusually low-effort for Rob and Carla. Public
+research is our job. Their contribution should be limited to the irreplaceable
+human layer: private photographs, surviving objects, personal memories,
+important people and corrections only they can make. No sorting, scanning,
+captions or exact dates should be demanded.
+
+When in doubt, prefer **correct → consolidate → populate → simplify** over
+**expand → redesign → rewrite everything**.
 
 ---
 
@@ -73,8 +117,8 @@ src/
     evidence.ts       honesty-label rules
     fortune-engine.ts the Ziggy machine
     mornings.ts       legacy date helpers; the exhibition now shows an approximation
-tests/                content integrity, the engine, server-rendered structure
-public/archive/       approved images, documents and audio
+  tests/               content integrity, the engine, server-rendered structure
+  public/archive/      approved images, documents and audio
 ```
 
 Components take data as props and render it. They hold no facts of their own.
@@ -113,7 +157,7 @@ Every file in `src/content/` exports typed data. Types live in
 | `sources.ts` | Every citation, by id |
 | `timeline.ts` | The 1996 → 2026 narrative |
 | `wins.ts` | The ten Division One slots, plus sourced-but-unplaced wins |
-| `monkeys.ts` | The succession and the folklore specimen labels |
+| `monkeys.ts` | Historical monkey-name records and folklore specimen labels |
 | `memories.ts` | Counter objects and the oral-history fragments on them |
 | `people.ts` | `principals` (Rob, Carla) and `staff` (the gang) |
 | `community.ts` | Around Town |
@@ -154,6 +198,26 @@ Rules the tests enforce:
 Personal material has a second gate: `Evidence.permission`
 (`granted` / `pending` / `not-required` / `withheld`). `isPubliclyClearable()`
 decides whether a person's details render at all. The default is no.
+
+### Record-separation rules
+
+Keep these distinct even when they sit close together in time:
+
+- company registration;
+- ABN commencement;
+- GST registration;
+- registered business-name dates;
+- recorded trading-name dates;
+- archived-web capture dates;
+- first verified address-specific evidence;
+- first physical trading day;
+- remembered opening date;
+- shopfront-signage chronology.
+
+A registry date is not an opening date. A web capture is not the first day the
+shop existed. A source using one monkey name does not prove a genealogy. A
+Frankston resident winning Lotto does not prove a ticket was sold at 8
+Thompson Street.
 
 ---
 
@@ -262,7 +326,7 @@ and must be unique — `XXXX` is an honest statement that the object is undated.
   description: "What it is and why it matters.",
   provenance: "Held: back room.",
   holding: "held",              // held | wanted | lost
-  relatedIds: ["new-awning"],   // timeline, monkey, person or counter-object ids
+  relatedIds: ["new-awning"],   // must exist in the catalogue graph
   tags: ["signage", "shopfront"],
   evidence: { status: "verified", sourceIds: ["family-archive-001"] },
   media: { /* alt text and caption are required, filled or not */ },
@@ -312,13 +376,29 @@ become an afterthought when the images land.
 
 ---
 
-## What remains unresolved
+## What public research already carries
 
-Public research now supplies the ABR chronology, a dated 2016 address-specific
-web record, documented services/catalogue categories, the 2016/2019/2022
-recoverable wins, the 2026 tenth win and one 2018 community example.
+The public record now supplies enough that Rob and Carla should not be asked
+to reconstruct it for us:
 
-The genuinely human/archive layer is shorter:
+- the ABR company/business-name/trading-name chronology;
+- the supported Est. 1996 / thirty-year frame without an invented opening day;
+- a dated 2016 address-specific Tobacco Blends / Cignall web record;
+- documented public services and specialist online catalogue categories;
+- recoverable Division One wins in 2016, 2019 and 2022, plus the documented
+  tenth win in 2026;
+- one documented 2018 Great Flavours / Butt Out Day collaboration;
+- a strong published lead for the Ziggie disappearance/search/reward,
+  non-recovery and replacement;
+- separate dated use of the name Archie.
+
+Do not turn these back into owner homework.
+
+---
+
+## What remains genuinely human
+
+The owner/archive layer should stay short:
 
 - the earliest shop image or paper;
 - monkey photographs/material and clarification of the Ziggie / Archie /
@@ -337,7 +417,7 @@ on 13 June 2026; two readable draw archives give the Division One dividend as
 $3,127,800.49, while an indexed official snippet is $1,000 lower. The source
 note preserves that conflict.
 
-**A note on the mornings counter:** the front window now says
+**A note on the mornings counter:** the front window says
 `≈ 11,000 mornings`. No exact date is stored or implied. It is an
 anniversary-scale illustration attached to the supported Est. 1996 /
 thirty-year frame.
@@ -349,3 +429,6 @@ thirty-year frame.
 This is an exhibition first and a business website second. Preserve the real
 shop's texture. Do not sand it into brand language, and do not let a good
 story quietly become a fact.
+
+The archive earns the right to be strange by being scrupulous about what it
+knows.
