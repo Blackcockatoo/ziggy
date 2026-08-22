@@ -37,7 +37,7 @@ export function Counter({
   return (
     <MuseumSection
       id="counter"
-      index="05"
+      index="06"
       eyebrow="Thirty years of conversation"
       title="The Counter"
       intro="Pick something up. Everything on this counter has a story attached to it — or a question waiting to become one."
