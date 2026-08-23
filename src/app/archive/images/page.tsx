@@ -1,94 +1,370 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import styles from "./visual-archive.module.css";
 
 export const metadata: Metadata = {
-  title: "Ziggy — Supplied Visual Archive",
-  description: "User-supplied Ziggy image studies being ingested into the Working Archive.",
+  title: "Ziggy — The Image Room",
+  description:
+    "The audited visual archive behind Ziggy: reference images, Old Vic stationery, air-freshener studies, playing cards, calendars and ephemera.",
 };
 
-const originalReferences = [
-  "Ziggy — 30 Years group poster",
-  "Ziggy — original tray reference",
+const rooms = [
+  ["references", "References"],
+  ["legacy", "Legacy 44"],
+  ["stationery", "Stationery"],
+  ["fresheners", "Fresheners"],
+  ["cards", "Cards"],
+  ["calendar", "Calendar"],
+  ["ephemera", "Ephemera"],
+] as const;
+
+const stats = [
+  ["44", "legacy chat images retained"],
+  ["5", "later production systems recovered"],
+  ["0", "new images generated in this audit"],
+] as const;
+
+const freshenerVariants = [
+  "THE ZIG — master recognition mark",
+  "THE TRAY — quietest extension",
+  "3196 — place / provenance",
+  "THE BOW — gold-centre geometry",
+  "THE CARD — deck crossover",
+  "THE CREST — ceremonial Old Vic",
 ];
 
-const conceptsA = [
-  "Cabinet of 30 Years",
-  "Oracle of Thompson Street",
-  "1996 / 2026 Split Era",
-  "After Closing",
-  "Thirty-Year Receipt",
-  "Saint Ziggy of Frankston",
-  "Reflection Close-up",
-  "Oracle Tarot Cards",
-  "Archaeological Discovery",
-  "Snow Globe",
+const cardSet = [
+  "King of Spades — Gentleman of the Old Vic State",
+  "Queen of Hearts — Lady of the Bay",
+  "Jack of Clubs — the local lad",
+  "Ace of Spades — heraldic Ziggy",
+  "Joker — the monkey breaks the rules",
+  "Two-way back — the Sugar-Free Zig test",
 ];
 
-const page = {
-  minHeight: "100vh",
-  background: "#0b0b08",
-  color: "#eee7d8",
-  padding: "clamp(24px, 5vw, 72px)",
-  fontFamily: "ui-sans-serif, system-ui, sans-serif",
-} as const;
+function Plate({
+  src,
+  alt,
+  ratio,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  ratio: string;
+  priority?: boolean;
+}) {
+  return (
+    <div className={styles.plate} style={{ aspectRatio: ratio }}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        priority={priority}
+        sizes="(max-width: 760px) 100vw, (max-width: 1200px) 78vw, 960px"
+        className={styles.plateImage}
+      />
+    </div>
+  );
+}
 
-const shell = { maxWidth: 1180, margin: "0 auto" } as const;
-const serif = { fontFamily: "Georgia, 'Times New Roman', serif" } as const;
-const eyebrow = { fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase" as const, color: "#d9c18a" };
-const grid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 18 } as const;
-const panel = { border: "1px solid rgba(217,193,138,.24)", background: "#12120e", padding: 18 } as const;
-const listStyle = { margin: "18px 0 0", paddingLeft: 20, color: "#cfc4ad", lineHeight: 1.75 } as const;
+function SectionHead({
+  number,
+  eyebrow,
+  title,
+  copy,
+}: {
+  number: string;
+  eyebrow: string;
+  title: string;
+  copy: string;
+}) {
+  return (
+    <header className={styles.sectionHead}>
+      <span className={styles.sectionNumber}>{number}</span>
+      <div>
+        <p className={styles.eyebrow}>{eyebrow}</p>
+        <h2>{title}</h2>
+        <p className={styles.lead}>{copy}</p>
+      </div>
+    </header>
+  );
+}
 
 export default function VisualArchivePage() {
   return (
-    <main style={page}>
-      <div style={shell}>
-        <nav style={{ display: "flex", justifyContent: "space-between", gap: 16, alignItems: "center", marginBottom: 56 }}>
-          <a href="/archive" style={{ color: "#d9c18a", textDecoration: "none", letterSpacing: ".12em", textTransform: "uppercase", fontSize: 11 }}>← Working Archive</a>
-          <span style={eyebrow}>Supplied archive · intake 01</span>
-        </nav>
+    <main className={styles.page}>
+      <header className={styles.topbar}>
+        <a href="/archive" className={styles.backLink}>
+          ← Working Archive
+        </a>
+        <span className={styles.topLabel}>Visual audit · 23 Aug 2026</span>
+      </header>
 
-        <header style={{ maxWidth: 900, marginBottom: 52 }}>
-          <p style={eyebrow}>Visual library</p>
-          <h1 style={{ ...serif, fontSize: "clamp(48px, 8vw, 104px)", lineHeight: .9, fontWeight: 400, letterSpacing: "-.055em", margin: "14px 0 24px" }}>The images that made the project.</h1>
-          <p style={{ ...serif, fontSize: "clamp(19px, 2.2vw, 28px)", color: "#cfc4ad", lineHeight: 1.45, maxWidth: 780 }}>This room is for the actual image material supplied with the project — not new renders. It keeps the experiments, references and strange useful detours visible beside the finished argument.</p>
-          <div style={{ marginTop: 24, display: "inline-flex", gap: 10, flexWrap: "wrap" }}>
-            <span style={{ border: "1px solid #b58a3c", padding: "7px 10px", fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase" }}>12 images ingested</span>
-            <span style={{ border: "1px solid rgba(238,231,216,.2)", padding: "7px 10px", fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "#a99e89" }}>Source: supplied Ziggy archive ZIP</span>
+      <section className={styles.hero}>
+        <div className={styles.heroCopy}>
+          <p className={styles.eyebrow}>The working visual archive · Frankston 3196</p>
+          <h1>
+            THE IMAGE
+            <span>ROOM</span>
+          </h1>
+          <p className={styles.heroDeck}>
+            The project was bigger than the first upload suggested. This audit pulls the useful image work back together: the original references, the older forty-four-image chat archive, Old Vic stationery, the air-freshener system, a proper card deck, the Frankston calendar studies and the small commemorative objects around them.
+          </p>
+          <p className={styles.auditNote}>
+            Nothing on this page was newly generated for the audit. Existing project images were recovered, grouped and re-filed so the archive finally shows the breadth of the work.
+          </p>
+        </div>
+
+        <div className={styles.heroVisual}>
+          <Image
+            src="/images/ziggy/character/ziggy-with-tray.webp"
+            alt="Ziggy holding the silver tray"
+            fill
+            priority
+            sizes="(max-width: 840px) 100vw, 42vw"
+            className={styles.heroImage}
+          />
+          <div className={styles.heroStamp}>
+            <span>AUDITED</span>
+            <b>3196</b>
           </div>
-        </header>
+        </div>
+      </section>
 
-        <section style={{ ...grid, marginBottom: 64 }}>
-          <article style={panel}>
-            <p style={eyebrow}>00 · Original references</p>
-            <div style={{ position: "relative", width: "100%", aspectRatio: "115 / 53", marginTop: 14, background: "#080806", overflow: "hidden" }}>
-              <Image src="/images/ziggy/archive-upload/00-original-references.webp" alt="Contact sheet of the supplied original Ziggy reference images" fill sizes="(max-width: 700px) 100vw, 50vw" style={{ objectFit: "contain" }} />
+      <section className={styles.stats} aria-label="Archive audit summary">
+        {stats.map(([value, label]) => (
+          <div key={label} className={styles.stat}>
+            <strong>{value}</strong>
+            <span>{label}</span>
+          </div>
+        ))}
+      </section>
+
+      <nav className={styles.roomNav} aria-label="Image room sections">
+        {rooms.map(([id, label]) => (
+          <a key={id} href={`#${id}`}>
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <section className={`${styles.section} ${styles.paper}`} id="references">
+        <SectionHead
+          number="00"
+          eyebrow="Anchor material"
+          title="Start with the monkey that actually exists."
+          copy="The full-body tray reference and the thirty-year anniversary image remain the visual anchors. They are not interchangeable with later creative studies: one helps us look closely at the physical character; the other records how the anniversary idea first announced itself."
+        />
+        <div className={styles.referenceGrid}>
+          <figure className={styles.figureCard}>
+            <div className={styles.referenceImage}>
+              <Image
+                src="/images/ziggy/character/ziggy-with-tray.webp"
+                alt="Full-body Ziggy tray reference"
+                fill
+                sizes="(max-width: 760px) 100vw, 50vw"
+                className={styles.coverContain}
+              />
             </div>
-            <ol style={listStyle}>{originalReferences.map((item) => <li key={item}>{item}</li>)}</ol>
-          </article>
-
-          <article style={panel}>
-            <p style={eyebrow}>01 · Thirty Years concepts — Set A</p>
-            <div style={{ position: "relative", width: "100%", aspectRatio: "115 / 263", marginTop: 14, background: "#080806", overflow: "hidden" }}>
-              <Image src="/images/ziggy/archive-upload/01-thirty-years-concepts-a.webp" alt="Contact sheet of ten supplied Thirty Years Ziggy concept images" fill sizes="(max-width: 700px) 100vw, 50vw" style={{ objectFit: "contain" }} />
+            <figcaption>
+              <span>Physical character reference</span>
+              <small>Ear construction · grin · gold knot · harlequin · silver tray</small>
+            </figcaption>
+          </figure>
+          <figure className={styles.figureCard}>
+            <div className={styles.referenceImage}>
+              <Image
+                src="/images/ziggy/anniversary/thirty-years-poster.webp"
+                alt="Ziggy thirty years anniversary concept poster"
+                fill
+                sizes="(max-width: 760px) 100vw, 50vw"
+                className={styles.coverContain}
+              />
             </div>
-            <ol style={listStyle}>{conceptsA.map((item) => <li key={item}>{item}</li>)}</ol>
-          </article>
-        </section>
+            <figcaption>
+              <span>Thirty-year anniversary concept</span>
+              <small>Creative campaign material · not historical evidence by itself</small>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-        <section style={{ borderTop: "1px solid rgba(217,193,138,.24)", paddingTop: 28, display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(220px, .45fr)", gap: 28 }}>
+      <section className={`${styles.section} ${styles.night}`} id="legacy">
+        <SectionHead
+          number="01"
+          eyebrow="Recovered chat archive"
+          title="The older forty-four were not a side note."
+          copy="The first live image room only showed twelve items. The audit folds the broader legacy sets back into the story: originals, Thirty Years experiments, Australian archetypes and timeline / mythology studies. The point is continuity, not volume for its own sake."
+        />
+        <Plate
+          src="/images/ziggy/archive-audit/legacy-44.webp"
+          alt="Audit contact sheet of the forty-four legacy Ziggy chat images"
+          ratio="360 / 448"
+        />
+        <div className={styles.annotationRow}>
+          <span>Original references</span>
+          <span>Thirty Years · A / B</span>
+          <span>Australian archetypes · A / B</span>
+          <span>Timeline / myth studies</span>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.green}`} id="stationery">
+        <SectionHead
+          number="02"
+          eyebrow="Old Vic State · ceremonial layer"
+          title="The stationery is where the joke learned manners."
+          copy="Letterheads, envelopes, certificates, seals, heraldry and restrained brand sheets turn Old Vic State into useful visual theatre. It works because it behaves with institutional confidence while remaining explicitly fictional."
+        />
+        <div className={styles.splitFeature}>
+          <Plate
+            src="/images/ziggy/archive-audit/brand-stationery.webp"
+            alt="Audited Ziggy Old Vic stationery, letterhead, heraldic and identity studies"
+            ratio="420 / 319"
+          />
+          <aside className={styles.sideNote}>
+            <p className={styles.eyebrow}>What survived the audit</p>
+            <h3>Keep the bureaucracy beautiful.</h3>
+            <ul>
+              <li>letterhead + envelope system</li>
+              <li>certificate / proclamation language</li>
+              <li>invented crest + seal family</li>
+              <li>Frankston 3196 provenance</li>
+              <li>bottle green, cream, black and restrained gold</li>
+            </ul>
+            <p className={styles.warning}>OLD VIC STATE IS FICTIONAL. Never present the stationery as a historic Victorian government identity or endorsement.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.paper}`} id="fresheners">
+        <SectionHead
+          number="03"
+          eyebrow="The little moving sign"
+          title="The air freshener became the cleanest recognition test."
+          copy="This is the moment the project stops asking whether a funny monkey can go on merchandise and starts asking what the smallest learnable Ziggy might be. The strongest answer is not a face — it is a proprietary silhouette."
+        />
+        <div className={styles.splitFeatureReverse}>
+          <aside className={styles.sideNoteDark}>
+            <p className={styles.eyebrow}>Master recommendation</p>
+            <h3>THE ZIG</h3>
+            <p>Two exaggerated ear curves. One small gold centre. One shallow silver tray interruption. One cream diamond only when it helps. Tiny 3196 on the reverse.</p>
+            <ol className={styles.compactList}>
+              {freshenerVariants.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+            <p className={styles.rule}>Object first. Advertisement second.</p>
+          </aside>
+          <Plate
+            src="/images/ziggy/archive-audit/air-freshener-system.webp"
+            alt="Ziggy custom air freshener concept system including The Zig, tray, bow, crest and 3196 variants"
+            ratio="420 / 280"
+          />
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.night}`} id="cards">
+        <SectionHead
+          number="04"
+          eyebrow="Premium artefact"
+          title="A real deck first. Ziggy theatre second."
+          copy="The card work is strongest when conventional playing-card mechanics are boringly good: instant indices, two-way symmetry, familiar suits and a restrained back. The mythology lives inside those rules rather than replacing them."
+        />
+        <div className={styles.splitFeature}>
+          <Plate
+            src="/images/ziggy/archive-audit/playing-cards.webp"
+            alt="Old Vic Ziggy playing-card studies with King, Queen, Jack, Ace, Joker and card back"
+            ratio="340 / 334"
+          />
+          <aside className={styles.sideNoteNight}>
+            <p className={styles.eyebrow}>Recovered card suite</p>
+            <ol className={styles.compactList}>
+              {cardSet.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ol>
+            <p className={styles.rule}>The back is one of the earliest serious Sugar-Free Zig tests.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.paper}`} id="calendar">
+        <SectionHead
+          number="05"
+          eyebrow="Frankston leads"
+          title="Full Zig. Mild Zig. Sugar-Free Zig."
+          copy="The calendar solved the scale problem. One place can be expressed at three strengths without inventing three brands: Ziggy can be the subject, become the host, or recede until only visual DNA remains."
+        />
+        <Plate
+          src="/images/ziggy/archive-audit/calendar-jan-jun.webp"
+          alt="Frankston Ziggy calendar studies showing Full Zig, Mild Zig and Sugar-Free Zig approaches"
+          ratio="420 / 290"
+        />
+        <div className={styles.threeDial}>
+          <article>
+            <span>FULL ZIG</span>
+            <b>Ziggy is the subject.</b>
+          </article>
+          <article>
+            <span>MILD ZIG</span>
+            <b>Frankston leads; Ziggy hosts.</b>
+          </article>
+          <article>
+            <span>SUGAR-FREE ZIG</span>
+            <b>The brand survives as visual DNA.</b>
+          </article>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.green}`} id="ephemera">
+        <SectionHead
+          number="06"
+          eyebrow="Small evidence of a large world"
+          title="Stamps, receipts and paper scraps make the fiction feel handled."
+          copy="The best ceremonial pieces look as if they might have lived in a drawer for years. The commemorative stamp and thirty-year receipt are useful because they translate the larger system into humble, believable paper objects."
+        />
+        <div className={styles.splitFeature}>
+          <Plate
+            src="/images/ziggy/archive-audit/ephemera.webp"
+            alt="Ziggy commemorative stamp and thirty-year receipt concept studies"
+            ratio="420 / 264"
+          />
+          <aside className={styles.sideNote}>
+            <p className={styles.eyebrow}>Application rule</p>
+            <h3>Make artefacts, not a merch catalogue.</h3>
+            <p>The strongest objects either teach a distinctive Ziggy asset or gain meaning because of the Ziggy story. If an object does neither, it probably does not need to exist.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.auditResult}`} id="result">
+        <SectionHead
+          number="07"
+          eyebrow="Audit result"
+          title="One visual system, not six unrelated ideas."
+          copy="The useful material now points in the same direction: repeat fewer things, more confidently. Keep the full monkey for theatre. Let the expensive and everyday objects learn how to survive on less."
+        />
+        <div className={styles.minimumMark}>
+          <div><span>01</span><b>Paired ear curves</b><small>shape</small></div>
+          <div><span>02</span><b>Small gold centre</b><small>colour cue</small></div>
+          <div><span>03</span><b>Silver tray stroke</b><small>behaviour / offer</small></div>
+          <div><span>04</span><b>Frankston 3196</b><small>provenance when space permits</small></div>
+        </div>
+        <blockquote>
+          How little Ziggy can remain before Ziggy disappears?
+        </blockquote>
+        <footer className={styles.footer}>
           <div>
-            <p style={eyebrow}>Archive rule</p>
-            <h2 style={{ ...serif, fontSize: "clamp(32px, 5vw, 62px)", fontWeight: 400, lineHeight: 1, margin: "10px 0 18px" }}>Keep the experiments. Label what they are.</h2>
-            <p style={{ color: "#bdb19a", maxWidth: 700 }}>These are creative/reference artefacts from the working project. They do not become historical evidence merely by entering the archive. Where an image illustrates folklore, imagined history, Old Vic State or future speculation, the surrounding copy must keep that distinction clear.</p>
+            <p className={styles.eyebrow}>Archive discipline</p>
+            <p>Creative study ≠ historical evidence. Old Vic State ≠ government identity. Product imagination ≠ owner approval. The archive keeps those boundaries visible because that is what lets the strange stuff stay strange.</p>
           </div>
-          <div style={{ borderLeft: "1px solid rgba(217,193,138,.24)", paddingLeft: 22 }}>
-            <p style={eyebrow}>Intake status</p>
-            <p style={{ ...serif, fontSize: 27, margin: "8px 0" }}>Originals + Set A</p>
-            <p style={{ color: "#948a78", fontSize: 13 }}>This is the first live ingest from the 44-image supplied archive.</p>
+          <div className={styles.footerLinks}>
+            <a href="/archive">Working Archive</a>
+            <a href="/">Exhibition</a>
           </div>
-        </section>
-      </div>
+        </footer>
+      </section>
     </main>
   );
 }
