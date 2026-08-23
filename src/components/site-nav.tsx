@@ -13,6 +13,7 @@ export function SiteNav({ items }: { items: NavigationItem[] }) {
             {item.label}
           </a>
         ))}
+        <a href="/archive">Working archive</a>
       </div>
     </nav>
   );
