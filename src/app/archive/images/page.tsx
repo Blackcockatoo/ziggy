@@ -225,6 +225,10 @@ export default function VisualArchivePage() {
               <li>bottle green, cream, black and restrained gold</li>
             </ul>
             <p className={styles.warning}>OLD VIC STATE IS FICTIONAL. Never present the stationery as a historic Victorian government identity or endorsement.</p>
+            <a className={styles.cupboardLink} href="/archive/stationery">
+              Open the Stationery Cupboard
+              <span>Browse and download all eight finished objects →</span>
+            </a>
           </aside>
         </div>
       </section>

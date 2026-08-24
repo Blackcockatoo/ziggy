@@ -28,6 +28,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# python build helpers
+__pycache__/
+*.py[cod]
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

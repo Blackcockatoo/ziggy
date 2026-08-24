@@ -44,6 +44,9 @@ export default function ArchivePage() {
         <a href="/archive/images" style={floatingLink}>
           Visual archive
         </a>
+        <a href="/archive/stationery" style={floatingLink}>
+          Stationery cupboard · 8
+        </a>
       </div>
       <ArchiveExperience />
     </>

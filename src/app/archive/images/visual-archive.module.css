@@ -306,6 +306,20 @@
 .sideNoteNight li { line-height: 1.65; }
 .sideNote ul { padding-left: 18px; }
 .warning { margin-top: 24px !important; padding-top: 18px; border-top: 1px solid rgba(216, 189, 130, .3); color: #e4cf95; font-size: 11px; letter-spacing: .07em; text-transform: uppercase; }
+.cupboardLink {
+  display: grid;
+  gap: 6px;
+  margin-top: 22px;
+  padding: 15px 16px;
+  border: 1px solid var(--gold);
+  color: var(--cream) !important;
+  background: rgba(9, 10, 8, .42);
+  text-decoration: none;
+  font-family: Georgia, serif;
+  font-size: 19px;
+}
+.cupboardLink:hover { background: rgba(200, 161, 82, .12); }
+.cupboardLink span { color: var(--softGold); font-family: ui-sans-serif, system-ui, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 
 .compactList { margin: 22px 0 0; padding-left: 20px; }
 .compactList li { margin-bottom: 9px; opacity: .82; }
