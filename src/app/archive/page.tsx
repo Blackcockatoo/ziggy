@@ -7,32 +7,44 @@ export const metadata: Metadata = {
     "A living Frankston archive: exhibition, evidence, visual language, object studies and the working conversation behind Ziggy.",
 };
 
+const floatingLink = {
+  zIndex: 9999,
+  padding: "11px 14px",
+  border: "1px solid rgba(217,193,138,.7)",
+  borderRadius: 999,
+  background: "rgba(11,11,8,.9)",
+  color: "#d9c18a",
+  textDecoration: "none",
+  fontSize: 10,
+  fontWeight: 700,
+  letterSpacing: ".12em",
+  textTransform: "uppercase" as const,
+  backdropFilter: "blur(10px)",
+  boxShadow: "0 10px 30px rgba(0,0,0,.35)",
+};
+
 export default function ArchivePage() {
   return (
     <>
-      <a
-        href="/archive/images"
+      <div
         style={{
           position: "fixed",
           right: 18,
           bottom: 18,
           zIndex: 9999,
-          padding: "11px 14px",
-          border: "1px solid rgba(217,193,138,.7)",
-          borderRadius: 999,
-          background: "rgba(11,11,8,.9)",
-          color: "#d9c18a",
-          textDecoration: "none",
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: ".12em",
-          textTransform: "uppercase",
-          backdropFilter: "blur(10px)",
-          boxShadow: "0 10px 30px rgba(0,0,0,.35)",
+          display: "flex",
+          gap: 8,
+          flexWrap: "wrap",
+          justifyContent: "flex-end",
         }}
       >
-        Visual archive · 12
-      </a>
+        <a href="/archive/record-room" style={floatingLink}>
+          Record room · 13
+        </a>
+        <a href="/archive/images" style={floatingLink}>
+          Visual archive
+        </a>
+      </div>
       <ArchiveExperience />
     </>
   );
