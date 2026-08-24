@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { LegacyImageGallery } from "@/components/legacy-image-gallery";
+import { visualArchiveChapters, visualArchiveItems } from "@/content/visual-archive";
 import styles from "./visual-archive.module.css";
 
 export const metadata: Metadata = {
@@ -193,20 +195,10 @@ export default function VisualArchivePage() {
         <SectionHead
           number="01"
           eyebrow="Recovered chat archive"
-          title="The older forty-four were not a side note."
-          copy="The first live image room only showed twelve items. The audit folds the broader legacy sets back into the story: originals, Thirty Years experiments, Australian archetypes and timeline / mythology studies. The point is continuity, not volume for its own sake."
+          title="The forty-four are back on the wall."
+          copy="What was compressed into one contact sheet is now a proper browsable collection: two supplied references, forty-two creative studies and a separate Ziggy museum note for every image. Funny where the work invites it, serious where the archive needs it, and always clear about what is reference, invention or folklore."
         />
-        <Plate
-          src="/images/ziggy/archive-audit/legacy-44.webp"
-          alt="Audit contact sheet of the forty-four legacy Ziggy chat images"
-          ratio="360 / 448"
-        />
-        <div className={styles.annotationRow}>
-          <span>Original references</span>
-          <span>Thirty Years · A / B</span>
-          <span>Australian archetypes · A / B</span>
-          <span>Timeline / myth studies</span>
-        </div>
+        <LegacyImageGallery items={visualArchiveItems} chapters={visualArchiveChapters} />
       </section>
 
       <section className={`${styles.section} ${styles.green}`} id="stationery">
