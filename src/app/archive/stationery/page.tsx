@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { StationeryCupboard } from "./stationery-cupboard";
 
 export const metadata: Metadata = {
-  title: "Ziggy - The Stationery Cupboard",
+  title: "Ziggy - The Optional Stationery Cupboard",
   description:
-    "Browse and download the regal, practical Old Vic State stationery suite for Ziggy and The Monkey Shop, Frankston.",
+    "An optional cupboard of fictional Old Vic State stationery and Ziggy paper experiments — made for fun and practical play, not as an owner task or official business system.",
 };
 
 export default function StationeryPage() {
