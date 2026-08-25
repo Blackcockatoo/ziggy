@@ -17,9 +17,9 @@ const typeLabels: Record<ArtefactRecord["objectType"], string> = {
 };
 
 const holdingLabels: Record<ArtefactRecord["holding"], string> = {
-  held: "In archive",
-  wanted: "Wanted",
-  lost: "Lost",
+  held: "Already here",
+  wanted: "Would be lovely",
+  lost: "May be gone",
 };
 
 const archivePriorities = [
@@ -85,27 +85,28 @@ export function ObjectArchive({
     >
       <dl className="archive-summary">
         <div>
-          <dt>In archive</dt>
+          <dt>Already here</dt>
           <dd>{String(counts.held).padStart(2, "0")}</dd>
         </div>
         <div>
-          <dt>Wanted</dt>
+          <dt>Would be lovely</dt>
           <dd>{String(counts.wanted).padStart(2, "0")}</dd>
         </div>
         <div>
-          <dt>Lost</dt>
+          <dt>May be gone</dt>
           <dd>{String(counts.lost).padStart(2, "0")}</dd>
         </div>
       </dl>
 
       <section className="archive-request" aria-labelledby="archive-request-title">
         <div className="archive-request__intro">
-          <p className="eyebrow">The human pieces only</p>
-          <h3 id="archive-request-title">A small, completely optional ask</h3>
+          <p className="eyebrow">Only if it falls into your lap</p>
+          <h3 id="archive-request-title">Not a scavenger hunt.</h3>
           <p>
-            Ignore this section entirely unless something is easy to share. One phone photo,
-            one rough memory, or nothing at all is a perfectly good response. No sorting. No
-            scanning. No captions. No homework. Approximate dates are enough.
+            This is not a list to work through. Ignore it entirely unless something is already
+            handy or a memory pops into your head. One phone photo, one rough sentence, or
+            nothing at all is a perfectly good response. No sorting. No scanning. No captions.
+            No searching cupboards on behalf of the project. Approximate dates are enough.
           </p>
         </div>
         <div className="archive-request__grid">
@@ -123,10 +124,11 @@ export function ObjectArchive({
       </section>
 
       <details className="archive-register">
-        <summary>Open the full internal accession register</summary>
+        <summary>Curator nerd drawer — open only if curious</summary>
         <p>
-          This detailed catalogue is curator scaffolding, not a checklist for Rob or Carla.
-          They are not expected to fill gaps, find objects, or complete the archive.
+          This detailed catalogue is scaffolding for the person building the exhibition, not a
+          checklist for Rob or Carla. They are not expected to fill gaps, find objects, explain
+          catalogue numbers or complete the archive.
         </p>
         {groups.map((holding) => {
           const records = artefacts.filter((item) => item.holding === holding);
@@ -159,7 +161,7 @@ export function ObjectArchive({
                             <dd>{artefact.dateRange}</dd>
                           </div>
                           <div>
-                            <dt>Holding</dt>
+                            <dt>Status</dt>
                             <dd>{holdingLabels[artefact.holding]}</dd>
                           </div>
                           {artefact.provenance ? (
