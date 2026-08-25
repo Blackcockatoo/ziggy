@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { AroundTown } from "@/components/around-town";
 import { AskZiggy } from "@/components/ask-ziggy";
 import { Commemorative } from "@/components/commemorative";
@@ -16,6 +17,43 @@ import { Timeline } from "@/components/timeline";
 import { VisitFinale } from "@/components/visit-finale";
 import { ZiggySays } from "@/components/ziggy-says";
 import { exhibition, lotteryExclusions, unplacedWins } from "@/content/exhibition";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: "/",
+    type: "website",
+    locale: "en_AU",
+    siteName: SITE_NAME,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "The Monkey Shop — Thirty Years in Frankston",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/opengraph-image"],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  inLanguage: "en-AU",
+  isAccessibleForFree: true,
+};
 
 /**
  * The exhibition, in walking order.
@@ -30,6 +68,12 @@ export default function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#daily-counter">
         Skip to today&apos;s counter
       </a>

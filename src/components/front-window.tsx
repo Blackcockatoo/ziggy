@@ -35,6 +35,10 @@ export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
         {identity.thesis[1]}
       </p>
 
+      <p className="front-window__gift-note">
+        An unofficial gift for Rob and Carla. Nothing to approve, populate or maintain.
+      </p>
+
       <a className="enter-link" href="#daily-counter">
         Today&apos;s counter <span aria-hidden="true">↓</span>
       </a>

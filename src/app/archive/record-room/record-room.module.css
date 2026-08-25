@@ -12,3 +12,7 @@
 @media(max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));width:min(880px,100%)}}
 @media(max-width:620px){.page{padding:3.8rem .85rem 7rem}.hero{margin-bottom:2.8rem}.hero h1{font-size:clamp(4rem,24vw,7rem)}.grid{grid-template-columns:1fr;gap:3rem}.card{width:min(100%,34rem);margin:0 auto}.caption,.note{width:min(100%,34rem);margin-right:auto;margin-left:auto}.note{padding-left:2.2rem}.back{padding:1.15rem}.lyricTitle{font-size:clamp(1.05rem,5vw,1.5rem)}.lyrics{font-size:clamp(.61rem,2.2vw,.79rem);line-height:1.55}.sheetFoot{right:1.15rem;left:1.15rem}.marginalia{grid-template-columns:1fr;gap:.65rem;margin-top:4rem}.footer{flex-direction:column}.player{grid-template-columns:auto auto 1fr auto}.player>button:last-child{display:none}.openAudio{display:none}}
 @media(prefers-reduced-motion:reduce){.cardInner,.front img{transition:none}}
+
+.player button:disabled{opacity:.32;cursor:not-allowed}
+
+@media(max-width:620px){.player{grid-template-columns:auto auto minmax(0,1fr) auto}.player button{width:2.75rem;height:2.75rem}.player>button:last-child{display:grid}.playButton{min-height:2.75rem}}

@@ -95,8 +95,14 @@ pnpm test
 pnpm build
 ```
 
-The site is fully static (`next build` prerenders one route). There is no
+`pnpm build` also runs lint, typecheck and tests first, so a production build
+cannot quietly skip the other gates.
+
+The site is fully static (`next build` prerenders its routes). There is no
 database, no API and no runtime content fetch.
+
+For deployment, domain and content-location details, see
+[`docs/HANDOVER.md`](docs/HANDOVER.md).
 
 ---
 

@@ -259,6 +259,17 @@ h3 {
   text-align: center;
 }
 
+.front-window__gift-note {
+  max-width: 34rem;
+  margin: 0.85rem auto 0;
+  color: rgba(251, 247, 237, 0.62);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .enter-link {
   width: max-content;
   border-bottom: 1px solid var(--paper-light);
@@ -2814,6 +2825,23 @@ h3 {
 
   .ziggy-room__ambient img {
     opacity: 0.4;
+  }
+}
+
+/* Keep the small archival controls comfortable on phones and touch screens. */
+@media (max-width: 680px), (pointer: coarse) {
+  .enter-link,
+  .source-links a,
+  .timeline__story summary,
+  .lineage__questions summary,
+  .archive-register > summary {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
+  .source-links a {
+    padding-block: 0.55rem;
   }
 }
 
