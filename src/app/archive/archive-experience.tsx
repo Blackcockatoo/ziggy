@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import styles from "./archive.module.css";
 
@@ -14,6 +15,9 @@ type WorkbenchEntry = {
   title: string;
   body: string;
 };
+
+const STEERING_STORAGE_KEY = "ziggy-archive-steering:v1";
+const LEGACY_STEERING_STORAGE_KEY = "ziggy-archive-steering";
 
 const evidence: Array<{
   claim: string;
@@ -162,6 +166,22 @@ const steeringItems = [
   "Calendar as a Frankston-first place experiment",
 ];
 
+function parseSteeringDecisions(saved: string | null): Record<string, DecisionState> {
+  if (!saved) return {};
+
+  const parsed: unknown = JSON.parse(saved);
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+
+  return Object.fromEntries(
+    steeringItems.flatMap((item) => {
+      const value = (parsed as Record<string, unknown>)[item];
+      return value === "keep" || value === "park" || value === "confirm"
+        ? [[item, value]]
+        : [];
+    }),
+  );
+}
+
 function statusLabel(status: EvidenceStatus) {
   if (status === "documented") return "Documented";
   if (status === "confirm") return "Needs confirming";
@@ -178,6 +198,7 @@ export function ArchiveExperience() {
   const [distance, setDistance] = useState(88);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [decisions, setDecisions] = useState<Record<string, DecisionState>>({});
+  const [steeringReady, setSteeringReady] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -191,21 +212,31 @@ export function ArchiveExperience() {
   }, []);
 
   useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem("ziggy-archive-steering");
-      if (saved) setDecisions(JSON.parse(saved) as Record<string, DecisionState>);
-    } catch {
-      // Local notes are convenience only; the archive still works without them.
-    }
+    const frame = window.requestAnimationFrame(() => {
+      try {
+        const current = window.localStorage.getItem(STEERING_STORAGE_KEY);
+        const legacy = window.localStorage.getItem(LEGACY_STEERING_STORAGE_KEY);
+        const saved = current ?? legacy;
+        if (saved) setDecisions(parseSteeringDecisions(saved));
+        if (!current && legacy) window.localStorage.removeItem(LEGACY_STEERING_STORAGE_KEY);
+      } catch {
+        // Local steering is convenience only; the archive still works without it.
+      } finally {
+        setSteeringReady(true);
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
+    if (!steeringReady) return;
     try {
-      window.localStorage.setItem("ziggy-archive-steering", JSON.stringify(decisions));
+      window.localStorage.setItem(STEERING_STORAGE_KEY, JSON.stringify(decisions));
     } catch {
       // Ignore storage failures in private / restricted browsers.
     }
-  }, [decisions]);
+  }, [decisions, steeringReady]);
 
   const filteredEvidence = useMemo(
     () => evidence.filter((item) => evidenceFilter === "all" || item.status === evidenceFilter),
@@ -254,9 +285,9 @@ export function ArchiveExperience() {
     <div className={styles.appShell}>
       <div className={styles.progress} style={{ width: `${progress}%` }} aria-hidden="true" />
       <header className={styles.topbar}>
-        <a href="/" className={styles.brandLink} aria-label="Back to the exhibition">
+        <Link href="/" className={styles.brandLink} aria-label="Back to the exhibition">
           <span className={styles.brandMonogram}>M</span><span>The Monkey Shop</span>
-        </a>
+        </Link>
         <nav className={styles.quickNav} aria-label="Optional back-room sections">
           <a href="#truth">Truth</a><a href="#anatomy">Anatomy</a><a href="#dial">Zig Dial</a><a href="#objects">Objects</a><a href="#workbench">Workbench</a>
         </nav>
@@ -270,7 +301,7 @@ export function ArchiveExperience() {
             <h1>ZIGGY<span>Thirty Years in Frankston</span></h1>
             <p className={styles.heroDeck}>This is where the overbuilding lives: research, visual experiments, odd little object studies and the thinking behind the tribute. It is here to browse, not to approve.</p>
             <div className={styles.heroActions}>
-              <a href="#orientation" className={styles.primaryAction}>Wander in</a><a href="/" className={styles.secondaryAction}>Return to the tribute</a>
+              <a href="#orientation" className={styles.primaryAction}>Wander in</a><Link href="/" className={styles.secondaryAction}>Return to the tribute</Link>
             </div>
             <p className={styles.heroLine}>Nothing in this room needs a next step.</p>
           </div>

@@ -1,8 +1,131 @@
 {
   "title": "Ziggy Stationery Cupboard 2026",
+  "edition": "Regal artwork and practical working files",
   "fictional_layer": true,
   "notice": "Old Vic State is a fictional ceremonial layer, not a historical government identity or endorsement.",
+  "documents": [
+    {
+      "number": "01",
+      "title": "Letterhead",
+      "category": "Correspondence",
+      "regal_print": "01-letterhead-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/01-letterhead-regal.jpg"
+    },
+    {
+      "number": "02",
+      "title": "Memorandum / Briefing Note",
+      "category": "Correspondence",
+      "regal_print": "02-memorandum-briefing-note-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/02-memorandum-briefing-note-regal.jpg"
+    },
+    {
+      "number": "03",
+      "title": "Certificate of Appreciation",
+      "category": "Ceremony",
+      "regal_print": "03-certificate-of-appreciation-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/03-certificate-of-appreciation-regal.jpg"
+    },
+    {
+      "number": "04",
+      "title": "Archive Intake Record",
+      "category": "Archive",
+      "regal_print": "04-archive-intake-record-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/04-archive-intake-record-regal.jpg"
+    },
+    {
+      "number": "05",
+      "title": "Owner Steering Sheet",
+      "category": "Archive",
+      "regal_print": "05-owner-steering-sheet-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/05-owner-steering-sheet-regal.jpg"
+    },
+    {
+      "number": "06",
+      "title": "Product Development Record",
+      "category": "Archive",
+      "regal_print": "06-product-development-record-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/06-product-development-record-regal.jpg"
+    },
+    {
+      "number": "07",
+      "title": "With Compliments",
+      "category": "Ephemera",
+      "regal_print": "07-with-compliments-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/07-with-compliments-regal.jpg"
+    },
+    {
+      "number": "08",
+      "title": "Commemorative Receipt / Archive Ticket",
+      "category": "Ephemera",
+      "regal_print": "08-commemorative-archive-ticket-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/08-commemorative-archive-ticket-regal.jpg"
+    },
+    {
+      "number": "09",
+      "title": "Birth Certificate",
+      "category": "Ceremony",
+      "regal_print": "09-birth-certificate-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/09-birth-certificate-regal.jpg"
+    },
+    {
+      "number": "10",
+      "title": "Bachelor Degree",
+      "category": "Ceremony",
+      "regal_print": "10-bachelor-degree-regal-print.pdf",
+      "preview": "/images/ziggy/stationery/regal/10-bachelor-degree-regal.jpg"
+    }
+  ],
   "files": [
+    {
+      "name": "01-letterhead-regal-print.pdf",
+      "bytes": 412096,
+      "format": "PDF"
+    },
+    {
+      "name": "02-memorandum-briefing-note-regal-print.pdf",
+      "bytes": 404302,
+      "format": "PDF"
+    },
+    {
+      "name": "03-certificate-of-appreciation-regal-print.pdf",
+      "bytes": 532069,
+      "format": "PDF"
+    },
+    {
+      "name": "04-archive-intake-record-regal-print.pdf",
+      "bytes": 422684,
+      "format": "PDF"
+    },
+    {
+      "name": "05-owner-steering-sheet-regal-print.pdf",
+      "bytes": 530184,
+      "format": "PDF"
+    },
+    {
+      "name": "06-product-development-record-regal-print.pdf",
+      "bytes": 546058,
+      "format": "PDF"
+    },
+    {
+      "name": "07-with-compliments-regal-print.pdf",
+      "bytes": 468938,
+      "format": "PDF"
+    },
+    {
+      "name": "08-commemorative-archive-ticket-regal-print.pdf",
+      "bytes": 535884,
+      "format": "PDF"
+    },
+    {
+      "name": "09-birth-certificate-regal-print.pdf",
+      "bytes": 757443,
+      "format": "PDF"
+    },
+    {
+      "name": "10-bachelor-degree-regal-print.pdf",
+      "bytes": 819723,
+      "format": "PDF"
+    },
     {
       "name": "01-letterhead-fillable.pdf",
       "bytes": 71170,
@@ -55,7 +178,12 @@
     },
     {
       "name": "ZIGGY_OLD_VIC_STATE_STATIONERY_SUITE_REGAL_2026.pdf",
-      "bytes": 4410253,
+      "bytes": 5419044,
+      "format": "PDF"
+    },
+    {
+      "name": "ZIGGY_OLD_VIC_STATE_WORKING_STATIONERY_SUITE_2026.pdf",
+      "bytes": 4410265,
       "format": "PDF"
     }
   ]

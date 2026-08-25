@@ -255,6 +255,7 @@
 .filters::-webkit-scrollbar { display: none; }
 .filters button {
   flex: 0 0 auto;
+  min-height: 44px;
   padding: 11px 14px;
   border: 1px solid rgba(21, 18, 13, .24);
   color: var(--ink);
@@ -263,6 +264,13 @@
 }
 .filterActive { color: var(--paperLight) !important; border-color: var(--green) !important; background: var(--green) !important; }
 .filterButton:hover { background: rgba(11, 52, 40, .08); }
+
+.page a:focus-visible,
+.page button:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--goldLight);
+}
 
 .cupboardLayout {
   max-width: 1260px;
@@ -335,19 +343,33 @@
 
 .documentStage {
   position: relative;
-  min-height: 590px;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 1087 / 1536;
   overflow: hidden;
   border: 1px solid rgba(21, 18, 13, .25);
-  background: #bdb39f;
+  background: #17130e;
 }
 .documentStage[data-shape="landscape"] { min-height: 360px; align-self: center; }
 .documentStage[data-shape="ticket"] { min-height: 620px; margin-inline: auto; width: min(100%, 340px); }
-.documentImage { object-fit: contain; padding: 12px; }
+.documentImage { object-fit: contain; padding: 8px; }
 
 .inspectionCopy { align-self: center; }
 .inspectionMeta { display: flex; justify-content: space-between; gap: 14px; color: #785316; }
 .inspectionCopy h3 { margin: 15px 0 4px; font-family: var(--font-serif), Georgia, serif; font-size: clamp(40px, 5vw, 68px); font-weight: 520; line-height: .96; }
 .rank { margin: 0 0 24px !important; color: #8a5f1b; font-family: var(--font-serif), Georgia, serif; font-size: 21px; font-style: italic; }
+.editionFlag {
+  display: inline-flex;
+  margin: 0 0 13px !important;
+  padding: 7px 9px;
+  border: 1px solid rgba(120, 83, 22, .42);
+  color: #62440f !important;
+  font-size: 9px !important;
+  font-weight: 800;
+  line-height: 1.2 !important;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
 .inspectionCopy > p:not(.rank) { color: #4e4536; font-size: 15px; line-height: 1.7; }
 
 .practicalNote {
@@ -374,6 +396,13 @@
   text-decoration: none;
 }
 .downloadList a:hover { background: var(--greenLight); }
+.downloadList a[data-edition="working"] {
+  color: var(--green);
+  background: transparent;
+}
+.downloadList a[data-edition="working"] small { color: rgba(11, 52, 40, .68); }
+.downloadList a[data-edition="working"] b { color: #785316; }
+.downloadList a[data-edition="working"]:hover { background: rgba(11, 52, 40, .08); }
 .downloadList a span { display: grid; gap: 3px; }
 .downloadList strong { font-size: 12px; }
 .downloadList small { color: rgba(255, 247, 226, .62); font-size: 9px; text-transform: uppercase; letter-spacing: .09em; }
@@ -421,7 +450,6 @@
   .facts { grid-template-columns: 1fr; }
   .facts div + div { border-left: 0; border-top: 1px solid rgba(223, 192, 119, .2); }
   .sectionHead, .inspectionPanel, .issueDesk { grid-template-columns: 1fr; }
-  .documentStage { min-height: 720px; }
   .inspectionCopy { align-self: auto; }
   .footer { flex-direction: column; }
 }
@@ -436,7 +464,6 @@
   .cabinetDoors span { min-height: 88px; font-size: 12px; }
   .drawerGrid { grid-template-columns: 1fr; }
   .drawerActive { transform: translateX(3px); }
-  .documentStage { min-height: 530px; }
   .documentStage[data-shape="landscape"] { min-height: 260px; }
   .documentStage[data-shape="ticket"] { min-height: 580px; width: min(100%, 310px); }
   .inspectionMeta { flex-direction: column; }

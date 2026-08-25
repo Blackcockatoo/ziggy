@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -43,7 +44,7 @@ export default function ArchiveLayout({ children }: Readonly<{ children: React.R
             Nothing in this back room is a proposal, commitment or expectation unless you
             explicitly decide you want to make something real later.
           </div>
-          <a
+          <Link
             href="/"
             style={{
               display: "inline-block",
@@ -56,7 +57,7 @@ export default function ArchiveLayout({ children }: Readonly<{ children: React.R
             }}
           >
             ← Back to the actual tribute
-          </a>
+          </Link>
         </div>
       </aside>
       {children}

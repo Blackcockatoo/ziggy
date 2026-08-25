@@ -18,6 +18,7 @@ import type { ExhibitionContent, NavigationItem } from "./types";
  * quietly fail to exist.
  */
 export const navigation: NavigationItem[] = [
+  { href: "#daily-counter", label: "Today" },
   { href: "#story", label: "1996 → 2026" },
   { href: "#ledger", label: "The ten" },
   { href: "#monkey", label: "The monkey" },

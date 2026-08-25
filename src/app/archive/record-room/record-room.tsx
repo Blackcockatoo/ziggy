@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import styles from "./record-room.module.css";
 
@@ -227,7 +229,13 @@ export function RecordRoom() {
               >
                 <span className={styles.cardInner}>
                   <span className={styles.front}>
-                    <img src={driveThumb(track.coverId)} alt={`${track.title} artwork`} />
+                    <Image
+                      src={driveThumb(track.coverId)}
+                      alt={`${track.title} artwork`}
+                      fill
+                      sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                      unoptimized
+                    />
                     <span className={styles.frontShade} />
                     <span className={styles.trackStamp}>NO. {String(track.no).padStart(2, "0")} / 13</span>
                     <span className={styles.turnCue}>TURN THE RECORD ↻</span>
@@ -272,9 +280,9 @@ export function RecordRoom() {
       </aside>
 
       <footer className={styles.footer}>
-        <a href="/archive">← working archive</a>
+        <Link href="/archive">← working archive</Link>
         <p>A musical of tremendous importance about almost nothing.</p>
-        <a href="/">public exhibition →</a>
+        <Link href="/">public exhibition →</Link>
       </footer>
 
       <div className={styles.player}>

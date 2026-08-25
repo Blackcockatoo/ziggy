@@ -111,8 +111,8 @@ src/
     page.tsx          the exhibition, in walking order
     layout.tsx        fonts, metadata
     globals.css       the whole design system
-  components/         one component per room, plus shared pieces
-  content/            the archive — every fact the site renders
+  components/         one component per room, plus the everyday Counter
+  content/            the archive and separately configured Counter content
   lib/
     evidence.ts       honesty-label rules
     fortune-engine.ts the Ziggy machine
@@ -130,6 +130,7 @@ If you find yourself typing a date into a `.tsx` file, it belongs in
 | # | Room | Component | Anchor |
 |---|------|-----------|--------|
 | — | Front Window | `front-window.tsx` | `#top` |
+| — | Today's Counter | `counter-home/counter-home.tsx` | `#daily-counter` |
 | 01 | 1996 → 2026 | `timeline.tsx` | `#story` |
 | 02 | The Luck Ledger | `luck-ledger.tsx` | `#ledger` |
 | 03 | The Lucky Monkey + The Succession | `lucky-monkey.tsx`, `monkey-succession.tsx` | `#monkey` |
@@ -143,6 +144,9 @@ If you find yourself typing a date into a `.tsx` file, it belongs in
 
 A test asserts that every navigation anchor has a matching section id, so a
 room cannot be listed and then quietly not exist.
+
+The lightweight front Counter is configured under `src/content/counter/`.
+See [`docs/COUNTER.md`](docs/COUNTER.md) for the short extension path.
 
 ---
 

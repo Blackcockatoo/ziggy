@@ -35,8 +35,8 @@ export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
         {identity.thesis[1]}
       </p>
 
-      <a className="enter-link" href="#story">
-        Enter the tribute <span aria-hidden="true">↓</span>
+      <a className="enter-link" href="#daily-counter">
+        Today&apos;s counter <span aria-hidden="true">↓</span>
       </a>
 
       <aside className="mornings-counter">

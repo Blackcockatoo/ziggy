@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { LegacyImageGallery } from "@/components/legacy-image-gallery";
 import { visualArchiveChapters, visualArchiveItems } from "@/content/visual-archive";
 import styles from "./visual-archive.module.css";
@@ -96,9 +97,9 @@ export default function VisualArchivePage() {
   return (
     <main className={styles.page}>
       <header className={styles.topbar}>
-        <a href="/archive" className={styles.backLink}>
+        <Link href="/archive" className={styles.backLink}>
           ← Working Archive
-        </a>
+        </Link>
         <span className={styles.topLabel}>Visual audit · 23 Aug 2026</span>
       </header>
 
@@ -225,10 +226,10 @@ export default function VisualArchivePage() {
               <li>bottle green, cream, black and restrained gold</li>
             </ul>
             <p className={styles.warning}>OLD VIC STATE IS FICTIONAL. Never present the stationery as a historic Victorian government identity or endorsement.</p>
-            <a className={styles.cupboardLink} href="/archive/stationery">
+            <Link className={styles.cupboardLink} href="/archive/stationery">
               Open the Stationery Cupboard
-              <span>Browse and download all eight finished objects →</span>
-            </a>
+              <span>Browse and download all ten finished objects →</span>
+            </Link>
           </aside>
         </div>
       </section>
@@ -356,8 +357,8 @@ export default function VisualArchivePage() {
             <p>Creative study ≠ historical evidence. Old Vic State ≠ government identity. Product imagination ≠ owner approval. The archive keeps those boundaries visible because that is what lets the strange stuff stay strange.</p>
           </div>
           <div className={styles.footerLinks}>
-            <a href="/archive">Working Archive</a>
-            <a href="/">Exhibition</a>
+            <Link href="/archive">Working Archive</Link>
+            <Link href="/">Exhibition</Link>
           </div>
         </footer>
       </section>

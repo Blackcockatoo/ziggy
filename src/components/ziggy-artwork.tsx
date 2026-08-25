@@ -36,7 +36,6 @@ export function ZiggyArtwork({
       aria-hidden={alt === "" ? true : undefined}
       priority={priority}
       loading={priority ? undefined : "lazy"}
-      quality={80}
     />
   );
 }

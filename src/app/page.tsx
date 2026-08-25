@@ -2,6 +2,7 @@ import { AroundTown } from "@/components/around-town";
 import { AskZiggy } from "@/components/ask-ziggy";
 import { Commemorative } from "@/components/commemorative";
 import { Counter } from "@/components/counter";
+import { CounterHome } from "@/components/counter-home/counter-home";
 import { FrontWindow } from "@/components/front-window";
 import { Gang } from "@/components/gang";
 import { LuckLedger } from "@/components/luck-ledger";
@@ -19,21 +20,23 @@ import { exhibition, lotteryExclusions, unplacedWins } from "@/content/exhibitio
 /**
  * The exhibition, in walking order.
  *
- * The front window comes before the navigation, and the documentary board
- * comes before Ask Ziggy so the penny-arcade machine grows out of the shop's
- * voice rather than landing as a disconnected gimmick.
+ * The original front window remains the opening image. The everyday Counter
+ * then becomes the fast public front door before the exhibition resumes in
+ * its established walking order. The documentary board still comes before
+ * Ask Ziggy so the machine grows out of the shop's voice.
  */
 export default function Home() {
   const { identity, sources } = exhibition;
 
   return (
     <>
-      <a className="skip-link" href="#story">
-        Skip to the exhibition
+      <a className="skip-link" href="#daily-counter">
+        Skip to today&apos;s counter
       </a>
       <FrontWindow identity={identity} />
       <SiteNav items={exhibition.navigation} />
       <main>
+        <CounterHome />
         <ResearchKey />
         <Timeline entries={exhibition.timeline} sources={sources} />
         <Commemorative />

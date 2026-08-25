@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArchiveExperience } from "./archive-experience";
 
 export const metadata: Metadata = {
@@ -38,15 +39,15 @@ export default function ArchivePage() {
           justifyContent: "flex-end",
         }}
       >
-        <a href="/archive/record-room" style={floatingLink}>
+        <Link href="/archive/record-room" style={floatingLink}>
           Songs · if curious
-        </a>
-        <a href="/archive/images" style={floatingLink}>
+        </Link>
+        <Link href="/archive/images" style={floatingLink}>
           Image room
-        </a>
-        <a href="/archive/stationery" style={floatingLink}>
+        </Link>
+        <Link href="/archive/stationery" style={floatingLink}>
           Ridiculous stationery
-        </a>
+        </Link>
       </div>
       <ArchiveExperience />
     </>

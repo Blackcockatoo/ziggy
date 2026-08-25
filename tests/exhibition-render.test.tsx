@@ -25,6 +25,7 @@ const escaped = (text: string) =>
 describe("exhibition chapters", () => {
   const requiredSections = [
     "top",
+    "daily-counter",
     "story",
     "ledger",
     "monkey",

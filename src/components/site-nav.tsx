@@ -2,7 +2,7 @@ import type { NavigationItem } from "@/content/types";
 
 export function SiteNav({ items }: { items: NavigationItem[] }) {
   return (
-    <nav className="site-nav" aria-label="Exhibition rooms">
+    <nav className="site-nav" aria-label="Monkey Shop sections">
       <a className="site-nav__brand" href="#top" aria-label="The Monkey Shop, back to top">
         <span aria-hidden="true">M</span>
         <span>The Monkey Shop</span>

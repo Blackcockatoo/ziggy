@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import shutil
 import zipfile
 from pathlib import Path
 
@@ -572,6 +573,92 @@ PAGES = [
 ]
 
 
+# The source names are the ten supplied artwork sheets. Their public names and
+# cupboard order stay stable even if a future pass replaces the source files.
+REGAL_DOCUMENTS = [
+    {
+        "number": "01",
+        "title": "Letterhead",
+        "category": "Correspondence",
+        "source": "10-1000092440.png",
+        "asset": "01-letterhead-regal.jpg",
+        "pdf": "01-letterhead-regal-print.pdf",
+    },
+    {
+        "number": "02",
+        "title": "Memorandum / Briefing Note",
+        "category": "Correspondence",
+        "source": "07-1000092439.png",
+        "asset": "02-memorandum-briefing-note-regal.jpg",
+        "pdf": "02-memorandum-briefing-note-regal-print.pdf",
+    },
+    {
+        "number": "03",
+        "title": "Certificate of Appreciation",
+        "category": "Ceremony",
+        "source": "03-1000092445.png",
+        "asset": "03-certificate-of-appreciation-regal.jpg",
+        "pdf": "03-certificate-of-appreciation-regal-print.pdf",
+    },
+    {
+        "number": "04",
+        "title": "Archive Intake Record",
+        "category": "Archive",
+        "source": "09-1000092443.png",
+        "asset": "04-archive-intake-record-regal.jpg",
+        "pdf": "04-archive-intake-record-regal-print.pdf",
+    },
+    {
+        "number": "05",
+        "title": "Owner Steering Sheet",
+        "category": "Archive",
+        "source": "08-1000092444.png",
+        "asset": "05-owner-steering-sheet-regal.jpg",
+        "pdf": "05-owner-steering-sheet-regal-print.pdf",
+    },
+    {
+        "number": "06",
+        "title": "Product Development Record",
+        "category": "Archive",
+        "source": "06-1000092442.png",
+        "asset": "06-product-development-record-regal.jpg",
+        "pdf": "06-product-development-record-regal-print.pdf",
+    },
+    {
+        "number": "07",
+        "title": "With Compliments",
+        "category": "Ephemera",
+        "source": "04-1000092446.png",
+        "asset": "07-with-compliments-regal.jpg",
+        "pdf": "07-with-compliments-regal-print.pdf",
+    },
+    {
+        "number": "08",
+        "title": "Commemorative Receipt / Archive Ticket",
+        "category": "Ephemera",
+        "source": "05-1000092441.png",
+        "asset": "08-commemorative-archive-ticket-regal.jpg",
+        "pdf": "08-commemorative-archive-ticket-regal-print.pdf",
+    },
+    {
+        "number": "09",
+        "title": "Birth Certificate",
+        "category": "Ceremony",
+        "source": "02-1000092447.png",
+        "asset": "09-birth-certificate-regal.jpg",
+        "pdf": "09-birth-certificate-regal-print.pdf",
+    },
+    {
+        "number": "10",
+        "title": "Bachelor Degree",
+        "category": "Ceremony",
+        "source": "01-1000092448.png",
+        "asset": "10-bachelor-degree-regal.jpg",
+        "pdf": "10-bachelor-degree-regal-print.pdf",
+    },
+]
+
+
 def configure_pdf(c: canvas.Canvas, title: str) -> None:
     c.setTitle(title)
     c.setAuthor("Blue $nake Studio")
@@ -588,9 +675,9 @@ def build_single(path: Path, drawer, pagesize, forms: bool, assets: dict[str, Pa
     c.save()
 
 
-def build_static_suite(path: Path, assets: dict[str, Path]) -> None:
+def build_working_suite(path: Path, assets: dict[str, Path]) -> None:
     c = canvas.Canvas(str(path), pagesize=A4, pageCompression=1)
-    configure_pdf(c, "Ziggy Old Vic State - Regal Stationery Suite 2026")
+    configure_pdf(c, "Ziggy Old Vic State - Practical Working Stationery Suite 2026")
     for drawer in [page_letterhead, page_memo, page_certificate, page_archive, page_steering, page_product]:
         c.setPageSize(A4)
         drawer(c, False, assets)
@@ -610,6 +697,78 @@ def build_static_suite(path: Path, assets: dict[str, Path]) -> None:
     c.save()
 
 
+def prepare_regal_assets(source_dir: Path | None, image_dir: Path) -> list[Path]:
+    """Import supplied sheets once, then use the stable public copies thereafter."""
+    destination_dir = image_dir / "regal"
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    assets: list[Path] = []
+
+    for document in REGAL_DOCUMENTS:
+        destination = destination_dir / document["asset"]
+        if source_dir is not None:
+            source = source_dir / document["source"]
+            if not source.exists():
+                raise FileNotFoundError(f"Missing supplied stationery artwork: {source}")
+            with Image.open(source) as image:
+                source_format = image.format
+                if source_format not in {"JPEG", "PNG"}:
+                    raise ValueError(f"Expected a JPEG or PNG artwork source: {source}")
+                if source_format == "PNG":
+                    image.convert("RGB").save(
+                        destination,
+                        "JPEG",
+                        quality=95,
+                        optimize=True,
+                        progressive=True,
+                    )
+            if source_format == "JPEG":
+                shutil.copyfile(source, destination)
+
+        if not destination.exists():
+            raise FileNotFoundError(
+                f"Missing regal asset {destination}. Run with --regal-source-dir on the first build."
+            )
+        assets.append(destination)
+
+    return assets
+
+
+def draw_regal_artwork(c: canvas.Canvas, artwork: Path) -> None:
+    width, height = A4
+    c.setFillColor(IVORY_LIGHT)
+    c.rect(0, 0, width, height, fill=1, stroke=0)
+    with Image.open(artwork) as image:
+        image_width, image_height = image.size
+    scale = min(width / image_width, height / image_height)
+    draw_width = image_width * scale
+    draw_height = image_height * scale
+    c.drawImage(
+        str(artwork),
+        (width - draw_width) / 2,
+        (height - draw_height) / 2,
+        draw_width,
+        draw_height,
+        preserveAspectRatio=True,
+    )
+
+
+def build_regal_print(path: Path, artwork: Path, title: str) -> None:
+    c = canvas.Canvas(str(path), pagesize=A4, pageCompression=1)
+    configure_pdf(c, f"Ziggy - {title} - Regal Print Edition")
+    draw_regal_artwork(c, artwork)
+    c.showPage()
+    c.save()
+
+
+def build_regal_suite(path: Path, artworks: list[Path]) -> None:
+    c = canvas.Canvas(str(path), pagesize=A4, pageCompression=1)
+    configure_pdf(c, "Ziggy Old Vic State - Ten-Page Regal Stationery Suite 2026")
+    for artwork in artworks:
+        draw_regal_artwork(c, artwork)
+        c.showPage()
+    c.save()
+
+
 def make_product_asset(source: Path | None, destination: Path) -> Path:
     if source and source.exists():
         image = Image.open(source).convert("RGB")
@@ -623,8 +782,19 @@ def make_product_asset(source: Path | None, destination: Path) -> Path:
 def write_manifest(download_dir: Path, files: list[Path]) -> None:
     data = {
         "title": "Ziggy Stationery Cupboard 2026",
+        "edition": "Regal artwork and practical working files",
         "fictional_layer": True,
         "notice": "Old Vic State is a fictional ceremonial layer, not a historical government identity or endorsement.",
+        "documents": [
+            {
+                "number": document["number"],
+                "title": document["title"],
+                "category": document["category"],
+                "regal_print": document["pdf"],
+                "preview": f"/images/ziggy/stationery/regal/{document['asset']}",
+            }
+            for document in REGAL_DOCUMENTS
+        ],
         "files": [
             {"name": item.name, "bytes": item.stat().st_size, "format": item.suffix.lstrip(".").upper()}
             for item in files
@@ -638,17 +808,24 @@ def write_readme(download_dir: Path) -> None:
 The Monkey Shop / Frankston 3196 / Est. 1996
 
 WHAT IS INCLUDED
-- Six A4 fillable working documents.
+- Ten A4 regal print editions made from the supplied artwork sheets.
+- Six A4 fillable working documents retained beside their regal editions.
 - One actual-size A6 With Compliments card.
 - One four-up A4 card print sheet.
 - One actual-size fillable archive ticket.
 - One three-up A4 ticket print sheet.
-- One combined eight-page stationery suite.
+- One combined ten-page regal stationery suite.
+- One combined eight-page practical working suite.
 
 PRINTING
-- Print working documents on A4 at 100%.
+- Print A4 regal and working documents at 100% or "fit to printable area".
 - Print card and ticket sheets at 100%, then cut on the marks.
 - Fillable PDFs can be completed digitally or printed blank.
+
+EDITIONS
+- REGAL PRINT means the supplied finished artwork, presented on an A4 page.
+- WORKING means the lighter fillable form or correctly sized production file.
+- Birth Certificate and Bachelor Degree are fictional souvenir artworks only.
 
 IMPORTANT
 Old Vic State is an explicitly fictional ceremonial layer. It is not a historic
@@ -681,6 +858,11 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--product-source", type=Path)
+    parser.add_argument(
+        "--regal-source-dir",
+        type=Path,
+        help="Directory containing the ten supplied source sheets; required only when importing or replacing them.",
+    )
     args = parser.parse_args()
 
     repo = args.repo.resolve()
@@ -694,12 +876,13 @@ def main() -> None:
         "ziggy": repo / "public" / "images" / "ziggy" / "character" / "ziggy-with-tray.webp",
         "product": product_asset,
     }
+    regal_assets = prepare_regal_assets(args.regal_source_dir, image_dir)
 
-    built: list[Path] = []
+    working_files: list[Path] = []
     for filename, drawer, pagesize, forms in PAGES:
         path = download_dir / filename
         build_single(path, drawer, pagesize, forms, assets)
-        built.append(path)
+        working_files.append(path)
 
     card_sheet = download_dir / "07-with-compliments-a4-four-up-print-sheet.pdf"
     c = canvas.Canvas(str(card_sheet), pagesize=landscape(A4), pageCompression=1)
@@ -707,7 +890,7 @@ def main() -> None:
     page_compliments_sheet(c, assets)
     c.showPage()
     c.save()
-    built.append(card_sheet)
+    working_files.append(card_sheet)
 
     ticket_sheet = download_dir / "08-archive-ticket-a4-three-up-print-sheet.pdf"
     c = canvas.Canvas(str(ticket_sheet), pagesize=landscape(A4), pageCompression=1)
@@ -715,11 +898,21 @@ def main() -> None:
     page_ticket_sheet(c, assets)
     c.showPage()
     c.save()
-    built.append(ticket_sheet)
+    working_files.append(ticket_sheet)
 
-    suite = download_dir / "ZIGGY_OLD_VIC_STATE_STATIONERY_SUITE_REGAL_2026.pdf"
-    build_static_suite(suite, assets)
-    built.append(suite)
+    working_suite = download_dir / "ZIGGY_OLD_VIC_STATE_WORKING_STATIONERY_SUITE_2026.pdf"
+    build_working_suite(working_suite, assets)
+
+    regal_files: list[Path] = []
+    for document, artwork in zip(REGAL_DOCUMENTS, regal_assets, strict=True):
+        path = download_dir / document["pdf"]
+        build_regal_print(path, artwork, document["title"])
+        regal_files.append(path)
+
+    regal_suite = download_dir / "ZIGGY_OLD_VIC_STATE_STATIONERY_SUITE_REGAL_2026.pdf"
+    build_regal_suite(regal_suite, regal_assets)
+
+    built = [*regal_files, *working_files, regal_suite, working_suite]
 
     write_readme(download_dir)
     write_manifest(download_dir, built)
