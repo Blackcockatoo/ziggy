@@ -12,20 +12,32 @@ const statuses: EvidenceStatus[] = [
 ];
 
 /**
- * The wall text explaining the exhibition's own rules.
+ * The wall text explaining both the spirit of the gift and the exhibition's
+ * own research rules.
  *
- * The documented / lore distinction is the point of the whole build, so it is
- * stated at the entrance rather than buried in a footer.
+ * The first job is to remove pressure from Rob and Carla: this is something
+ * made for them to enjoy, not a project they have been volunteered to run.
+ * The documented / lore distinction then explains how the history is handled.
  */
 export function ResearchKey() {
   return (
     <aside className="research-key" aria-labelledby="research-key-title">
       <div className="research-key__statement">
-        <p className="eyebrow">Editorial rule</p>
-        <h2 id="research-key-title">No folklore disguised as fact.</h2>
+        <p className="eyebrow">Before you wander in</p>
+        <h2 id="research-key-title">A tribute first. A project only if you ever want it to be.</h2>
         <p>
-          A suburb remembers more than it writes down. This exhibition keeps both, and
-          says which is which: what is <strong>documented</strong>, what is{" "}
+          This is an unofficial, no-strings love job made because the shop has a story worth
+          celebrating. Rob and Carla are not being asked to launch anything, approve a brand,
+          manage an archive, or turn this into work.
+        </p>
+        <p>
+          Browse it like an unusually overbuilt digital scrapbook. Keep what makes you smile,
+          ignore what does not, and if something is wrong, one correction is enough. The rest
+          is simply the result of somebody getting a little carried away.
+        </p>
+        <p>
+          Underneath the fun, the history is handled carefully. A suburb remembers more than it
+          writes down, so the exhibition says what is <strong>documented</strong>, what is{" "}
           <strong>local lore</strong>, and which frames are still empty.
         </p>
       </div>
