@@ -24,6 +24,12 @@ change is currently required. In Vercel, open `ziggy` → Settings → Domains:
    `themonkeyshop.com`.
 3. Wait for both cards to show valid configuration and SSL, then test HTTPS.
 
+An authenticated developer can confirm the project association with:
+
+```sh
+vercel domains verify themonkeyshop.com --project ziggy
+```
+
 Keep `ziggy-three.vercel.app` attached as infrastructure. Do not transfer the
 domain, team or project ownership during Phase 1.
 
