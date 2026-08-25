@@ -24,7 +24,7 @@ const holdingLabels: Record<ArtefactRecord["holding"], string> = {
 
 const archivePriorities = [
   {
-    label: "Essential",
+    label: "If anything",
     items: [
       "Earliest shop image or paper",
       "One monkey image, clipping or object clue",
@@ -34,7 +34,7 @@ const archivePriorities = [
     ],
   },
   {
-    label: "Useful",
+    label: "Also lovely",
     items: [
       "Up to three important people",
       "One genuine community connection",
@@ -43,7 +43,7 @@ const archivePriorities = [
     ],
   },
   {
-    label: "Bonus",
+    label: "Only if easy",
     items: [
       "Uniforms or key tags",
       "Handwritten signs, receipts or invoices",
@@ -101,10 +101,11 @@ export function ObjectArchive({
       <section className="archive-request" aria-labelledby="archive-request-title">
         <div className="archive-request__intro">
           <p className="eyebrow">The human pieces only</p>
-          <h3 id="archive-request-title">A small, gentle ask</h3>
+          <h3 id="archive-request-title">A small, completely optional ask</h3>
           <p>
-            No sorting. No scanning. No captions. No homework. Phone photographs and
-            approximate dates are enough.
+            Ignore this section entirely unless something is easy to share. One phone photo,
+            one rough memory, or nothing at all is a perfectly good response. No sorting. No
+            scanning. No captions. No homework. Approximate dates are enough.
           </p>
         </div>
         <div className="archive-request__grid">
@@ -124,8 +125,8 @@ export function ObjectArchive({
       <details className="archive-register">
         <summary>Open the full internal accession register</summary>
         <p>
-          The detailed catalogue remains useful to the curator. It is not a checklist Rob
-          or Carla are expected to complete.
+          This detailed catalogue is curator scaffolding, not a checklist for Rob or Carla.
+          They are not expected to fill gaps, find objects, or complete the archive.
         </p>
         {groups.map((holding) => {
           const records = artefacts.filter((item) => item.holding === holding);
