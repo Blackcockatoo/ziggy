@@ -37,8 +37,9 @@ export function VisitFinale({ identity }: { identity: ExhibitionIdentity }) {
         </a>
         <p className="visit-finale__last-line">Look for the monkey.</p>
         <p className="visit-finale__credit">
-          A working digital exhibition · Historical details remain subject to archive
-          review · Ziggy artwork is interpretive, not archival.
+          Made as an unofficial gift · Nothing here requires a response, launch or next step ·
+          Historical details remain subject to archive review · Ziggy artwork is interpretive,
+          not archival.
         </p>
       </div>
     </footer>
