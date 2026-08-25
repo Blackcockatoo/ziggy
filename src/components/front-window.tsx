@@ -36,7 +36,7 @@ export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
       </p>
 
       <a className="enter-link" href="#story">
-        Enter <span aria-hidden="true">↓</span>
+        Enter the tribute <span aria-hidden="true">↓</span>
       </a>
 
       <aside className="mornings-counter">
@@ -50,10 +50,10 @@ export function FrontWindow({ identity }: { identity: ExhibitionIdentity }) {
         <EvidencePill evidence={identity.approximateMornings.evidence} />
       </aside>
 
-      <div className="front-window__stamp" aria-label="A digital exhibition, working archive">
-        <span>A digital exhibition</span>
+      <div className="front-window__stamp" aria-label="An unofficial digital tribute">
+        <span>Made as a gift</span>
         <strong>1996—2026</strong>
-        <span>Working archive</span>
+        <span>Unofficial tribute</span>
       </div>
     </header>
   );
