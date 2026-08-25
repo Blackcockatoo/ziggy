@@ -47,8 +47,8 @@ export function Principals({
         </p>
         <strong className="principals__last-line">They do.</strong>
         <p className="principals__note">
-          Working exhibition copy. Rob and Carla can correct it, replace it with their own
-          words, add a photograph, or leave the room exactly as it is.
+          Nothing here needs a formal response. If Rob or Carla ever want to correct one detail,
+          swap a photograph, add a memory, or simply say “leave it as it is”, that is enough.
         </p>
       </div>
     </section>
