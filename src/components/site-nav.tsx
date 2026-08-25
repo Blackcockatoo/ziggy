@@ -13,7 +13,7 @@ export function SiteNav({ items }: { items: NavigationItem[] }) {
             {item.label}
           </a>
         ))}
-        <a href="/archive">Working archive</a>
+        <a href="/archive">Optional back room</a>
       </div>
     </nav>
   );
