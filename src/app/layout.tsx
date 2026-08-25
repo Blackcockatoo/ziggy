@@ -21,8 +21,8 @@ export const metadata: Metadata = {
     template: "%s · The Monkey Shop",
   },
   description:
-    "A working digital exhibition celebrating Rob, Carla and thirty years behind the counter in Frankston.",
-  applicationName: "The Monkey Shop Exhibition",
+    "An unofficial digital tribute celebrating Rob, Carla and thirty years behind the counter in Frankston — made as a gift, with no strings attached.",
+  applicationName: "The Monkey Shop Tribute",
   keywords: [
     "Frankston",
     "Cignall Frankston",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "The Monkey Shop · Thirty Years in Frankston",
-    description: "Thirty years of luck, stories and Frankston—told across one counter.",
+    description: "An unofficial gift celebrating thirty years of luck, stories and Frankston.",
     type: "website",
     locale: "en_AU",
     siteName: "The Monkey Shop",
