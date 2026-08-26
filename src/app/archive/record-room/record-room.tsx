@@ -169,7 +169,6 @@ export function RecordRoom() {
     if (!audio) return;
     audio.pause();
     audio.src = audioSrc(recordRoomTracks[nextIndex]);
-    audio.load();
     setPlaying(false);
 
     if (shouldKeepPlaying) {
