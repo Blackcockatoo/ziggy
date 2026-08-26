@@ -104,6 +104,10 @@ fields before deployment.
 5. Verify `/robots.txt`, `/sitemap.xml`, the canonical tag, social image,
    downloads, Record Room audio and the main interactive flows.
 
+For Record Room changes, test Previous/Play/Next while audio is actually
+playing. Browser source-change events are order-sensitive, so a static page
+check is not enough to verify the transport controls.
+
 If a release regresses, use Vercel's production rollback/promote control for
 the last known-good deployment; do not rewrite Git history. Account or project
 ownership is intentionally not transferred in Phase 1.
