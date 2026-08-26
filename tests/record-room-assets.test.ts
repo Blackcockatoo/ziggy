@@ -43,4 +43,18 @@ describe("the optional Record Room", () => {
     );
     expect(component).not.toContain("drive.google.com");
   });
+
+  it("ignores a stale pause event after changing tracks", () => {
+    const component = fs.readFileSync(
+      path.resolve(
+        process.cwd(),
+        "src/app/archive/record-room/record-room.tsx",
+      ),
+      "utf8",
+    );
+
+    expect(component).toContain(
+      "if (event.currentTarget.paused) setPlaying(false);",
+    );
+  });
 });

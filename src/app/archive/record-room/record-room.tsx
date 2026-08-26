@@ -211,7 +211,9 @@ export function RecordRoom() {
       <audio
         ref={audioRef}
         preload="none"
-        onPause={() => setPlaying(false)}
+        onPause={(event) => {
+          if (event.currentTarget.paused) setPlaying(false);
+        }}
         onPlay={() => setPlaying(true)}
         onEnded={() => setPlaying(false)}
       />
