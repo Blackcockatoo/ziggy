@@ -142,6 +142,7 @@ export function RecordRoom() {
 
     const nextSrc = audioSrc(recordRoomTracks[index]);
     if (audio.getAttribute("src") !== nextSrc) {
+      audio.pause();
       audio.src = nextSrc;
       audio.load();
     }
@@ -161,11 +162,12 @@ export function RecordRoom() {
     );
     if (nextIndex === current) return;
 
-    const shouldKeepPlaying = playing;
+    const audio = audioRef.current;
+    const shouldKeepPlaying = audio ? !audio.paused : playing;
     setCurrent(nextIndex);
 
-    const audio = audioRef.current;
     if (!audio) return;
+    audio.pause();
     audio.src = audioSrc(recordRoomTracks[nextIndex]);
     audio.load();
     setPlaying(false);
@@ -183,10 +185,14 @@ export function RecordRoom() {
   const togglePlayer = async () => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (!audio.src) {
-      await playTrack(current);
-      return;
+
+    const expectedSrc = audioSrc(active);
+    if (audio.getAttribute("src") !== expectedSrc) {
+      audio.pause();
+      audio.src = expectedSrc;
+      audio.load();
     }
+
     if (audio.paused) {
       try {
         await audio.play();
@@ -207,10 +213,7 @@ export function RecordRoom() {
         preload="none"
         onPause={() => setPlaying(false)}
         onPlay={() => setPlaying(true)}
-        onEnded={() => {
-          setPlaying(false);
-          if (current < recordRoomTracks.length - 1) playTrack(current + 1);
-        }}
+        onEnded={() => setPlaying(false)}
       />
 
       <header className={styles.hero}>

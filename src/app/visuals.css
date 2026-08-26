@@ -2831,6 +2831,8 @@ h3 {
 /* Keep the small archival controls comfortable on phones and touch screens. */
 @media (max-width: 680px), (pointer: coarse) {
   .enter-link,
+  .research-key summary,
+  .question-chips button,
   .source-links a,
   .timeline__story summary,
   .lineage__questions summary,
