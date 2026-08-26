@@ -38,7 +38,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  min-height: 38px;
+  min-height: 44px;
   padding: 8px 13px;
   border: 1px solid rgba(238, 230, 210, 0.16);
   border-radius: 999px;
@@ -179,6 +179,7 @@
 
 .controls button {
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   gap: 10px;
   width: fit-content;
@@ -505,6 +506,7 @@
 .dialogHeader button,
 .dialogFooter button {
   flex: 0 0 auto;
+  min-height: 44px;
   padding: 9px 12px;
   border: 1px solid rgba(216, 189, 130, 0.38);
   color: var(--gallery-cream);

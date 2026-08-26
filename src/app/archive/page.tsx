@@ -10,6 +10,9 @@ export const metadata: Metadata = {
 
 const floatingLink = {
   zIndex: 9999,
+  display: "inline-flex" as const,
+  minHeight: 44,
+  alignItems: "center" as const,
   padding: "11px 14px",
   border: "1px solid rgba(217,193,138,.7)",
   borderRadius: 999,

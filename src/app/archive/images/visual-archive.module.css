@@ -41,7 +41,7 @@
   text-transform: uppercase;
 }
 
-.backLink { text-decoration: none; color: var(--softGold) !important; }
+.backLink { display: inline-flex; align-items: center; text-decoration: none; color: var(--softGold) !important; }
 .topLabel { color: rgba(238, 230, 210, 0.56); }
 .eyebrow { margin: 0; color: var(--softGold); }
 
@@ -168,7 +168,7 @@
   scrollbar-width: none;
 }
 .roomNav::-webkit-scrollbar { display: none; }
-.roomNav a { flex: 0 0 auto; padding: 7px 10px; text-decoration: none; border: 1px solid rgba(17, 17, 13, 0.17); }
+.roomNav a { flex: 0 0 auto; display: inline-flex; min-height: 44px; align-items: center; padding: 7px 10px; text-decoration: none; border: 1px solid rgba(17, 17, 13, 0.17); }
 .roomNav a:hover { background: #191b16; color: var(--cream); }
 
 .section {
@@ -377,7 +377,7 @@
 }
 .footer p:last-child { max-width: 760px; line-height: 1.65; }
 .footerLinks { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
-.footerLinks a { color: var(--softGold); text-decoration: none; border-bottom: 1px solid rgba(216,189,130,.35); padding-bottom: 4px; }
+.footerLinks a { display: inline-flex; min-height: 44px; align-items: center; color: var(--softGold); text-decoration: none; border-bottom: 1px solid rgba(216,189,130,.35); padding-bottom: 4px; }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 82px; }
@@ -398,6 +398,8 @@
 }
 
 @media (max-width: 600px) {
+  .topbar { padding-block: 4px; }
+  .backLink { min-height: 44px; }
   .topLabel { display: none; }
   .hero h1 { font-size: clamp(64px, 24vw, 104px); }
   .hero h1 span { margin-left: .2em; }

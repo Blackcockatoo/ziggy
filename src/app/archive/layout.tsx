@@ -47,7 +47,9 @@ export default function ArchiveLayout({ children }: Readonly<{ children: React.R
           <Link
             href="/"
             style={{
-              display: "inline-block",
+              display: "inline-flex",
+              minHeight: 44,
+              alignItems: "center",
               marginTop: 10,
               color: "inherit",
               fontSize: 11,
