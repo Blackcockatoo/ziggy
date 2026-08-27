@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { LegacyImageGallery } from "@/components/legacy-image-gallery";
+import {
+  posterPackDownload,
+  posterPackItems,
+  posterPackQrTarget,
+} from "@/content/poster-pack";
 import { visualArchiveChapters, visualArchiveItems } from "@/content/visual-archive";
 import styles from "./visual-archive.module.css";
 
@@ -14,6 +19,7 @@ export const metadata: Metadata = {
 const rooms = [
   ["references", "References"],
   ["legacy", "Legacy 44"],
+  ["posters", "Posters"],
   ["stationery", "Stationery"],
   ["fresheners", "Fresheners"],
   ["cards", "Cards"],
@@ -335,9 +341,64 @@ export default function VisualArchivePage() {
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.auditResult}`} id="result">
+      <section className={`${styles.section} ${styles.posterSection}`} id="posters">
         <SectionHead
           number="07"
+          eyebrow="Finished working edition · 27 Aug 2026"
+          title="Six posters. One clean pack. Every code working."
+          copy="The finished Monkey Shop poster set is filed here as its own edition, separate from the Legacy 44. Each 1122 × 1402 PNG is available individually, and the complete original-resolution set is bundled into one tidy download."
+        />
+
+        <div className={styles.posterPackIntro}>
+          <div>
+            <p className={styles.eyebrow}>Independent QR check</p>
+            <h3>Six out of six decoded.</h3>
+            <p>
+              Every poster resolves to <b>{posterPackQrTarget.replace("https://", "")}</b>.
+              The artwork, filenames and QR quiet zones are preserved exactly as supplied.
+            </p>
+          </div>
+          <a className={styles.packDownload} href={posterPackDownload} download>
+            Download the complete pack
+            <span>ZIP · six original PNG posters + practical print note ↓</span>
+          </a>
+        </div>
+
+        <div className={styles.posterGrid}>
+          {posterPackItems.map((item) => (
+            <figure className={styles.posterCard} key={item.id}>
+              <div className={styles.posterImage}>
+                <Image
+                  src={item.src}
+                  alt={item.alt}
+                  fill
+                  sizes="(max-width: 650px) 100vw, (max-width: 1050px) 50vw, 33vw"
+                  className={styles.posterArtwork}
+                />
+              </div>
+              <figcaption>
+                <div>
+                  <span>{String(item.number).padStart(2, "0")} / 06</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.note}</p>
+                </div>
+                <a href={item.src} download={item.downloadName}>
+                  Download PNG <span aria-hidden="true">↓</span>
+                </a>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <p className={styles.posterProofNote}>
+          Production note: scan one physical proof at its final printed size before ordering a full run.
+          Do not crop, recolour or place artwork over the white QR margin.
+        </p>
+      </section>
+
+      <section className={`${styles.section} ${styles.auditResult}`} id="result">
+        <SectionHead
+          number="08"
           eyebrow="Audit result"
           title="One visual system, not six unrelated ideas."
           copy="The useful material now points in the same direction: repeat fewer things, more confidently. Keep the full monkey for theatre. Let the expensive and everyday objects learn how to survive on less."
